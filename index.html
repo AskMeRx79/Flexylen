@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GP Pathfinder Clinical Training Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --gp-purple: #8B1874;
+            --gp-blue: #1E3A8A;
+            --nhs-blue: #005EB8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .header {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .logo-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gp-blue);
+        }
+        
+        .pathfinder {
+            background: var(--gp-purple);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+        
+        .nhs-logo {
+            background: var(--nhs-blue);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        h1 {
+            color: var(--gp-blue);
+            font-size: 36px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .welcome-box {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .welcome-box h2 {
+            color: #2E7D32;
+            margin-bottom: 1rem;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+            background: #F8F9FA;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        
+        .module-icon {
+            font-size: 48px;
+            margin-bottom: 1rem;
+        }
+        
+        .module-card h3 {
+            color: var(--gp-purple);
+            font-size: 24px;
+            margin-bottom: 1rem;
+        }
+        
+        .module-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .module-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #E0E0E0;
+        }
+        
+        .duration {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, var(--gp-purple), var(--gp-blue));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .modules-grid {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    GP <span class="pathfinder">Pathfinder</span> Clinics
+                </div>
+                <div class="nhs-logo">NHS</div>
+            </div>
+            
+            <h1>Clinical Training Portal</h1>
+            <p class="subtitle">Interactive Learning Modules for Primary Care Clinicians</p>
+            
+            <div class="welcome-box">
+                <h2>Welcome to GP Pathfinder Training</h2>
+                <p>Select a module below to begin your interactive clinical training. Each module includes EMIS documentation practice, clinical scenarios, MCQ assessments, and prescription writing skills.</p>
+                <p style="margin-top: 1rem;"><strong>All modules created by:</strong> Aggrey Mpofu MPharmS IPrescrib. | <strong>Reviewed by:</strong> Sukjinder Pahal IPrescrib.</p>
+            </div>
+        </div>
+        
+        <div class="modules-grid">
+            <a href="Hyperlipidaemia_Interactive_Training.html" class="module-card">
+                <div class="module-icon">💊</div>
+                <h3>Hyperlipidaemia Management</h3>
+                <p>Learn to assess CV risk with QRISK3, initiate statin therapy, manage intolerance, and recognize familial hypercholesterolaemia.</p>
+                <div class="module-meta">
+                    <span class="duration">⏱️ 60-90 minutes</span>
+                    <button class="start-btn">Start Module</button>
+                </div>
+            </a>
+            
+            <a href="CKD_Interactive_Training.html" class="module-card">
+                <div class="module-icon">🫘</div>
+                <h3>CKD Management</h3>
+                <p>Master eGFR interpretation, CKD staging, medication management, and recognizing when to escalate to nephrology services.</p>
+                <div class="module-meta">
+                    <span class="duration">⏱️ 60-90 minutes</span>
+                    <button class="start-btn">Start Module</button>
+                </div>
+            </a>
+            
+            <a href="HeartFailure_Interactive_Training.html" class="module-card">
+                <div class="module-icon">❤️</div>
+                <h3>Heart Failure Management</h3>
+                <p>Develop skills in GDMT optimization, NYHA classification, medication titration, and managing decompensated heart failure.</p>
+                <div class="module-meta">
+                    <span class="duration">⏱️ 60-90 minutes</span>
+                    <button class="start-btn">Start Module</button>
+                </div>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p><strong>GP Pathfinder Clinics</strong> - Clinical Excellence in Primary Care</p>
+            <p style="margin-top: 0.5rem; font-size: 14px;">© 2026 GP Pathfinder Clinics. For internal training use only.</p>
+        </div>
+    </div>
+</body>
+</html>
