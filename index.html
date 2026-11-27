@@ -3,249 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GP Pathfinder Clinical Training Portal</title>
+    <title>Flexylen Clinical Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        /* Flexylen brand palette (shared with Consultation_Scribe.html) */
         :root {
-            --gp-purple: #8B1874;
-            --gp-blue: #1E3A8A;
-            --nhs-blue: #005EB8;
+            --fx-blue: oklch(0.52 0.19 263); --fx-blue-light: oklch(0.77 0.11 265); --fx-blue-dark: oklch(0.39 0.16 265);
+            --fx-green: oklch(0.54 0.12 160); --fx-green-light: oklch(0.85 0.1 163);
+            --fx-yellow: oklch(0.8 0.15 80); --fx-yellow-light: oklch(0.94 0.1 95); --fx-yellow-dark: oklch(0.65 0.14 75);
+            --fx-purple: oklch(0.5 0.2 287);
+            --fx-cyan: oklch(0.72 0.13 210);
+            --fx-red: oklch(0.56 0.17 18); --fx-red-light: oklch(0.82 0.09 15);
+            --hero-1: oklch(0.36 0.15 265); --hero-2: oklch(0.16 0.06 265); --hero-glow: oklch(0.6 0.16 245 / 0.45);
+
+            --bg: oklch(0.973 0.006 264);
+            --card: oklch(1 0 0);
+            --ink: oklch(0.23 0.03 264);
+            --muted: oklch(0.5 0.03 264);
+            --line: oklch(0.9 0.015 264);
+            --soft: oklch(0.95 0.01 264);
+            --heading: var(--fx-blue-dark);
+            --shadow: 0 4px 14px oklch(0.23 0.03 264 / 0.10);
+            --shadow-hover: 0 10px 26px oklch(0.23 0.03 264 / 0.18);
         }
-        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: oklch(0.129 0.042 264.7);
+                --card: oklch(0.208 0.042 265.8);
+                --ink: oklch(0.984 0.003 247.9);
+                --muted: oklch(0.704 0.04 256.8);
+                --line: oklch(1 0 0 / 12%);
+                --soft: oklch(0.279 0.041 260);
+                --heading: var(--fx-blue-light);
+                --shadow: 0 4px 14px oklch(0 0 0 / 0.35);
+                --shadow-hover: 0 10px 26px oklch(0 0 0 / 0.5);
+            }
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: "Nunito", system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
+            padding: 2rem 1.25rem;
         }
-        
-        .container {
-            max-width: 1000px;
-            width: 100%;
+        h1, h2, h3, .logo, .start-btn { font-family: "Fredoka", "Nunito", sans-serif; }
+
+        .container { max-width: 1100px; margin: 0 auto; }
+
+        .hero {
+            background: radial-gradient(circle at 85% 0%, var(--hero-glow), transparent 45%), linear-gradient(150deg, var(--hero-1), var(--hero-2));
+            color: oklch(0.99 0 0);
+            border-radius: 20px;
+            padding: 2.25rem 2.5rem 2.5rem;
+            box-shadow: var(--shadow);
         }
-        
-        .header {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px 12px 0 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        .top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .logo { font-size: 30px; font-weight: 700; letter-spacing: .3px; }
+        .logo .dot { color: var(--fx-yellow); }
+        .tag {
+            background: oklch(1 0 0 / 0.14); border: 1px solid oklch(1 0 0 / 0.3); color: white;
+            padding: 6px 16px; border-radius: 999px; font-weight: 700; font-size: 14px;
         }
-        
-        .logo-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--gp-blue);
-        }
-        
-        .pathfinder {
-            background: var(--gp-purple);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 4px;
-            margin-left: 8px;
-        }
-        
-        .nhs-logo {
-            background: var(--nhs-blue);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        h1 {
-            color: var(--gp-blue);
-            font-size: 36px;
-            margin-bottom: 0.5rem;
-        }
-        
-        .subtitle {
-            color: #666;
-            font-size: 18px;
-        }
-        
+        h1 { font-size: 40px; font-weight: 600; margin-top: 1.5rem; }
+        .subtitle { color: oklch(0.9 0.03 264); font-size: 18px; margin-top: .35rem; }
+        .stripe { display: flex; height: 6px; border-radius: 6px; overflow: hidden; margin-top: 1.25rem; max-width: 280px; }
+        .stripe span { flex: 1; }
+
         .welcome-box {
-            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-            padding: 2rem;
-            border-radius: 8px;
-            margin: 2rem 0;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-left: 5px solid var(--fx-yellow);
+            border-radius: 16px;
+            padding: 1.5rem 1.75rem;
+            margin: 1.25rem 0;
+            box-shadow: var(--shadow);
+            line-height: 1.6;
         }
-        
-        .welcome-box h2 {
-            color: #2E7D32;
-            margin-bottom: 1rem;
-        }
-        
+        .welcome-box h2 { color: var(--heading); font-weight: 600; font-size: 22px; margin-bottom: .5rem; }
+        .credits { margin-top: .75rem; color: var(--muted); font-size: 15px; }
+        .credits strong { color: var(--ink); }
+
         .modules-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 3rem;
-            background: #F8F9FA;
-            border-radius: 0 0 12px 12px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
         }
-        
+
         .module-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            --tone: var(--fx-blue);
+            --tone-soft: oklch(from var(--fx-blue) l c h / 0.14);
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-top: 5px solid var(--tone);
+            border-radius: 16px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+            transition: transform .25s, box-shadow .25s;
             text-decoration: none;
             color: inherit;
-        }
-        
-        .module-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-        
-        .module-icon {
-            font-size: 48px;
-            margin-bottom: 1rem;
-        }
-        
-        .module-card h3 {
-            color: var(--gp-purple);
-            font-size: 24px;
-            margin-bottom: 1rem;
-        }
-        
-        .module-card p {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-        
-        .module-meta {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid #E0E0E0;
+            flex-direction: column;
         }
-        
-        .duration {
-            color: #999;
-            font-size: 14px;
+        .module-card:hover, .module-card:focus-visible { transform: translateY(-4px); box-shadow: var(--shadow-hover); outline: none; }
+        .module-card:focus-visible { border-color: var(--fx-blue-light); }
+        .tone-green { --tone: var(--fx-green); --tone-soft: oklch(from var(--fx-green) l c h / 0.16); }
+        .tone-red { --tone: var(--fx-red); --tone-soft: oklch(from var(--fx-red) l c h / 0.14); }
+        .tone-purple { --tone: var(--fx-purple); --tone-soft: oklch(from var(--fx-purple) l c h / 0.14); }
+
+        .module-icon {
+            font-size: 32px;
+            width: 60px; height: 60px; border-radius: 16px;
+            display: grid; place-items: center;
+            background: var(--tone-soft);
+            margin-bottom: 1rem;
         }
-        
+        .module-card h3 { color: var(--heading); font-size: 22px; font-weight: 600; margin-bottom: .6rem; }
+        .module-card p { color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; flex: 1; }
+
+        .module-meta {
+            display: flex; justify-content: space-between; align-items: center; gap: .75rem;
+            padding-top: 1rem; border-top: 1px solid var(--line);
+        }
+        .duration { color: var(--muted); font-size: 14px; }
+
         .start-btn {
-            background: linear-gradient(135deg, var(--gp-purple), var(--gp-blue));
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s;
+            color: white; font-weight: 600; font-size: 15px;
+            padding: .6rem 1.2rem; border-radius: 12px;
+            border: 1px solid oklch(1 0 0 / 0.35);
+            box-shadow: 0 4px 12px oklch(0.39 0.16 265 / 0.3);
+            background: linear-gradient(180deg, oklch(1 0 0 / .35), oklch(1 0 0 / .08) 24%, transparent 44%),
+                        linear-gradient(135deg, var(--fx-blue-light), var(--fx-blue) 58%, var(--fx-blue-dark));
+            white-space: nowrap;
+            transition: filter .2s;
         }
-        
-        .start-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: white;
-        }
-        
+        .module-card:hover .start-btn { filter: brightness(1.08); }
+
+        .footer { text-align: center; padding: 2rem 1rem 0.5rem; color: var(--muted); font-size: 15px; }
+        .footer strong { color: var(--heading); font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600; }
+
         @media (max-width: 768px) {
-            .modules-grid {
-                grid-template-columns: 1fr;
-                padding: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            .logo-section {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            body { padding: 1rem .75rem; }
+            .hero { padding: 1.5rem 1.25rem 1.75rem; }
+            h1 { font-size: 30px; }
+            .subtitle { font-size: 16px; }
+            .welcome-box { padding: 1.25rem; }
+            .modules-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo-section">
-                <div class="logo">
-                    GP <span class="pathfinder">Pathfinder</span> Clinics
-                </div>
-                <div class="nhs-logo">NHS</div>
+        <header class="hero">
+            <div class="top">
+                <div class="logo">Flexylen<span class="dot">.</span></div>
+                <span class="tag">Clinical Training</span>
             </div>
-            
+
             <h1>Clinical Training Portal</h1>
-            <p class="subtitle">Interactive Learning Modules for Primary Care Clinicians</p>
-            
-            <div class="welcome-box">
-                <h2>Welcome to GP Pathfinder Training</h2>
-                <p>Select a module below to begin your interactive clinical training. Each module includes EMIS documentation practice, clinical scenarios, MCQ assessments, and prescription writing skills.</p>
-                <p style="margin-top: 1rem;"><strong>All modules created by:</strong> Aggrey Mpofu MPharmS IPrescrib. | <strong>Reviewed by:</strong> Sukjinder Pahal IPrescrib.</p>
+            <p class="subtitle">Interactive learning modules and tools for primary care clinicians</p>
+            <div class="stripe" aria-hidden="true">
+                <span style="background:var(--fx-blue)"></span><span style="background:var(--fx-green)"></span><span style="background:var(--fx-yellow)"></span><span style="background:var(--fx-red)"></span><span style="background:var(--fx-purple)"></span><span style="background:var(--fx-cyan)"></span>
             </div>
-        </div>
-        
-        <div class="modules-grid">
+        </header>
+
+        <section class="welcome-box">
+            <h2>Welcome to Flexylen Training</h2>
+            <p>Select a module below to begin your interactive clinical training. Each module includes EMIS documentation practice, clinical scenarios, MCQ assessments, and prescription writing skills.</p>
+            <p class="credits"><strong>All modules created by:</strong> Aggrey Mpofu MPharmS IPrescrib. | <strong>Reviewed by:</strong> Sukjinder Pahal IPrescrib.</p>
+        </section>
+
+        <main class="modules-grid">
             <a href="Hyperlipidaemia_Interactive_Training.html" class="module-card">
                 <div class="module-icon">💊</div>
                 <h3>Hyperlipidaemia Management</h3>
-                <p>Learn to assess CV risk with QRISK3, initiate statin therapy, manage intolerance, and recognize familial hypercholesterolaemia.</p>
+                <p>Learn to assess CV risk with QRISK3, initiate statin therapy, manage intolerance, and recognise familial hypercholesterolaemia.</p>
                 <div class="module-meta">
                     <span class="duration">⏱️ 60-90 minutes</span>
-                    <button class="start-btn">Start Module</button>
-                </div>
-            </a>
-            
-            <a href="CKD_Interactive_Training.html" class="module-card">
-                <div class="module-icon">🫘</div>
-                <h3>CKD Management</h3>
-                <p>Master eGFR interpretation, CKD staging, medication management, and recognizing when to escalate to nephrology services.</p>
-                <div class="module-meta">
-                    <span class="duration">⏱️ 60-90 minutes</span>
-                    <button class="start-btn">Start Module</button>
-                </div>
-            </a>
-            
-            <a href="HeartFailure_Interactive_Training.html" class="module-card">
-                <div class="module-icon">❤️</div>
-                <h3>Heart Failure Management</h3>
-                <p>Develop skills in GDMT optimization, NYHA classification, medication titration, and managing decompensated heart failure.</p>
-                <div class="module-meta">
-                    <span class="duration">⏱️ 60-90 minutes</span>
-                    <button class="start-btn">Start Module</button>
+                    <span class="start-btn">Start Module</span>
                 </div>
             </a>
 
-            <a href="Consultation_Scribe.html" class="module-card">
+            <a href="CKD_Interactive_Training.html" class="module-card tone-green">
+                <div class="module-icon">🫘</div>
+                <h3>CKD Management</h3>
+                <p>Master eGFR interpretation, CKD staging, medication management, and recognising when to escalate to nephrology services.</p>
+                <div class="module-meta">
+                    <span class="duration">⏱️ 60-90 minutes</span>
+                    <span class="start-btn">Start Module</span>
+                </div>
+            </a>
+
+            <a href="HeartFailure_Interactive_Training.html" class="module-card tone-red">
+                <div class="module-icon">❤️</div>
+                <h3>Heart Failure Management</h3>
+                <p>Develop skills in GDMT optimisation, NYHA classification, medication titration, and managing decompensated heart failure.</p>
+                <div class="module-meta">
+                    <span class="duration">⏱️ 60-90 minutes</span>
+                    <span class="start-btn">Start Module</span>
+                </div>
+            </a>
+
+            <a href="Consultation_Scribe.html" class="module-card tone-purple">
                 <div class="module-icon">📝</div>
                 <h3>Flexylen Consultation Scribe</h3>
                 <p>Paste a consultation transcript and get structured clinical notes (EMIS, SOAP or Structured Medication Review) ready to paste into the record.</p>
                 <div class="module-meta">
                     <span class="duration">🛠️ Clinical tool</span>
-                    <button class="start-btn">Open Scribe</button>
+                    <span class="start-btn">Open Scribe</span>
                 </div>
             </a>
-        </div>
+        </main>
 
-        <div class="footer">
-            <p><strong>GP Pathfinder Clinics</strong> - Clinical Excellence in Primary Care</p>
-            <p style="margin-top: 0.5rem; font-size: 14px;">© 2026 GP Pathfinder Clinics. For internal training use only.</p>
-        </div>
+        <footer class="footer">
+            <p><strong>Flexylen</strong> — Clinical excellence in primary care</p>
+            <p style="margin-top: 0.4rem; font-size: 14px;">© 2026 Flexylen. For internal training use only.</p>
+        </footer>
     </div>
 </body>
 </html>
