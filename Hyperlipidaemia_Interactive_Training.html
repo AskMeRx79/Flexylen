@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperlipidaemia Management | Flexylen Clinical Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/flexylen-module.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+window.FLEXYLEN_MODULE = {
+  id: "hyperlipidaemia",
+  title: "Hyperlipidaemia Management",
+  icon: "💊",
+  tone: "blue",
+  duration: "60–90 minutes",
+  summary: "Learn to assess CV risk with QRISK3, initiate statin therapy, manage intolerance, and recognise familial hypercholesterolaemia.",
+  reviewStatus: "Draft — awaiting clinical review",
+  updated: "November 2026",
+  passMark: 80,
+
+  objectives: [
+    "Assess 10-year cardiovascular risk with QRISK3 and recognise the groups in whom QRISK3 should not be used (type 1 diabetes, CKD, familial hypercholesterolaemia, age 85 and over, established CVD).",
+    "Interpret a full lipid profile, including non-HDL cholesterol and triglycerides, and complete a secondary-cause screen before starting lipid-lowering therapy.",
+    "Initiate and titrate statin therapy for primary prevention, secondary prevention and CKD in line with NICE NG238 and the NHS England national lipid pathway, using shared decision making.",
+    "Monitor response and safety (lipids, ALT, CK when indicated) and apply secondary prevention treat-to-target thresholds (LDL-C 2.0 mmol/L or less / non-HDL-C 2.6 mmol/L or less).",
+    "Manage statin-associated muscle symptoms and statin intolerance, and select add-on or alternative therapies (ezetimibe, bempedoic acid, inclisiran) within NICE technology appraisal criteria.",
+    "Recognise and act on clinically important drug interactions and counsel on pregnancy, contraception and lifestyle.",
+    "Recognise possible familial hypercholesterolaemia and severe hypertriglyceridaemia, and know when and how urgently to refer."
+  ],
+
+  sources: [
+    { label: "NICE NG238: Cardiovascular disease — risk assessment and reduction, including lipid modification (December 2023)", url: "https://www.nice.org.uk/guidance/ng238" },
+    { label: "NHS England Accelerated Access Collaborative: Summary of national guidance for lipid management for primary and secondary prevention of CVD", url: "https://www.england.nhs.uk/aac/publication/summary-of-national-guidance-for-lipid-management/" },
+    { label: "NICE CG71: Familial hypercholesterolaemia — identification and management", url: "https://www.nice.org.uk/guidance/cg71" },
+    { label: "NICE TA385: Ezetimibe for treating primary heterozygous-familial and non-familial hypercholesterolaemia", url: "https://www.nice.org.uk/guidance/ta385" },
+    { label: "NICE TA733: Inclisiran for treating primary hypercholesterolaemia or mixed dyslipidaemia", url: "https://www.nice.org.uk/guidance/ta733" },
+    { label: "BNF: Atorvastatin (dosing, interactions, cautions)", url: "https://bnf.nice.org.uk/drugs/atorvastatin/" },
+    { label: "QRISK3 risk calculator", url: "https://www.qrisk.org/" }
+  ],
+
+  learn: [
+    {
+      title: "1. Cardiovascular risk assessment and QRISK3",
+      html: `<p>NICE NG238 recommends a systematic strategy to identify people aged 40 and over who are likely to be at high CVD risk, prioritising by estimated risk. Use <strong>QRISK3</strong> to estimate 10-year risk of CVD in people aged 25–84 without established CVD. Most practices run QRISK3 within EMIS from coded data, so check the inputs are current before quoting the result.</p>
+<table><tr><th>QRISK3 input</th><th>Why it matters</th></tr>
+<tr><td>Age, sex, ethnicity, postcode (deprivation)</td><td>Ethnicity and deprivation shift risk substantially; uncoded ethnicity defaults may mislead.</td></tr>
+<tr><td>Smoking status (categories)</td><td>Ex-smoker vs light/heavy smoker changes the estimate.</td></tr>
+<tr><td>TC:HDL ratio</td><td>Use a recent full lipid profile.</td></tr>
+<tr><td>Systolic BP and its variability (SD of readings)</td><td>Use an average of recent readings, not a single high reading.</td></tr>
+<tr><td>BMI, family history of CHD in first-degree relative under 60</td><td>Often missing or out of date in the record.</td></tr>
+<tr><td>Diabetes (type 1/2), CKD stage 3–5, AF, treated hypertension, migraine, RA, SLE, severe mental illness, atypical antipsychotics, corticosteroids, erectile dysfunction</td><td>QRISK3-specific risk factors — ask about them.</td></tr></table>
+<div class="callout red"><strong>Do not use QRISK3 (treat as high risk / follow specific pathway) in:</strong><ul><li>Established CVD (secondary prevention)</li><li>Type 1 diabetes</li><li>CKD with eGFR below 60 and/or albuminuria</li><li>Familial hypercholesterolaemia or other inherited lipid disorders</li><li>Age 85 and over — consider at increased risk on age alone</li></ul></div>
+<div class="callout key"><strong>Interpretation caveats:</strong> QRISK3 may <strong>underestimate</strong> risk in people with HIV, serious mental illness, those on drugs causing dyslipidaemia (e.g. antipsychotics, corticosteroids, immunosuppressants), autoimmune disease, recent smoking cessation, already treated hypertension or lipids, and people with TG 4.5–9.9 mmol/L. Use clinical judgement and explain this to the patient.</div>
+<p>NICE also suggests discussing <strong>lifetime risk</strong> (e.g. QRISK3-lifetime) with younger people whose 10-year risk is low but whose lifetime risk is high, to support lifestyle change.</p>`
+    },
+    {
+      title: "2. The lipid profile and secondary causes",
+      html: `<p>A <strong>non-fasting</strong> full lipid profile is fine for risk assessment and monitoring. Request total cholesterol (TC), HDL-C, non-HDL-C and triglycerides (TG); LDL-C is usually calculated.</p>
+<ul><li><strong>Non-HDL-C = TC − HDL-C.</strong> It includes all atherogenic (apoB-containing) particles, does not need fasting and is the NICE monitoring measure for primary prevention.</li>
+<li>Calculated (Friedewald) LDL-C is unreliable when TG is above about 4.5 mmol/L — use non-HDL-C instead.</li>
+<li>One abnormal result is a prompt to look at the whole picture, not an automatic diagnosis — repeat if unexpected.</li></ul>
+<p><strong>Before starting a statin</strong> (NG238): at least one full lipid sample, HbA1c, renal function and eGFR, ALT (transaminase) and TSH. Many practices add urine ACR, BMI and BP so CKD and diabetes are not missed.</p>
+<table><tr><th>Secondary cause</th><th>Screen / clue</th></tr>
+<tr><td>Hypothyroidism</td><td>TSH — treat before judging lipids; statin myopathy risk higher if untreated</td></tr>
+<tr><td>Diabetes / poor glycaemic control</td><td>HbA1c — raises TG especially</td></tr>
+<tr><td>Excess alcohol</td><td>Alcohol history (units/week), GGT, MCV — raises TG</td></tr>
+<tr><td>Liver disease / cholestasis</td><td>LFTs</td></tr>
+<tr><td>CKD / nephrotic syndrome</td><td>U&amp;E, eGFR, urine ACR, albumin</td></tr>
+<tr><td>Drugs</td><td>Corticosteroids, atypical antipsychotics, retinoids, ciclosporin, some antiretrovirals, thiazides and beta-blockers (modest), oral oestrogens (TG)</td></tr>
+<tr><td>Obesity, pregnancy</td><td>BMI; pregnancy raises lipids physiologically</td></tr></table>
+<div class="callout green"><strong>Practice tip:</strong> set up a single "pre-statin bloods" EMIS template or order set (lipids, HbA1c, U&amp;E, LFT, TSH, ACR) so the baseline is complete first time.</div>`
+    },
+    {
+      title: "3. Primary prevention: who and what to offer",
+      html: `<p>NG238 emphasises lifestyle change and shared decision making. Statin choice and dose are deliberately simple:</p>
+<table><tr><th>Group</th><th>Recommendation</th></tr>
+<tr><td>QRISK3 10% or more (age up to 84)</td><td><strong>Offer atorvastatin 20 mg</strong> once daily after discussing benefits/risks, optimising other risk factors and addressing lifestyle. Lifestyle change should not delay a statin if the person wants one.</td></tr>
+<tr><td>QRISK3 below 10%</td><td>Do not rule out a statin. NG238 states a statin may be appropriate after an informed discussion if the person wishes — use the NICE patient decision aid (absolute risk reduction over 10 years).</td></tr>
+<tr><td>Age 85 and over</td><td>Consider atorvastatin 20 mg — may reduce risk of non-fatal MI; consider frailty, polypharmacy and life expectancy.</td></tr>
+<tr><td>CKD (eGFR below 60 and/or albuminuria)</td><td><strong>Offer atorvastatin 20 mg</strong>; increase if non-HDL-C reduction is under 40% and eGFR is 30 or more. Agree higher doses with a renal specialist if eGFR is below 30.</td></tr>
+<tr><td>Type 1 diabetes</td><td><strong>Offer atorvastatin 20 mg</strong> if older than 40, <em>or</em> diabetes for more than 10 years, <em>or</em> established nephropathy, <em>or</em> other CVD risk factors. Discuss with younger adults too.</td></tr>
+<tr><td>Type 2 diabetes</td><td>Use QRISK3 as for the general population (unless CKD).</td></tr></table>
+<div class="callout key"><strong>Shared decision making:</strong> express benefit as absolute risk (e.g. "out of 100 people like you, about X avoid a heart attack or stroke over 10 years"). Discuss the common nocebo effect with muscle symptoms, and that a statin is a long-term treatment that works only while taken.</div>
+<div class="callout"><strong>Lifestyle (all groups):</strong> cardioprotective diet (saturated fat 10% or less of energy, replace with mono/polyunsaturated fats, at least 5 portions of fruit/veg, 2 portions of fish weekly including oily fish), 150 min moderate activity weekly plus strength work, weight management, alcohol within 14 units/week spread over the week, and smoking cessation support. Plant stanols/sterols are not recommended by NICE for primary prevention.</div>`
+    },
+    {
+      title: "4. Secondary prevention and treat-to-target",
+      html: `<p>For people with established CVD (CHD, stroke/TIA, peripheral arterial disease) NG238 recommends <strong>atorvastatin 80 mg</strong> once daily. Use a <strong>lower dose</strong> if there are potential drug interactions, high risk of adverse effects (e.g. frailty, CKD, low body weight, previous intolerance) or the patient prefers.</p>
+<div class="callout key"><strong>Secondary prevention targets</strong> (NG238 and NHS England national lipid pathway): aim for <strong>LDL-C 2.0 mmol/L or less</strong> or <strong>non-HDL-C 2.6 mmol/L or less</strong>. If not achieved, check adherence and timing, optimise statin to the maximum tolerated intensity, then add further therapy.</div>
+<table><tr><th>Step (on maximum tolerated statin)</th><th>Option</th></tr>
+<tr><td>LDL-C above 2.0 / non-HDL-C above 2.6</td><td>Check adherence; increase to high-intensity statin (atorvastatin 80 mg or rosuvastatin 20–40 mg) if tolerated</td></tr>
+<tr><td>Still above target</td><td>Add <strong>ezetimibe 10 mg</strong> (NICE TA385) — about 20–25% further LDL-C reduction</td></tr>
+<tr><td>LDL-C persistently 2.6 mmol/L or more despite maximum tolerated lipid-lowering therapy</td><td>Consider <strong>inclisiran</strong> (TA733, secondary prevention only) — primary care initiation is supported in the national pathway</td></tr>
+<tr><td>Very high LDL-C despite therapy (thresholds in TA393/TA394)</td><td>Specialist assessment for a PCSK9 monoclonal antibody (alirocumab/evolocumab)</td></tr>
+<tr><td>Raised TG (1.7 mmol/L or more) with established CVD on a statin</td><td>Icosapent ethyl may be considered within its NICE TA criteria (usually specialist-led locally — check formulary)</td></tr></table>
+<div class="callout green"><strong>Practice tip:</strong> run an EMIS search for "established CVD + last LDL-C above 2.0 or non-HDL above 2.6 in last 12 months" — this is one of the highest-yield pharmacist-led recall searches in general practice.</div>`
+    },
+    {
+      title: "5. Statins: intensity, choice and interactions",
+      html: `<p>Statin intensity is defined by the expected LDL-C reduction. High intensity is 40% or more.</p>
+<table><tr><th>Statin</th><th>Approx. LDL-C reduction</th><th>Intensity</th></tr>
+<tr><td>Atorvastatin 10 mg</td><td>~37%</td><td>Medium</td></tr>
+<tr><td>Atorvastatin 20 mg</td><td>~43%</td><td>High</td></tr>
+<tr><td>Atorvastatin 40 mg / 80 mg</td><td>~49% / ~55%</td><td>High</td></tr>
+<tr><td>Rosuvastatin 5 mg / 10 mg / 20 mg</td><td>~38% / ~43% / ~48%</td><td>Medium / High / High</td></tr>
+<tr><td>Simvastatin 20 mg / 40 mg</td><td>~32% / ~37%</td><td>Low / Medium</td></tr>
+<tr><td>Pravastatin 40 mg</td><td>~29%</td><td>Low</td></tr></table>
+<p>Simvastatin 80 mg is not recommended (myopathy risk). Rosuvastatin: consider a lower starting dose (5 mg) in people of Asian family origin; the 40 mg dose is contraindicated in some groups — check the BNF/SPC. Atorvastatin and rosuvastatin can be taken at any time of day; simvastatin and pravastatin are traditionally taken at night.</p>
+<table><tr><th>Interaction</th><th>Action</th></tr>
+<tr><td>Clarithromycin / erythromycin (strong CYP3A4 inhibitors)</td><td>Simvastatin contraindicated; for atorvastatin, usually <strong>withhold the statin during the course</strong> (or use the lowest dose) — short interruption is harmless</td></tr>
+<tr><td>Itraconazole, ketoconazole, HIV protease inhibitors, cobicistat</td><td>Avoid simvastatin; check BNF for atorvastatin/rosuvastatin limits</td></tr>
+<tr><td>Amlodipine, diltiazem, verapamil, amiodarone</td><td><strong>Simvastatin maximum 20 mg</strong> daily; switching to atorvastatin is often simpler</td></tr>
+<tr><td>Ciclosporin</td><td>Simvastatin contraindicated; low maximum doses for atorvastatin and rosuvastatin — specialist advice</td></tr>
+<tr><td>Fusidic acid (systemic)</td><td>Stop the statin; restart at least 7 days after the last dose (risk of rhabdomyolysis)</td></tr>
+<tr><td>Gemfibrozil</td><td>Avoid with statins; fenofibrate is preferred if a fibrate is truly needed</td></tr>
+<tr><td>Grapefruit juice</td><td>Avoid with simvastatin; avoid large quantities with atorvastatin</td></tr>
+<tr><td>Ticagrelor, colchicine, warfarin</td><td>Ticagrelor limits simvastatin dose; colchicine adds myopathy risk; check INR when starting/changing statin on warfarin</td></tr></table>`
+    },
+    {
+      title: "6. Monitoring after starting or changing therapy",
+      html: `<table><tr><th>When</th><th>Check</th><th>Action</th></tr>
+<tr><td>Baseline</td><td>Full lipids, HbA1c, U&amp;E/eGFR, ALT, TSH (± ACR, CK if unexplained muscle pain)</td><td>Treat secondary causes first; do not start if ALT more than 3× ULN</td></tr>
+<tr><td>2–3 months</td><td>Full lipid profile, ALT, adherence, side effects</td><td>Primary prevention: aim for <strong>more than 40% reduction in non-HDL-C</strong>. Secondary prevention: LDL-C 2.0 or less / non-HDL-C 2.6 or less. If not achieved, check adherence and timing, then titrate.</td></tr>
+<tr><td>12 months</td><td>Full lipid profile, ALT</td><td>Do not repeat ALT routinely after 12 months unless clinically indicated</td></tr>
+<tr><td>Annually</td><td>Medication review, lipids (in practice usually annual), adherence, lifestyle, other risk factors</td><td>Re-titrate after every dose change (re-check 2–3 months later)</td></tr></table>
+<div class="callout key"><strong>Liver enzymes:</strong> a modest rise in ALT is common and usually transient. Do not stop a statin because ALT is raised but <strong>below 3× ULN</strong>; repeat and consider NAFLD/alcohol. If ALT is persistently more than 3× ULN, stop/withhold and investigate.</div>
+<div class="callout"><strong>Do not routinely measure CK</strong> in people without muscle symptoms. Measure CK if there are persistent, generalised, unexplained muscle symptoms before or during treatment.</div>`
+    },
+    {
+      title: "7. Statin-associated muscle symptoms and intolerance",
+      html: `<p>True statin intolerance is uncommon; in blinded trials muscle symptoms occur almost as often on placebo. Most people can stay on some statin therapy. The NHS England national pathway sets out a structured approach.</p>
+<ol><li><strong>Assess:</strong> symmetrical, proximal, aching muscle pain or weakness, temporal relation to starting or dose increase. Look for contributors: hypothyroidism, vitamin D deficiency, interacting drugs, heavy exercise, alcohol, renal/hepatic impairment, frailty.</li>
+<li><strong>Check CK</strong> (and TSH, U&amp;E) if symptoms are persistent or generalised.</li>
+<li><strong>Act on CK:</strong></li></ol>
+<table><tr><th>Finding</th><th>Action</th></tr>
+<tr><td>CK below 5× ULN, tolerable symptoms</td><td>Can continue, or stop for a washout (usually 2–4 weeks) to see if symptoms resolve, then rechallenge</td></tr>
+<tr><td>CK more than 5× ULN</td><td><strong>Stop the statin</strong>; recheck CK (and renal function) after a short interval; re-introduce at lower dose/alternative only once CK normalises and symptoms resolve</td></tr>
+<tr><td>CK more than 10× ULN, dark urine, weakness, AKI</td><td>Possible rhabdomyolysis — stop, urgent U&amp;E/CK and same-day assessment</td></tr></table>
+<p><strong>Rechallenge options</strong> (if symptoms resolve on washout): same statin at lower dose, an alternative statin (e.g. rosuvastatin 5 mg), or alternate-day/twice-weekly dosing of a long half-life statin. Most guidance suggests considering a person "statin intolerant" only after trying at least two to three statins, including at least one at the lowest licensed dose.</p>
+<table><tr><th>If statins not tolerated</th><th>Detail</th></tr>
+<tr><td><strong>Ezetimibe 10 mg</strong> (TA385)</td><td>Monotherapy when statins are contraindicated or not tolerated; ~20% LDL-C reduction</td></tr>
+<tr><td><strong>Bempedoic acid 180 mg</strong> with ezetimibe (TA694)</td><td>When statins are contraindicated or not tolerated and ezetimibe alone is not enough. Available as a fixed-dose combination with ezetimibe. Can raise uric acid — caution with gout.</td></tr>
+<tr><td><strong>Inclisiran</strong> (TA733)</td><td>Secondary prevention with LDL-C persistently 2.6 mmol/L or more despite maximum tolerated therapy (which may be no statin). 284 mg by SC injection at day 0, 3 months, then every 6 months, usually given by practice nurse</td></tr></table>
+<div class="callout green"><strong>Practice tip:</strong> record "statin intolerance" only after the structured pathway, with the statins and doses tried — vague codes block future rechallenge and appropriate add-on therapy.</div>`
+    },
+    {
+      title: "8. Familial hypercholesterolaemia (FH)",
+      html: `<p>Heterozygous FH affects roughly 1 in 250 people, most of whom are undiagnosed. Untreated, it causes premature CHD. It is autosomal dominant, so each first-degree relative has a 50% chance of being affected.</p>
+<div class="callout key"><strong>Suspect FH</strong> (CG71/NG238) when: TC is <strong>more than 7.5 mmol/L</strong> (or LDL-C more than 4.9 mmol/L in adults), especially with a <strong>personal or family history of premature CHD</strong> (first-degree relative under 60), tendon xanthomata, or a family history of very high cholesterol. Exclude secondary causes first.</div>
+<p><strong>Make a clinical diagnosis</strong> with the <strong>Simon Broome</strong> criteria or the <strong>Dutch Lipid Clinic Network (DLCN)</strong> score (NICE suggests DLCN in primary care where available):</p>
+<table><tr><th>Simon Broome (adults)</th><th>Criteria</th></tr>
+<tr><td>Definite FH</td><td>TC above 7.5 or LDL-C above 4.9 <strong>plus</strong> tendon xanthomas (patient, first- or second-degree relative) <strong>or</strong> a causative DNA variant</td></tr>
+<tr><td>Possible FH</td><td>TC above 7.5 or LDL-C above 4.9 <strong>plus</strong> family history of MI under 50 in a second-degree relative or under 60 in a first-degree relative, <strong>or</strong> family history of raised TC in a first- or second-degree relative</td></tr></table>
+<p>DLCN: score above 8 = definite, 6–8 = probable, 3–5 = possible.</p>
+<div class="callout red"><strong>Refer to a specialist lipid / FH service</strong> for DNA testing and cascade testing when there is a clinical diagnosis of FH. NG238 also advises specialist assessment for <strong>TC above 9.0 mmol/L</strong> or <strong>non-HDL-C above 7.5 mmol/L</strong>, even without a family history of premature CHD.</div>
+<ul><li><strong>Do not use QRISK3</strong> — people with FH are already at high risk.</li>
+<li>Offer a high-intensity statin (e.g. atorvastatin 80 mg or the maximum tolerated dose), aiming for at least a <strong>50% reduction in LDL-C</strong> from baseline; add ezetimibe if needed. Many will need specialist-led therapy.</li>
+<li><strong>Cascade testing</strong> of first-degree (and then second/third-degree) relatives, coordinated by the FH service. Children of an affected parent should be tested by age 10.</li>
+<li>Advise women with FH to stop statins <strong>3 months before trying to conceive</strong> and to use effective contraception while on statins.</li>
+<li>Code the diagnosis (and family history) in EMIS so relatives' records and recalls work.</li></ul>`
+    },
+    {
+      title: "9. Hypertriglyceridaemia, pregnancy and special situations",
+      html: `<table><tr><th>Triglycerides (mmol/L)</th><th>Action (NG238)</th></tr>
+<tr><td>Above 20</td><td><strong>Refer urgently</strong> for specialist review if not secondary to excess alcohol or poor glycaemic control — risk of acute pancreatitis</td></tr>
+<tr><td>10–20</td><td>Repeat a <strong>fasting</strong> TG (within about 5 days to 2 weeks) and review secondary causes; seek specialist advice if TG remains above 10</td></tr>
+<tr><td>4.5–9.9</td><td>QRISK3 may underestimate CVD risk; optimise management of other CVD risk factors and secondary causes; seek specialist advice if non-HDL-C is above 7.5</td></tr></table>
+<div class="callout red"><strong>Red flags:</strong> TG above 20 with abdominal pain (pancreatitis), eruptive xanthomata or lipaemia retinalis need same-day assessment. Very high TC above 9.0 or non-HDL above 7.5 needs specialist assessment.</div>
+<p><strong>Fibrates:</strong> NICE does not recommend fibrates, nicotinic acid, bile acid sequestrants or omega-3 supplements for routine CVD prevention. Fibrates may be used by specialists for severe hypertriglyceridaemia.</p>
+<div class="callout key"><strong>Pregnancy, breastfeeding and contraception:</strong> UK product licences contraindicate statins in pregnancy and breastfeeding. Counsel anyone who could become pregnant about effective contraception, advise stopping the statin before planned conception (CG71 advises 3 months beforehand in FH), and to stop and seek advice promptly if pregnancy occurs unexpectedly. Ezetimibe, bempedoic acid and inclisiran are also not recommended in pregnancy.</div>
+<p><strong>Older and frail patients:</strong> balance benefit with polypharmacy, life expectancy and patient priorities; deprescribing in the last months of life is appropriate.</p>
+<p><strong>Adherence:</strong> roughly half of patients stop statins within a year. Explore beliefs and side-effect concerns, use the New Medicine Service in community pharmacy, and consider 28-day vs longer supplies as appropriate.</p>`
+    }
+  ],
+
+  scenarios: [
+    {
+      title: "Case 1: Primary prevention — starting a statin",
+      intro: `<p><strong>David, 58</strong>, attends a health check follow-up. Ex-smoker (stopped 2 years ago), treated hypertension on amlodipine 10 mg, BMI 29, father had an MI at 70. No known CVD, diabetes or CKD.</p><p>EMIS-calculated QRISK3 is <strong>14.2%</strong>.</p>`,
+      steps: [
+        {
+          prompt: "Before discussing statin treatment, which baseline tests are needed?",
+          options: [
+            { text: "Full lipid profile, HbA1c, U&E/eGFR, ALT and TSH", correct: true, feedback: "Correct. NG238 recommends at least one full lipid sample, HbA1c, renal function/eGFR, transaminase and TSH before starting a statin to exclude secondary causes and establish a baseline. Urine ACR is a sensible addition." },
+            { text: "Fasting lipid profile and CK only", correct: false, feedback: "Fasting is not required, and CK is not needed in someone without muscle symptoms. This misses the secondary-cause screen (TSH, HbA1c, renal and liver function)." },
+            { text: "No tests — the QRISK3 already includes his cholesterol", correct: false, feedback: "QRISK3 uses the TC:HDL ratio but you still need a baseline for monitoring response (non-HDL-C) and safety (ALT), and to exclude secondary causes." },
+            { text: "Lipid profile and LFTs; repeat LFTs monthly for 6 months after starting", correct: false, feedback: "LFT monitoring is at baseline, about 3 months and 12 months — not monthly. TSH, HbA1c and renal function are also needed." }
+          ]
+        },
+        {
+          prompt: "What is the most appropriate recommendation for David's lipid management?",
+          info: `<p>Results: TC 6.1, HDL 1.1, <strong>non-HDL 5.0</strong>, TG 2.0 mmol/L. HbA1c 39 mmol/mol, eGFR 82, ALT 28 U/L (ULN 40), TSH normal. BP average 134/82.</p>`,
+          options: [
+            { text: "Offer atorvastatin 20 mg daily alongside lifestyle advice, after a shared decision-making discussion", correct: true, feedback: "Correct. QRISK3 is 10% or more, so NG238 recommends offering atorvastatin 20 mg after discussing absolute benefit and risks, alongside lifestyle measures — lifestyle change should not delay a statin if he wants one." },
+            { text: "Lifestyle advice only for 6 months, then repeat QRISK3", correct: false, feedback: "Lifestyle is important, but NG238 does not require a lifestyle-only trial before offering a statin to someone at 10% or more risk who wants treatment." },
+            { text: "Simvastatin 40 mg at night", correct: false, feedback: "Simvastatin 40 mg is medium intensity and he takes amlodipine, which limits simvastatin to 20 mg daily. Atorvastatin 20 mg is the NICE first choice." },
+            { text: "Atorvastatin 80 mg daily", correct: false, feedback: "Atorvastatin 80 mg is the secondary prevention dose. For primary prevention, start with 20 mg and titrate if the non-HDL-C response is inadequate." }
+          ]
+        },
+        {
+          prompt: "David asks whether atorvastatin is safe with his amlodipine and whether he must take it at night. What do you advise?",
+          options: [
+            { text: "Atorvastatin 20 mg is fine with amlodipine and can be taken at any time of day, but at the same time each day", correct: true, feedback: "Correct. The amlodipine dose cap (20 mg) applies to simvastatin, not atorvastatin 20 mg. Atorvastatin's long half-life means timing is flexible — consistency helps adherence." },
+            { text: "He must stop amlodipine because of the interaction", correct: false, feedback: "There is no need to stop amlodipine. The clinically important interaction is with simvastatin above 20 mg." },
+            { text: "Atorvastatin must be taken at night as cholesterol is made overnight", correct: false, feedback: "This applies to short half-life statins (simvastatin, pravastatin). Atorvastatin and rosuvastatin can be taken at any time." },
+            { text: "The combination is safe only if he avoids all fruit", correct: false, feedback: "Only grapefruit juice is relevant, and with atorvastatin it is large quantities that should be avoided. Other fruit is encouraged as part of a cardioprotective diet." }
+          ]
+        },
+        {
+          prompt: "At 3 months his non-HDL-C is 3.6 mmol/L (from 5.0). What is the next step?",
+          info: `<p>Reduction = (5.0 − 3.6) / 5.0 = <strong>28%</strong>. ALT 35 U/L. No side effects reported.</p>`,
+          options: [
+            { text: "Check adherence and timing of the blood test; if adherent, increase atorvastatin (e.g. to 40 mg) and recheck in 2–3 months", correct: true, feedback: "Correct. The aim is more than 40% reduction in non-HDL-C. First check adherence and that he took it before the test, then titrate. Recheck lipids 2–3 months after any dose change." },
+            { text: "Add ezetimibe 10 mg immediately", correct: false, feedback: "Ezetimibe is an option once the statin is optimised (or not tolerated). Adherence and statin titration come first." },
+            { text: "No change — any reduction is acceptable in primary prevention", correct: false, feedback: "NG238 sets a target of more than 40% reduction in non-HDL-C. A 28% reduction warrants review." },
+            { text: "Switch to pravastatin 40 mg", correct: false, feedback: "Pravastatin 40 mg is low intensity (about 29%) and would be a step down." }
+          ]
+        },
+        {
+          prompt: "At 12 months ALT is 70 U/L (ULN 40); he feels well and drinks about 28 units of alcohol per week. What do you do?",
+          options: [
+            { text: "Continue the statin, address alcohol, and repeat LFTs (with GGT) in a few weeks to months — ALT is below 3× ULN", correct: true, feedback: "Correct. Do not stop a statin for ALT below 3× ULN (120 U/L here). Alcohol intake above 14 units/week is a likely contributor and also raises CV risk; consider NAFLD and repeat to check the trend." },
+            { text: "Stop atorvastatin permanently because of liver toxicity", correct: false, feedback: "ALT below 3× ULN does not justify stopping. Stopping removes CV benefit unnecessarily." },
+            { text: "Halve the statin dose and refer to hepatology urgently", correct: false, feedback: "A mild isolated ALT rise in a well patient does not need urgent hepatology referral; look for causes and repeat." },
+            { text: "Ignore — LFTs are not needed after starting statins", correct: false, feedback: "ALT is checked at about 3 and 12 months. An abnormal result should be acted on proportionately, including a conversation about alcohol." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 2: Secondary prevention — intolerance and treat-to-target",
+      intro: `<p><strong>Margaret, 67</strong>, had an NSTEMI 8 months ago and was discharged on atorvastatin 80 mg, aspirin, bisoprolol and ramipril. She books a pharmacist medication review complaining of aching thighs and shoulders for 3 months. Pre-MI LDL-C 4.1 mmol/L.</p>`,
+      steps: [
+        {
+          prompt: "What is your initial assessment of her muscle symptoms?",
+          options: [
+            { text: "Characterise the symptoms, review contributors and check CK, TSH and U&E", correct: true, feedback: "Correct. Assess pattern, timing and severity, review interacting drugs and contributors (hypothyroidism, renal impairment, exercise), and measure CK as symptoms are persistent and generalised." },
+            { text: "Stop all lipid-lowering therapy permanently and code statin intolerance", correct: false, feedback: "She is at very high CV risk post-MI. Statin intolerance should only be coded after a structured pathway including rechallenge." },
+            { text: "Reassure that it is the nocebo effect and make no change", correct: false, feedback: "The nocebo effect is common, but persistent generalised symptoms still require assessment including CK to exclude myopathy." },
+            { text: "Switch directly to simvastatin 80 mg", correct: false, feedback: "Simvastatin 80 mg is not recommended because of high myopathy risk, and it would not address her symptoms." }
+          ]
+        },
+        {
+          prompt: "Her CK is 2× ULN and TSH is normal. Symptoms are bothersome but she is keen to keep protecting her heart. What do you recommend?",
+          options: [
+            { text: "Stop atorvastatin for a 2–4 week washout; if symptoms resolve, rechallenge at a lower dose (e.g. atorvastatin 20–40 mg) or an alternative statin", correct: true, feedback: "Correct. CK is below 5× ULN. A washout followed by rechallenge at lower intensity or a different statin is the national pathway approach and keeps most patients on a statin." },
+            { text: "Stop statins and start ezetimibe monotherapy long term", correct: false, feedback: "Ezetimibe alone gives only about 20% LDL-C reduction. Rechallenge with a statin should be attempted first." },
+            { text: "Continue atorvastatin 80 mg and add co-enzyme Q10", correct: false, feedback: "Evidence for co-enzyme Q10 is weak, and continuing a dose causing bothersome symptoms risks her stopping altogether." },
+            { text: "Admit for suspected rhabdomyolysis", correct: false, feedback: "CK 2× ULN with no weakness, dark urine or AKI does not suggest rhabdomyolysis." }
+          ]
+        },
+        {
+          prompt: "Symptoms resolved off treatment. Three months after restarting atorvastatin 40 mg (well tolerated) her LDL-C is 2.4 mmol/L and non-HDL-C 3.1 mmol/L. What next?",
+          options: [
+            { text: "Confirm adherence, then add ezetimibe 10 mg daily and recheck lipids in 2–3 months", correct: true, feedback: "Correct. She is above the secondary prevention target (LDL-C 2.0 or less / non-HDL 2.6 or less) on her maximum tolerated statin. Ezetimibe is the next step per the national pathway and TA385." },
+            { text: "Accept — LDL below 2.6 is the target", correct: false, feedback: "The secondary prevention target is LDL-C 2.0 mmol/L or less (non-HDL 2.6 or less). 2.6 is the inclisiran eligibility threshold, not the target." },
+            { text: "Start inclisiran now", correct: false, feedback: "TA733 requires LDL-C persistently 2.6 mmol/L or more despite maximum tolerated lipid-lowering therapy. Her LDL-C is 2.4 and ezetimibe has not been tried." },
+            { text: "Increase back to atorvastatin 80 mg despite previous symptoms", correct: false, feedback: "80 mg caused bothersome symptoms; 40 mg is her maximum tolerated dose. Adding ezetimibe is more likely to keep her on therapy." }
+          ]
+        },
+        {
+          prompt: "Margaret is prescribed clarithromycin for a chest infection by the out-of-hours service. What advice is most appropriate?",
+          options: [
+            { text: "Withhold atorvastatin for the 5–7 day course and restart once the antibiotic is finished", correct: true, feedback: "Correct. Clarithromycin is a strong CYP3A4 inhibitor that raises atorvastatin levels and myopathy risk. A short statin interruption is harmless and particularly sensible given her previous muscle symptoms." },
+            { text: "Continue both — the interaction only applies to simvastatin", correct: false, feedback: "Simvastatin is contraindicated with clarithromycin, but atorvastatin also interacts (BNF advises caution/dose limits). Withholding briefly is simplest." },
+            { text: "Stop ezetimibe as well as the statin", correct: false, feedback: "Ezetimibe does not have a significant interaction with clarithromycin." },
+            { text: "Switch atorvastatin permanently to rosuvastatin", correct: false, feedback: "A permanent switch is unnecessary for a short antibiotic course." }
+          ]
+        },
+        {
+          prompt: "A year later, on atorvastatin 40 mg plus ezetimibe with good adherence, two LDL-C results are 2.8 and 2.9 mmol/L. What do you consider?",
+          options: [
+            { text: "Inclisiran, as she has established CVD and LDL-C persistently 2.6 mmol/L or more on maximum tolerated therapy", correct: true, feedback: "Correct. This meets NICE TA733 criteria. Inclisiran is given as a 284 mg SC injection at day 0, 3 months and then 6-monthly, and can be initiated in primary care." },
+            { text: "Bempedoic acid with ezetimibe", correct: false, feedback: "TA694 is for people in whom statins are contraindicated or not tolerated. She tolerates atorvastatin 40 mg." },
+            { text: "Add fenofibrate", correct: false, feedback: "NICE does not recommend fibrates for CVD prevention, and fibrates with statins add myopathy risk." },
+            { text: "Accept the result — she is on two agents", correct: false, feedback: "She remains above target and meets criteria for a further, evidence-based LDL-lowering option." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 3: Suspected familial hypercholesterolaemia",
+      intro: `<p><strong>Priya, 34</strong>, had bloods for tiredness. <strong>TC 9.4, LDL-C 7.1, HDL 1.4, non-HDL 8.0, TG 1.3 mmol/L.</strong> She is a non-smoker, BMI 23. Her father had an MI aged 48. She has two children aged 6 and 9. She uses the progestogen-only pill and is thinking about another pregnancy next year.</p>`,
+      steps: [
+        {
+          prompt: "What is your first priority after reviewing Priya's lipid result?",
+          options: [
+            { text: "Exclude secondary causes (TSH, HbA1c, LFT, U&E, urine ACR, alcohol and drug history) and take a detailed family history", correct: true, feedback: "Correct. Hypothyroidism (also a possible cause of her tiredness), nephrotic syndrome, cholestasis and drugs can mimic FH. A three-generation family history supports the clinical diagnosis." },
+            { text: "Calculate QRISK3 to decide whether she needs treatment", correct: false, feedback: "QRISK3 should not be used when FH is suspected — it markedly underestimates risk." },
+            { text: "Repeat the lipid test fasting in 12 months", correct: false, feedback: "TC 9.4 needs prompt assessment, not a 12-month delay." },
+            { text: "Reassure — HDL is protective at 1.4 mmol/L", correct: false, feedback: "A normal HDL does not offset an LDL-C of 7.1 mmol/L." }
+          ]
+        },
+        {
+          prompt: "Secondary causes are excluded. On examination you find thickening of both Achilles tendons. How would you classify her using Simon Broome criteria?",
+          options: [
+            { text: "Definite FH — raised cholesterol plus tendon xanthomas", correct: true, feedback: "Correct. TC above 7.5 (or LDL-C above 4.9) plus tendon xanthomas in the patient (or a first/second-degree relative) meets Simon Broome 'definite' FH, as does a causative DNA variant." },
+            { text: "Possible FH only — DNA testing is required for any higher category", correct: false, feedback: "Tendon xanthomas alone with raised cholesterol meet the 'definite' criterion; DNA confirmation is an alternative route." },
+            { text: "Unlikely FH because she is female and premenopausal", correct: false, feedback: "FH is autosomal dominant and affects both sexes equally." },
+            { text: "Cannot be classified without a fasting LDL", correct: false, feedback: "Her TC alone exceeds 7.5 mmol/L; non-fasting values are acceptable." }
+          ]
+        },
+        {
+          prompt: "What is the most appropriate onward management for Priya's lipid disorder?",
+          options: [
+            { text: "Refer to the specialist lipid/FH service for DNA testing and cascade testing; discuss high-intensity statin therapy", correct: true, feedback: "Correct. A clinical diagnosis of FH should prompt referral for genetic testing and cascade testing. Adults with FH are offered a high-intensity statin aiming for at least 50% LDL-C reduction (pregnancy plans need careful discussion)." },
+            { text: "Start atorvastatin 20 mg and recheck in 3 months; no referral needed", correct: false, feedback: "Specialist referral is required for diagnosis confirmation and cascade testing; TC above 9.0 alone warrants specialist assessment." },
+            { text: "Refer to cardiology for an angiogram", correct: false, feedback: "She is asymptomatic; the appropriate service is a lipid/FH clinic, not invasive investigation." },
+            { text: "Advise diet alone as she is young", correct: false, feedback: "Diet alone is insufficient in FH; lifelong high LDL-C exposure drives premature CHD." }
+          ]
+        },
+        {
+          prompt: "Priya asks about her two children and her plans for pregnancy. What advice is most appropriate?",
+          options: [
+            { text: "Children should be offered testing (by age 10) via cascade testing; use effective contraception on a statin and stop it 3 months before trying to conceive", correct: true, feedback: "Correct. Each child has a 50% chance of FH and NICE CG71 advises testing children of an affected parent by age 10. Statins are contraindicated in pregnancy; CG71 advises stopping 3 months before conception, with specialist input." },
+            { text: "Children cannot be tested until age 18", correct: false, feedback: "Testing in childhood is recommended so that treatment (including statins from around age 8–10) can be considered." },
+            { text: "Statins are safe to continue throughout pregnancy and breastfeeding", correct: false, feedback: "UK product licences contraindicate statins in pregnancy and breastfeeding." },
+            { text: "Switch her to the combined pill so she can stay on a statin during pregnancy", correct: false, feedback: "Contraception does not make statins safe in pregnancy; the plan is effective contraception while on treatment and stopping before conception." }
+          ]
+        }
+      ]
+    }
+  ],
+
+  emis: [
+    {
+      title: "Starting a statin after a health check",
+      case: `<p><strong>Telephone/face-to-face review — pharmacist IP</strong></p>
+<p>Ms Helen Ward, 61. Attended following an NHS Health Check. Non-smoker, BMI 31, treated hypertension (losartan 50 mg). Mother had a stroke at 78. No chest pain, no muscle symptoms, no history of liver disease. Alcohol about 10 units/week. Walks 20 minutes a day.</p>
+<p>Results: TC 6.4, HDL 1.3, <strong>non-HDL 5.1</strong>, TG 1.8 mmol/L. HbA1c 41 mmol/mol, eGFR 76, ACR 1.2, ALT 22 U/L, TSH 1.9. BP 132/80 (home average 128/78).</p>
+<p>QRISK3: <strong>12.8%</strong>.</p>
+<p><em>"I'd like to reduce my risk, but my friend had terrible muscle pains on statins. Do I have to take it forever?"</em></p>
+<p>After discussion using the NICE decision aid (about 4 in 100 avoid a heart attack or stroke over 10 years), she chooses to start atorvastatin 20 mg and work on diet and weight. She is post-menopausal.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Plan", "Medication", "Safety netting", "Follow up"],
+      model: {
+        "History": "Post-NHS Health Check review. Non-smoker. HTN on losartan. Mother CVA aged 78. No CP/SOB, no muscle sx, no liver dx. EtOH ~10 u/wk. Walks 20 min/day. Concerned re muscle side effects (friend). Post-menopausal.",
+        "Examination": "BMI 31. BP 132/80 (HBPM avg 128/78).",
+        "Comment": "QRISK3 12.8%. TC 6.4, HDL 1.3, non-HDL 5.1, TG 1.8. HbA1c 41, eGFR 76, ACR 1.2, ALT 22, TSH 1.9 - no secondary cause identified. Shared decision using NICE decision aid (approx 4/100 avoid MI/stroke over 10 yrs). Discussed nocebo effect, most people tolerate statins, long-term treatment. Pt chooses to start statin.",
+        "Problem": "Primary prevention of CVD - QRISK3 >=10%\nHypertension",
+        "Plan": "Start atorvastatin 20 mg OD (NG238). Lifestyle: cardioprotective diet, wt loss, increase activity to 150 min/wk - offered referral to weight management. Bloods (lipids + ALT) in 3 months; aim non-HDL reduction >40% (target <3.1).",
+        "Medication": "Atorvastatin 20 mg tablets - 1 OD, any time of day. Qty 28. Added to repeat after review.",
+        "Safety netting": "Report unexplained muscle pain/weakness/dark urine - seek advice, CK. Avoid large amounts of grapefruit juice. Inform pharmacist/prescriber if started on new medicines (e.g. clarithromycin). PIL given.",
+        "Follow up": "Lipids + ALT in 3 months then pharmacist review (tel). Lipids + ALT at 12 months then annual review. NMS via community pharmacy."
+      },
+      checklist: [
+        "QRISK3 value documented and appropriate to use (no CKD, T1DM, FH, CVD)",
+        "Baseline secondary-cause screen documented (HbA1c, eGFR, ALT, TSH)",
+        "Shared decision with absolute risk figures and patient's choice recorded",
+        "Concerns about muscle side effects addressed (nocebo, what to report)",
+        "Correct drug and dose: atorvastatin 20 mg once daily",
+        "Lifestyle advice documented (diet, weight, activity, alcohol)",
+        "Monitoring plan: lipids and ALT at about 3 months, aim >40% non-HDL reduction",
+        "Safety netting for muscle symptoms and interacting drugs"
+      ]
+    },
+    {
+      title: "Secondary prevention review — statin muscle symptoms",
+      case: `<p><strong>Face-to-face review — pharmacist IP</strong></p>
+<p>Mr Ahmed Karim, 72. Ischaemic stroke 2 years ago. On atorvastatin 80 mg, clopidogrel 75 mg, amlodipine 5 mg, ramipril 5 mg. Reports 6 weeks of aching in both thighs, worse after his allotment work, no weakness, urine normal colour. No new medicines. Admits he has been missing doses "because of the aches".</p>
+<p>Exam: proximal muscle power 5/5, no tenderness. BP 128/76. Weight 64 kg.</p>
+<p>Recent bloods: CK 260 U/L (ULN 200), TSH 2.4, eGFR 52, ALT 30. LDL-C 2.7, non-HDL 3.4 mmol/L.</p>
+<p>Plan agreed: 4-week statin washout, then restart at a lower dose (atorvastatin 20 mg) aiming to titrate as tolerated; add ezetimibe if still above target.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Plan", "Safety netting", "Follow up"],
+      model: {
+        "History": "Ischaemic CVA 2 yrs ago. On atorvastatin 80 mg. 6/52 bilateral thigh aching, worse after exertion (allotment). No weakness, no dark urine. No new meds/OTC. Missing doses due to aches - partial adherence.",
+        "Examination": "Proximal power 5/5 throughout, no muscle tenderness. BP 128/76. Wt 64 kg.",
+        "Comment": "Possible statin-associated muscle symptoms. CK 260 (1.3x ULN, <5x ULN), TSH normal, eGFR 52, ALT 30. LDL 2.7 / non-HDL 3.4 - above secondary prevention target (LDL <=2.0, non-HDL <=2.6), likely partly due to missed doses. Risk factors: age, CKD 3a, low body weight.",
+        "Problem": "Secondary prevention of CVD - ischaemic stroke\nStatin-associated muscle symptoms\nCKD stage 3a",
+        "Plan": "Stop atorvastatin 80 mg - 4 week washout. If symptoms resolve: restart atorvastatin 20 mg OD and titrate as tolerated. If sx persist off statin - consider other cause. Recheck lipids 3 months after restart; if above target on max tolerated statin add ezetimibe 10 mg (national pathway). Explained importance of lipid lowering post-stroke.",
+        "Safety netting": "Seek urgent advice if muscle weakness, severe pain or dark/cola-coloured urine. Do not stop other meds. Avoid large amounts of grapefruit juice; tell prescriber about new meds (e.g. clarithromycin).",
+        "Follow up": "Tel review 4 weeks (symptoms) to restart statin. Lipids, ALT +/- CK 3 months after restart. Do not code statin intolerance at this stage."
+      },
+      checklist: [
+        "Symptom characterisation and red flags (weakness, dark urine) documented",
+        "Adherence explored and recorded",
+        "CK interpreted relative to ULN (below 5x ULN) and contributors checked (TSH, renal function)",
+        "Lipids compared against secondary prevention target (LDL-C 2.0 or less / non-HDL-C 2.6 or less)",
+        "Clear washout and rechallenge plan with lower dose/alternative statin",
+        "Next step if above target (ezetimibe) documented",
+        "Safety netting for rhabdomyolysis symptoms and interacting medicines",
+        "Follow-up timing for symptoms and lipids; intolerance not prematurely coded"
+      ]
+    }
+  ],
+
+  prescriptions: [
+    {
+      title: "Primary prevention — QRISK3 12.8%",
+      case: `<p>Helen Ward, 61, QRISK3 12.8%, eGFR 76, ALT 22. After shared decision making she chooses to start a statin for primary prevention. Write the first 28-day prescription.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["atorvastatin"]] },
+        { key: "strength", label: "Strength", accept: [["20"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: { drug: "Atorvastatin", strength: "20 mg", form: "Tablets", directions: "Take ONE tablet ONCE a day (at the same time each day)", quantity: "28 tablets" },
+      explanation: `<p><strong>Why:</strong> NG238 recommends atorvastatin 20 mg for primary prevention when QRISK3 is 10% or more (and for CKD and type 1 diabetes). It is high intensity (~43% LDL-C reduction), generic and low cost.</p>
+<p><strong>Counselling:</strong> any time of day; report unexplained muscle pain/weakness or dark urine; avoid large quantities of grapefruit juice; tell prescribers/pharmacists about new medicines; it only works while taken. Offer the New Medicine Service.</p>
+<p><strong>Monitoring:</strong> lipids and ALT at about 3 months (aim more than 40% reduction in non-HDL-C) and 12 months.</p>`
+    },
+    {
+      title: "Secondary prevention after MI",
+      case: `<p>Graham Tull, 59, discharged after an NSTEMI 2 weeks ago. The discharge letter asks the practice to continue high-intensity statin. No interacting medicines; eGFR 88; ALT 25. Write the repeat prescription.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["atorvastatin"]] },
+        { key: "strength", label: "Strength", accept: [["80"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"], ["56"]] }
+      ],
+      model: { drug: "Atorvastatin", strength: "80 mg", form: "Tablets", directions: "Take ONE tablet ONCE a day", quantity: "28 tablets" },
+      explanation: `<p><strong>Why:</strong> NG238 recommends atorvastatin 80 mg for people with established CVD, with lower doses only for interactions, high risk of adverse effects or patient preference.</p>
+<p><strong>Target:</strong> LDL-C 2.0 mmol/L or less or non-HDL-C 2.6 mmol/L or less. Check lipids and ALT at 2–3 months; if above target, check adherence and add ezetimibe 10 mg.</p>
+<p><strong>Counselling:</strong> muscle symptoms and what to report, interactions (e.g. clarithromycin — withhold during the course), adherence. Cardiac rehabilitation and lifestyle support.</p>`
+    },
+    {
+      title: "Adding ezetimibe in secondary prevention",
+      case: `<p>Margaret, 67, post-NSTEMI, tolerates atorvastatin 40 mg (80 mg caused muscle symptoms). Adherent. LDL-C 2.4, non-HDL-C 3.1 mmol/L. You agree to add a second lipid-lowering agent per the national pathway.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["ezetimibe"]] },
+        { key: "strength", label: "Strength", accept: [["10"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: { drug: "Ezetimibe", strength: "10 mg", form: "Tablets", directions: "Take ONE tablet ONCE a day (with atorvastatin)", quantity: "28 tablets" },
+      explanation: `<p><strong>Why:</strong> she is above the secondary prevention target on her maximum tolerated statin. Ezetimibe (NICE TA385) gives about a further 20–25% LDL-C reduction and is well tolerated.</p>
+<p><strong>Counselling:</strong> once daily at any time, with or without food; continue the statin; side effects are uncommon (GI upset, headache; rarely myalgia).</p>
+<p><strong>Monitoring:</strong> lipids in 2–3 months. If LDL-C remains 2.6 mmol/L or more despite maximum tolerated therapy, consider inclisiran (TA733).</p>`
+    }
+  ],
+
+  mcq: [
+    {
+      q: "A 52-year-old man with type 2 diabetes, eGFR 48 and urine ACR 6 mg/mmol asks about cholesterol treatment. What is the most appropriate approach?",
+      options: ["Offer atorvastatin 20 mg without calculating QRISK3", "Calculate QRISK3 and offer a statin only if 10% or more", "Offer atorvastatin 80 mg", "Offer ezetimibe first because of his renal function"],
+      answer: 0,
+      explanation: "CKD (eGFR below 60 and/or albuminuria) is a group where QRISK3 should not be used. NG238 recommends offering atorvastatin 20 mg, increasing if non-HDL-C reduction is under 40% and eGFR is 30 or more."
+    },
+    {
+      q: "A patient's lipid profile shows TC 6.0, HDL 1.2, TG 5.2 mmol/L. Which measure is most reliable for monitoring response to a statin?",
+      options: ["Calculated LDL-C", "Non-HDL cholesterol", "Total cholesterol", "TC:HDL ratio"],
+      answer: 1,
+      explanation: "Calculated (Friedewald) LDL-C is unreliable when TG is above about 4.5 mmol/L. Non-HDL-C (TC − HDL) captures all atherogenic particles and is the NICE monitoring measure."
+    },
+    {
+      q: "A 64-year-old on simvastatin 40 mg is started on amlodipine for hypertension. What is the most appropriate action?",
+      options: ["No change needed", "Stop the statin", "Switch to atorvastatin 20 mg (or reduce simvastatin to 20 mg)", "Switch to pravastatin 10 mg"],
+      answer: 2,
+      explanation: "Amlodipine increases simvastatin exposure; the maximum simvastatin dose with amlodipine is 20 mg. Switching to atorvastatin 20 mg is usually the better option as it is more effective and NICE first choice."
+    },
+    {
+      q: "Three months after starting atorvastatin 20 mg for primary prevention, ALT has risen from 25 to 95 U/L (ULN 40). The patient is well. What should you do?",
+      options: ["Stop the statin permanently", "Reduce to atorvastatin 10 mg", "Switch to rosuvastatin", "Continue, explore causes (e.g. alcohol, NAFLD) and repeat LFTs"],
+      answer: 3,
+      explanation: "NG238 advises not to stop a statin because of raised liver transaminases below 3× ULN (here 120 U/L). Look for other causes and repeat."
+    },
+    {
+      q: "Which patient should have their CVD risk assessed with QRISK3?",
+      options: ["A 45-year-old with type 2 diabetes and normal renal function", "A 50-year-old with type 1 diabetes", "A 40-year-old with heterozygous FH", "An 87-year-old with hypertension"],
+      answer: 0,
+      explanation: "QRISK3 is appropriate for people aged 25–84 with type 2 diabetes. It should not be used in type 1 diabetes, FH, CKD, established CVD or age 85 and over."
+    },
+    {
+      q: "A woman with established CHD is on atorvastatin 80 mg and ezetimibe 10 mg with good adherence. Her LDL-C is 2.8 and 2.9 mmol/L on two occasions. What is the most appropriate next option?",
+      options: ["Add a fibrate", "Consider inclisiran", "Bempedoic acid with ezetimibe", "No further action"],
+      answer: 1,
+      explanation: "NICE TA733: inclisiran for people with a history of CV events and LDL-C persistently 2.6 mmol/L or more despite maximum tolerated lipid-lowering therapy. Bempedoic acid (TA694) is for those who cannot take statins."
+    },
+    {
+      q: "A patient on atorvastatin develops generalised muscle pain. CK is 1,350 U/L (ULN 200). There is no weakness and renal function is normal. What is the best action?",
+      options: ["Continue the statin and recheck in 3 months", "Halve the dose", "Stop the statin and recheck CK and renal function after a short interval", "Add co-enzyme Q10"],
+      answer: 2,
+      explanation: "CK above 5× ULN (here about 6.75×) — stop the statin, recheck CK and renal function, and only consider reintroduction at a lower dose/alternative once CK normalises and symptoms settle. Over 10× ULN or features of rhabdomyolysis need urgent assessment."
+    },
+    {
+      q: "A 45-year-old has a non-fasting TG of 14.2 mmol/L. Alcohol is 6 units/week, HbA1c 40 mmol/mol. What is the most appropriate next step?",
+      options: ["Urgent same-day referral", "Start a fibrate immediately", "No action — non-fasting TG are unreliable", "Repeat a fasting TG within about 5 days to 2 weeks and review secondary causes"],
+      answer: 3,
+      explanation: "For TG 10–20 mmol/L, NG238 advises repeating a fasting sample (5 days to 2 weeks) and reviewing secondary causes; seek specialist advice if TG remains above 10. TG above 20 (not due to alcohol/glycaemia) needs urgent referral."
+    },
+    {
+      q: "A 40-year-old woman has TC 9.6 mmol/L, non-HDL 8.2 mmol/L and normal TSH, HbA1c, LFT and renal function. There is no known family history of premature CHD. What should you do?",
+      options: ["Refer for specialist lipid assessment", "Calculate QRISK3 and treat if 10% or more", "Lifestyle advice and repeat in 1 year", "Start atorvastatin 20 mg and no referral"],
+      answer: 0,
+      explanation: "NG238/CG71: consider FH when TC is above 7.5, and refer for specialist assessment if TC is above 9.0 or non-HDL-C above 7.5 mmol/L even without a family history of premature CHD."
+    },
+    {
+      q: "A 60-year-old with a previous TIA has LDL-C 2.3 mmol/L and non-HDL-C 3.0 mmol/L on atorvastatin 80 mg, which he takes reliably. What is the next step per the national lipid pathway?",
+      options: ["Accept — he is close to target", "Add ezetimibe 10 mg", "Start inclisiran", "Switch to simvastatin 80 mg"],
+      answer: 1,
+      explanation: "He is above the secondary prevention target (LDL-C 2.0 or less / non-HDL-C 2.6 or less) on maximum tolerated statin. Ezetimibe is the next step; inclisiran requires LDL-C persistently 2.6 or more."
+    },
+    {
+      q: "A patient on atorvastatin 40 mg is prescribed systemic fusidic acid for osteomyelitis. What is the correct advice?",
+      options: ["Continue both with CK monitoring", "Reduce atorvastatin to 10 mg", "Stop the statin and restart at least 7 days after the last fusidic acid dose", "Switch to rosuvastatin for the duration"],
+      answer: 2,
+      explanation: "Systemic fusidic acid with statins has caused fatal rhabdomyolysis. The statin should be stopped and restarted at least 7 days after the last dose of fusidic acid."
+    },
+    {
+      q: "A 28-year-old woman with FH on atorvastatin wants to start trying for a baby. What is the best advice?",
+      options: ["Continue the statin throughout pregnancy", "Switch to ezetimibe during pregnancy", "Stop the statin only once pregnancy is confirmed", "Stop the statin 3 months before trying to conceive, with specialist input"],
+      answer: 3,
+      explanation: "Statins are contraindicated in pregnancy and breastfeeding. NICE CG71 advises women with FH to stop statins 3 months before attempting to conceive. Ezetimibe is also not recommended in pregnancy."
+    },
+    {
+      q: "Using the Simon Broome criteria, which adult meets the definition of 'definite' FH?",
+      options: ["TC 8.2 mmol/L with Achilles tendon xanthomas", "TC 8.2 mmol/L with a father who had an MI at 55", "TC 7.0 mmol/L with corneal arcus at 60", "LDL-C 4.5 mmol/L with a sibling with TC 8.0"],
+      answer: 0,
+      explanation: "Definite FH: TC above 7.5 (or LDL-C above 4.9) plus tendon xanthomas in the patient or a first/second-degree relative, or a causative DNA variant. Family history of premature MI gives 'possible' FH."
+    },
+    {
+      q: "A patient has had muscle aches on atorvastatin 20 mg and rosuvastatin 5 mg, with symptoms resolving each time off treatment. QRISK3 is 18%. Ezetimibe alone has not reduced LDL-C sufficiently. Which option fits NICE TA guidance?",
+      options: ["Simvastatin 80 mg", "Bempedoic acid with ezetimibe", "Inclisiran", "Fenofibrate"],
+      answer: 1,
+      explanation: "TA694 recommends bempedoic acid with ezetimibe when statins are contraindicated or not tolerated and ezetimibe alone does not control LDL-C well enough. Inclisiran (TA733) is restricted to secondary prevention."
+    },
+    {
+      q: "A 48-year-old has a QRISK3 of 7% but a strong family history and wants a statin after discussion of benefits and risks. What does NG238 advise?",
+      options: ["A statin must not be prescribed below 10%", "Refer to cardiology", "A statin can be appropriate after an informed, shared decision", "Prescribe atorvastatin 80 mg"],
+      answer: 2,
+      explanation: "NG238 states that a statin should not be ruled out solely because QRISK3 is below 10%; after informed discussion, atorvastatin 20 mg may be offered if the person wishes."
+    }
+  ]
+};
+</script>
+<script src="assets/flexylen-module.js"></script>
+</body>
+</html>

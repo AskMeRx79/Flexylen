@@ -57,6 +57,10 @@
   const norm = s => String(s || "").toLowerCase().replace(/[‐-―]/g, "-").replace(/\s+/g, " ").trim();
   const matches = (value, accept) => accept.some(group => group.every(part => norm(value).includes(norm(part))));
   const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
+  // Titles may already carry "Case 1:", "EMIS 2:", "Rx 3:" etc.; the engine adds its own label.
+  const bare = t => String(t).replace(/^\s*(case|emis|exercise|rx|prescription)\s*\d+\s*[:.\-–—]\s*/i, "");
+  // Present scenario options in random order so the best answer isn't always in the same place.
+  const shuffled = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   // ---------- shell ----------
   document.title = `${M.title} | Flexylen Clinical Training`;
@@ -155,7 +159,7 @@
       main.append(el("section", { class: "card" }, el("h2", {}, "Clinical scenarios"),
         el("p", { class: "section-intro" }, "Choose the best option at each step. Wrong answers explain why — try again until you find the best choice."), summary));
       M.scenarios.forEach((sc, si) => {
-        const card = el("section", { class: "card" }, el("h3", { style: "margin-top:0" }, `Case ${si + 1}: ${sc.title}`),
+        const card = el("section", { class: "card" }, el("h3", { style: "margin-top:0" }, `Case ${si + 1}: ${bare(sc.title)}`),
           el("div", { class: "case", html: sc.intro }));
         const stepsBox = el("div");
         card.append(stepsBox);
@@ -180,7 +184,7 @@
           const opts = el("div", { class: "options" });
           const fb = el("div");
           let attempts = 0;
-          st.options.forEach(o => {
+          shuffled(st.options).forEach(o => {
             const b = el("button", { class: "opt", type: "button" }, o.text);
             b.addEventListener("click", () => {
               attempts++;
@@ -238,7 +242,7 @@
           if (compared === M.emis.length) { markDone("emis"); main.append(next("prescribing", "Go to prescription writing →")); }
         });
         main.append(el("section", { class: "card" },
-          el("h3", { style: "margin-top:0" }, `Exercise ${ei + 1}: ${ex.title}`),
+          el("h3", { style: "margin-top:0" }, `Exercise ${ei + 1}: ${bare(ex.title)}`),
           el("div", { class: "case", html: ex.case }),
           grid, el("div", { class: "actions" }, btn), result));
       });
@@ -284,7 +288,7 @@
           if (checked === M.prescriptions.length && !state.done.prescribing) { markDone("prescribing"); main.append(next("assessment", "Go to the MCQ assessment →")); }
         });
         main.append(el("section", { class: "card" },
-          el("h3", { style: "margin-top:0" }, `Prescription ${ri + 1}: ${rx.title}`),
+          el("h3", { style: "margin-top:0" }, `Prescription ${ri + 1}: ${bare(rx.title)}`),
           el("div", { class: "case", html: rx.case }),
           el("div", { class: "rx" }, el("div", { class: "rx-head" }, el("span", {}, "℞ Prescription"), el("span", { class: "muted" }, "Acute / repeat as appropriate")), grid),
           el("div", { class: "actions" }, btn), out));
