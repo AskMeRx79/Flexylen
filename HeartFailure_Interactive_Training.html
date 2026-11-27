@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Failure Management | Flexylen Clinical Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/flexylen-module.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+window.FLEXYLEN_MODULE = {
+  id: "heart-failure",
+  title: "Heart Failure Management",
+  icon: "❤️",
+  tone: "red",
+  duration: "60–90 minutes",
+  summary: "Develop skills in GDMT optimisation, NYHA classification, medication titration, and managing decompensated heart failure.",
+  reviewStatus: "Draft — awaiting clinical review",
+  updated: "November 2026",
+  passMark: 80,
+
+  objectives: [
+    "Apply the NICE NG106 diagnostic pathway, using NT-proBNP thresholds to decide referral urgency for specialist assessment and echocardiography.",
+    "Classify heart failure by LVEF (HFrEF, HFmrEF, HFpEF) and functional status (NYHA I–IV).",
+    "Describe the four pillars of guideline-directed medical therapy (GDMT) for HFrEF, including start doses, titration steps and target doses.",
+    "Safely monitor and titrate GDMT using renal function, potassium, blood pressure and heart rate, knowing when to continue, reduce or stop.",
+    "Recognise worsening (decompensated) heart failure, adjust diuretics appropriately and identify red flags needing same-day or emergency admission.",
+    "Identify drugs that worsen heart failure and give practical patient counselling on daily weights, sick day guidance and self-management.",
+    "Coordinate holistic care: iron deficiency, vaccinations, cardiac rehabilitation, the heart failure specialist team and palliative care."
+  ],
+
+  sources: [
+    { label: "NICE NG106: Chronic heart failure in adults — diagnosis and management", url: "https://www.nice.org.uk/guidance/ng106" },
+    { label: "NICE TA388: Sacubitril valsartan for treating symptomatic chronic heart failure with reduced ejection fraction", url: "https://www.nice.org.uk/guidance/ta388" },
+    { label: "NICE TA679: Dapagliflozin for treating chronic heart failure with reduced ejection fraction", url: "https://www.nice.org.uk/guidance/ta679" },
+    { label: "NICE TA902: Dapagliflozin for treating chronic heart failure with preserved or mildly reduced ejection fraction", url: "https://www.nice.org.uk/guidance/ta902" },
+    { label: "NICE TA929: Empagliflozin for treating chronic heart failure with preserved or mildly reduced ejection fraction", url: "https://www.nice.org.uk/guidance/ta929" },
+    { label: "ESC Clinical Practice Guidelines: Acute and Chronic Heart Failure (2021 guideline and 2023 focused update)", url: "https://www.escardio.org/Guidelines/Clinical-Practice-Guidelines/Acute-and-Chronic-Heart-Failure" },
+    { label: "BNF treatment summary: Chronic heart failure", url: "https://bnf.nice.org.uk/treatment-summaries/chronic-heart-failure/" }
+  ],
+
+  learn: [
+    {
+      title: "1. Diagnosis: history, NT-proBNP and referral urgency",
+      html: `<p>Heart failure (HF) is a clinical syndrome: symptoms (breathlessness, orthopnoea, paroxysmal nocturnal dyspnoea, fatigue, reduced exercise tolerance, ankle swelling) and signs (raised JVP, oedema, crackles, third heart sound, displaced apex) caused by structural or functional cardiac abnormality.</p>
+<p>In suspected HF, take a careful history and examination, and measure <strong>NT-proBNP</strong>. Alongside it, arrange a 12-lead ECG and baseline bloods (U&amp;E/eGFR, FBC, LFT, TFT, HbA1c, lipids, ferritin and transferrin saturation) and consider a chest X-ray, urinalysis and spirometry/peak flow to look for alternative or contributing diagnoses.</p>
+<table>
+<tr><th>NT-proBNP (ng/L)</th><th>NICE NG106 action</th></tr>
+<tr><td>&gt; 2,000</td><td>Refer urgently for specialist assessment and transthoracic echocardiography <strong>within 2 weeks</strong></td></tr>
+<tr><td>400–2,000</td><td>Refer for specialist assessment and echocardiography <strong>within 6 weeks</strong></td></tr>
+<tr><td>&lt; 400</td><td>HF less likely in an untreated person — consider alternative causes; reconsider if clinical suspicion remains high</td></tr>
+</table>
+<div class="callout key"><strong>Interpreting NT-proBNP:</strong> levels are <strong>lowered</strong> by obesity (BMI over 35), and by diuretics, ACE inhibitors, ARBs, beta-blockers and MRAs. Levels are <strong>raised</strong> by age over 70, AF, CKD (eGFR under 60), LVH, ischaemia, pulmonary hypertension, PE, sepsis, COPD and diabetes. A "normal" result in an obese patient on treatment does not fully exclude HF. Note that sacubitril/valsartan raises BNP (not NT-proBNP), so NT-proBNP is the preferred marker in patients taking it.</div>
+<div class="callout red"><strong>Do not wait for the blood test</strong> if the patient is acutely unwell: breathless at rest, hypoxic, hypotensive, confused, or with chest pain or arrhythmia — arrange same-day emergency assessment.</div>`
+    },
+    {
+      title: "2. Classifying HF: LVEF phenotype and NYHA class",
+      html: `<p>Echocardiography determines the phenotype, which drives treatment.</p>
+<table>
+<tr><th>Phenotype</th><th>LVEF</th><th>Key points</th></tr>
+<tr><td>HFrEF (reduced)</td><td>≤ 40%</td><td>Strongest evidence base — four-pillar GDMT reduces mortality and hospitalisation</td></tr>
+<tr><td>HFmrEF (mildly reduced)</td><td>41–49%</td><td>SGLT2 inhibitor recommended; diuretics for congestion; other HFrEF drugs may be considered on specialist advice</td></tr>
+<tr><td>HFpEF (preserved)</td><td>≥ 50%</td><td>Needs evidence of structural/diastolic dysfunction or raised natriuretic peptides; SGLT2 inhibitor, diuretics and comorbidity management</td></tr>
+</table>
+<p><strong>NYHA functional class</strong> describes symptom burden and should be recorded at every review:</p>
+<ul>
+<li><strong>I</strong> — no limitation; ordinary activity does not cause undue breathlessness or fatigue.</li>
+<li><strong>II</strong> — slight limitation; comfortable at rest, ordinary activity (e.g. walking up a flight of stairs briskly) causes symptoms.</li>
+<li><strong>III</strong> — marked limitation; comfortable at rest, but less than ordinary activity (e.g. walking on the flat, washing/dressing) causes symptoms.</li>
+<li><strong>IV</strong> — symptoms at rest; any physical activity increases discomfort.</li>
+</ul>
+<div class="callout green"><strong>Practice tip:</strong> use SNOMED codes for HF type (e.g. "Heart failure with reduced ejection fraction") and record LVEF, date of echo and NYHA class — this drives QOF recall, searches for GDMT optimisation and accurate referral letters.</div>`
+    },
+    {
+      title: "3. The four pillars of GDMT for HFrEF",
+      html: `<p>For HFrEF, four drug classes each independently reduce mortality and/or HF hospitalisation. The modern aim (ESC 2021/2023) is to get <strong>all four pillars started at low dose as early as safely possible</strong>, then titrate — rather than taking months to reach target dose of one drug before adding the next.</p>
+<ol>
+<li><strong>ACE inhibitor (or ARB if ACEi not tolerated, e.g. cough) — or ARNI (sacubitril/valsartan).</strong> NICE NG106 recommends ACEi plus beta-blocker first line. Sacubitril/valsartan (NICE TA388) is an option for NYHA II–IV with LVEF ≤35% already on a stable ACEi/ARB dose; it is started by a HF specialist team, then may be continued and titrated in primary care.</li>
+<li><strong>Beta-blocker licensed for HF:</strong> bisoprolol, carvedilol or nebivolol (nebivolol licensed for age 70 and over). Start low, go slow. Do not withhold in older people, or in those with peripheral vascular disease, COPD (without significant reversibility), diabetes or erectile dysfunction.</li>
+<li><strong>Mineralocorticoid receptor antagonist (MRA):</strong> spironolactone or eplerenone (eplerenone if gynaecomastia on spironolactone).</li>
+<li><strong>SGLT2 inhibitor:</strong> dapagliflozin (TA679) or empagliflozin (TA773) 10 mg once daily, no titration needed. NICE TAs describe treatment started on the advice of a HF specialist — follow your local pathway.</li>
+</ol>
+<div class="callout key"><strong>ARNI switch:</strong> never co-prescribe an ACEi with sacubitril/valsartan (angioedema risk). Stop the ACEi and wait at least <strong>36 hours</strong> before the first dose of sacubitril/valsartan. No washout is needed when switching from an ARB — start at the time of the next ARB dose.</div>
+<div class="callout"><strong>Other specialist options</strong> (secondary care led): ivabradine (sinus rhythm, HR ≥75 bpm despite beta-blocker, LVEF ≤35%), hydralazine plus nitrate (particularly people of African or Caribbean family origin), digoxin, vericiguat, and devices (ICD, CRT).</div>`
+    },
+    {
+      title: "4. Titration, target doses and monitoring",
+      html: `<p>Titrate one drug at a time, usually at intervals of about <strong>2 weeks</strong> (or longer, especially for beta-blockers), with clinical review and blood tests. Always confirm doses against the current BNF/SPC — the table is a teaching summary.</p>
+<table>
+<tr><th>Drug</th><th>Start dose</th><th>Target dose</th></tr>
+<tr><td>Ramipril</td><td>1.25–2.5 mg daily</td><td>10 mg daily (or 5 mg twice daily)</td></tr>
+<tr><td>Lisinopril</td><td>2.5–5 mg once daily</td><td>20–35 mg once daily</td></tr>
+<tr><td>Enalapril</td><td>2.5 mg twice daily</td><td>10–20 mg twice daily</td></tr>
+<tr><td>Candesartan</td><td>4 mg once daily</td><td>32 mg once daily</td></tr>
+<tr><td>Losartan</td><td>12.5–50 mg once daily</td><td>150 mg once daily</td></tr>
+<tr><td>Sacubitril/valsartan</td><td>49/51 mg twice daily (24/26 mg twice daily if low BP, ACEi/ARB-naive, eGFR &lt;30 or other risk factors)</td><td>97/103 mg twice daily</td></tr>
+<tr><td>Bisoprolol</td><td>1.25 mg once daily</td><td>10 mg once daily (steps: 1.25 → 2.5 → 3.75 → 5 → 7.5 → 10 mg)</td></tr>
+<tr><td>Carvedilol</td><td>3.125 mg twice daily</td><td>25 mg twice daily (50 mg twice daily if over 85 kg)</td></tr>
+<tr><td>Nebivolol</td><td>1.25 mg once daily</td><td>10 mg once daily</td></tr>
+<tr><td>Spironolactone</td><td>25 mg once daily (12.5 mg or alternate days if eGFR reduced)</td><td>50 mg once daily</td></tr>
+<tr><td>Eplerenone</td><td>25 mg once daily</td><td>50 mg once daily</td></tr>
+<tr><td>Dapagliflozin / empagliflozin</td><td>10 mg once daily</td><td>10 mg once daily (no titration)</td></tr>
+</table>
+<p><strong>Monitoring:</strong> check U&amp;E (creatinine, eGFR, potassium) and BP before starting, <strong>1–2 weeks after starting and after each dose increase</strong> of ACEi/ARB/ARNI or MRA, then periodically (at least 6-monthly once stable, more often in CKD).</p>
+<ul>
+<li><strong>ACEi/ARB/ARNI:</strong> a rise in creatinine of up to about 50% above baseline (or to around 266 µmol/L) and potassium up to 5.5 mmol/L is generally acceptable — continue and recheck. Larger rises: look for causes (dehydration, NSAIDs, over-diuresis), consider reducing dose and seek advice.</li>
+<li><strong>MRA:</strong> if potassium rises above 5.5 mmol/L, halve the dose and recheck; if potassium is above 6.0 mmol/L, <strong>stop</strong> and manage per local hyperkalaemia guidance.</li>
+<li><strong>Beta-blocker:</strong> titrate if HR above about 60 bpm, systolic BP adequate and no symptomatic hypotension or worsening congestion. Expect a transient increase in fatigue.</li>
+<li><strong>Asymptomatic low BP</strong> (e.g. systolic 95–100 mmHg) is not by itself a reason to stop GDMT; first consider reducing non-prognostic drugs (e.g. calcium-channel blockers, alpha-blockers, nitrates) or the diuretic if euvolaemic.</li>
+</ul>
+<div class="callout green"><strong>Practice tip:</strong> use an EMIS template or titration plan in the medication review comment ("Current dose / next step / bloods due") so any prescriber can continue the titration safely.</div>`
+    },
+    {
+      title: "5. Congestion, diuretics and self-monitoring",
+      html: `<p>Loop diuretics relieve congestion (breathlessness, oedema) but do not improve prognosis. Use the <strong>lowest dose that keeps the patient euvolaemic</strong> ("dry weight").</p>
+<ul>
+<li><strong>Furosemide</strong> commonly 20–40 mg each morning, increased as needed (e.g. 40 mg twice daily, second dose early afternoon to avoid nocturia). <strong>Bumetanide</strong> roughly 1 mg ≈ furosemide 40 mg; better oral absorption, useful when gut oedema limits furosemide effect.</li>
+<li>Adjust the dose by <strong>weight and symptoms</strong>: increase when weight rises and congestion appears; reduce when the patient is dry, dizzy, hypotensive or has a rising creatinine/urea.</li>
+<li>Check U&amp;E within about 1 week of a significant dose change (sooner if frail or CKD) — watch for hypokalaemia, hyponatraemia and AKI.</li>
+<li>Thiazide add-on (e.g. metolazone) for resistant oedema is specialist-led because of the risk of profound electrolyte disturbance.</li>
+</ul>
+<div class="callout key"><strong>Daily weights:</strong> patients should weigh themselves every morning, after passing urine, before breakfast, in similar clothing, on the same scales. A weight gain of <strong>more than 2 kg in 3 days</strong> (or as agreed in their personal plan) signals fluid retention — they should contact the practice or HF nurse team. Some services agree a flexible diuretic plan for patients who can self-adjust.</div>
+<p>Give advice on sensible fluid intake (fluid restriction of around 1.5–2 L/day is usually only for severe symptoms or hyponatraemia, on specialist advice) and avoiding high salt intake and salt substitutes containing potassium.</p>`
+    },
+    {
+      title: "6. HFmrEF and HFpEF",
+      html: `<p>HFpEF is common in older people, women, and those with hypertension, obesity, diabetes, AF and CKD. Treatment focuses on symptoms, hospitalisation reduction and comorbidities.</p>
+<ul>
+<li><strong>SGLT2 inhibitor:</strong> dapagliflozin (NICE TA902) and empagliflozin (NICE TA929) are recommended options for symptomatic HFmrEF/HFpEF, reducing HF hospitalisation and cardiovascular death composite outcomes.</li>
+<li><strong>Diuretics</strong> for congestion, titrated to symptoms and weight.</li>
+<li><strong>Comorbidities:</strong> control BP; rate/rhythm control and anticoagulation for AF; optimise diabetes; weight management (obesity is a major driver of HFpEF symptoms); treat sleep apnoea, anaemia, CKD and ischaemia.</li>
+<li><strong>HFmrEF:</strong> ACEi/ARB/ARNI, beta-blocker and MRA may be considered on specialist advice; ESC gives these a weaker recommendation than in HFrEF.</li>
+<li><strong>Exercise</strong> and cardiac rehabilitation improve quality of life across all phenotypes.</li>
+</ul>
+<div class="callout green"><strong>Practice tip:</strong> run a practice search for patients coded with HFpEF/HFmrEF who are not on an SGLT2 inhibitor and check eligibility (eGFR, type 1 diabetes, recurrent genital infection, ketoacidosis risk) per your local pathway.</div>`
+    },
+    {
+      title: "7. Decompensation, red flags and sick day guidance",
+      html: `<p><strong>Worsening HF</strong> presents with increasing breathlessness, orthopnoea (more pillows), PND, weight gain, worsening oedema (ankles, legs, sacrum, abdomen), reduced exercise tolerance, or new cough/wheeze. Always look for a precipitant:</p>
+<ul>
+<li>Non-adherence (medicines, salt or fluid), new drugs (NSAIDs, steroids, non-dihydropyridine CCBs, pioglitazone).</li>
+<li>Arrhythmia — especially new or fast AF (check pulse and ECG).</li>
+<li>Infection (chest, urinary), anaemia, thyroid disease, uncontrolled hypertension, ischaemia/ACS, worsening renal function, alcohol.</li>
+</ul>
+<div class="callout red"><strong>Same-day emergency admission / 999:</strong> breathlessness at rest or unable to lie flat; SpO<sub>2</sub> below 92% (or below the patient's known baseline); respiratory rate above about 25–30/min; chest pain suggesting ACS; syncope; symptomatic hypotension or shock (systolic BP below 90 mmHg with poor perfusion); new confusion; HR above about 120–130 bpm or below 40 bpm; K<sup>+</sup> ≥ 6.5 mmol/L or severe AKI; rapidly worsening symptoms despite increased diuretic. Use clinical judgement and NEWS2.</div>
+<p>Stable patients with mild-to-moderate fluid overload can often be managed in the community: increase the loop diuretic, check U&amp;E within a few days, daily weights, early review (2–3 days) and involve the HF nurse team.</p>
+<div class="callout key"><strong>Sick day guidance:</strong> during a dehydrating illness (vomiting, diarrhoea, fever, sweats, poor oral intake), advise patients to temporarily stop <strong>ACEi/ARB/ARNI, MRA, SGLT2 inhibitor and diuretics</strong> (and metformin if taken), and restart once eating and drinking normally for 24–48 hours. They should seek advice if unwell for more than 48 hours. Beta-blockers are usually continued unless hypotensive or bradycardic. Personalise this to the patient — over-zealous withholding of diuretics can precipitate congestion.</div>`
+    },
+    {
+      title: "8. Drugs to avoid, iron deficiency and vaccinations",
+      html: `<table>
+<tr><th>Drug / group</th><th>Problem in HF</th></tr>
+<tr><td>NSAIDs (including OTC ibuprofen, naproxen) and COX-2 inhibitors</td><td>Sodium and fluid retention, AKI, blunted diuretic response</td></tr>
+<tr><td>Verapamil, diltiazem (non-dihydropyridine CCBs)</td><td>Negatively inotropic — avoid in HFrEF</td></tr>
+<tr><td>Pioglitazone</td><td>Fluid retention — contraindicated in HF</td></tr>
+<tr><td>Class I antiarrhythmics (e.g. flecainide), dronedarone</td><td>Increased mortality/worsening HF in HFrEF; use specialist-led alternatives (amiodarone)</td></tr>
+<tr><td>Salt-containing effervescent/dispersible tablets (e.g. effervescent paracetamol, soluble aspirin)</td><td>High sodium load</td></tr>
+<tr><td>Potassium supplements, potassium-containing salt substitutes, trimethoprim</td><td>Hyperkalaemia with ACEi/ARB/ARNI/MRA</td></tr>
+<tr><td>Some others (e.g. itraconazole, tricyclics, systemic corticosteroids, saxagliptin)</td><td>Use with caution — check BNF</td></tr>
+</table>
+<p><strong>Iron deficiency</strong> is common and worsens symptoms even without anaemia. Check ferritin and transferrin saturation (TSAT). Iron deficiency in HF is defined as <strong>ferritin &lt;100 µg/L, or ferritin 100–299 µg/L with TSAT &lt;20%</strong>. In symptomatic HFrEF/HFmrEF, ESC recommends <strong>intravenous iron</strong> (ferric carboxymaltose or ferric derisomaltose) to improve symptoms and reduce hospitalisation — this is usually given in secondary care or a HF unit. Oral iron is poorly effective in HF. Investigate the cause of iron deficiency (e.g. GI blood loss) as you would in anyone else.</p>
+<div class="callout green"><strong>Vaccinations:</strong> offer annual influenza vaccine, pneumococcal vaccine, and COVID-19 and RSV vaccines according to the current UK eligibility criteria (Green Book). Record declines.</div>`
+    },
+    {
+      title: "9. Holistic care: rehabilitation, MDT and palliative care",
+      html: `<ul>
+<li><strong>Cardiac rehabilitation:</strong> NICE NG106 recommends offering a personalised, exercise-based cardiac rehabilitation programme to people with stable HF (unless their condition is unstable), with psychological and educational components.</li>
+<li><strong>Multidisciplinary team:</strong> HF specialist nurses, cardiologists, pharmacists, GPs and community teams share care. NICE advises that the specialist team writes a care plan, and that primary care reviews patients (with LVEF, NYHA, fluid status, renal function, medicines) at least every 6 months, and more often when titrating or unstable. After a hospital admission for HF, NICE advises follow-up within 2 weeks of discharge.</li>
+<li><strong>Self-management:</strong> written plan covering daily weights, symptoms to act on, medicines, sick day guidance, salt, alcohol, smoking cessation, activity and sexual health.</li>
+<li><strong>Mood and cognition:</strong> screen for depression and anxiety; consider cognitive impairment affecting adherence.</li>
+<li><strong>Driving and work:</strong> advise patients to check current DVLA guidance, which depends on symptoms, licence group and devices.</li>
+</ul>
+<div class="callout"><strong>Palliative care:</strong> HF has an unpredictable trajectory. Triggers to discuss future care include recurrent admissions, NYHA IV despite optimal therapy, frailty, cachexia, or worsening renal function limiting treatment. Offer advance care planning (ReSPECT), add to the palliative/GSF register, consider ICD deactivation discussions with the cardiology team, and use symptom control (e.g. low-dose opioids for breathlessness) alongside — not instead of — diuretics. Avoid stopping GDMT reflexively; rationalise with the patient and specialist team.</div>`
+    }
+  ],
+
+  scenarios: [
+    {
+      title: "Case 1: Suspected new heart failure",
+      intro: `<p><strong>Mrs Pauline Okoro, 74</strong>, attends with 3 months of increasing breathlessness walking to the shops and ankle swelling. She now sleeps on 3 pillows. PMH: hypertension, type 2 diabetes, knee osteoarthritis, BMI 31. Medication: amlodipine 10 mg OD, metformin 1 g BD, and she buys naproxen for her knees.</p>
+<p>Obs: BP 152/88, HR 88 irregular, RR 18, SpO<sub>2</sub> 95% on air, temp 36.8 °C. Bibasal fine crackles, pitting oedema to mid-shin, JVP raised 4 cm.</p>`,
+      steps: [
+        {
+          prompt: "Mrs Okoro is not acutely unwell. What is the most appropriate first-line investigation strategy?",
+          options: [
+            { text: "Request NT-proBNP, with a 12-lead ECG and baseline bloods (U&E, FBC, LFT, TFT, HbA1c, lipids, ferritin/TSAT), and consider chest X-ray and urinalysis", correct: true, feedback: "Correct. NICE NG106 recommends measuring NT-proBNP in suspected HF; the result determines referral urgency. The ECG (her pulse is irregular) and bloods look for causes, comorbidities and alternative diagnoses." },
+            { text: "Refer directly for open-access echocardiography without any blood tests", correct: false, feedback: "Not best practice. NICE uses NT-proBNP to triage referral urgency for specialist assessment and echo. Echo alone, without specialist review, misses the opportunity to assess and treat promptly." },
+            { text: "Start furosemide and review in 3 months to see whether symptoms improve", correct: false, feedback: "A diuretic may be appropriate for symptom relief, but a 3-month delay with no diagnostic work-up risks missing HFrEF, for which prognostic treatment is needed early." },
+            { text: "Arrange a chest X-ray only; if normal, HF is excluded", correct: false, feedback: "A normal chest X-ray does not exclude HF. NT-proBNP and echocardiography are the key diagnostic tests." }
+          ]
+        },
+        {
+          prompt: "Her NT-proBNP is 2,650 ng/L. ECG shows atrial fibrillation, ventricular rate 86 bpm. What referral is indicated?",
+          info: `<p><strong>Results:</strong> NT-proBNP 2,650 ng/L. ECG: AF, rate 86 bpm, no acute ischaemic changes. Creatinine 96 µmol/L, eGFR 52, K<sup>+</sup> 4.5 mmol/L, Hb 128 g/L.</p>`,
+          options: [
+            { text: "Routine cardiology referral; echo within 6 weeks", correct: false, feedback: "The 6-week timeframe applies to NT-proBNP 400–2,000 ng/L. Above 2,000 ng/L, NICE recommends a 2-week pathway." },
+            { text: "Urgent referral for specialist assessment and transthoracic echocardiography within 2 weeks", correct: true, feedback: "Correct. NT-proBNP above 2,000 ng/L warrants specialist assessment and echo within 2 weeks (NICE NG106). AF and CKD can raise NT-proBNP, but at this level with clinical signs HF is likely." },
+            { text: "No referral needed — the raised NT-proBNP is explained by AF", correct: false, feedback: "AF raises NT-proBNP, but it cannot be assumed to explain a value this high in someone with clinical signs of congestion. AF itself is also a cause and complication of HF." },
+            { text: "Send to the emergency department today", correct: false, feedback: "She is stable: SpO2 95%, normal RR, controlled rate, no chest pain. Urgent outpatient assessment is appropriate with safety-netting; emergency admission is not needed now." }
+          ]
+        },
+        {
+          prompt: "While awaiting cardiology review she is troubled by breathlessness and leg swelling. What symptomatic treatment is most appropriate now?",
+          options: [
+            { text: "Start bisoprolol 10 mg once daily to control the AF and treat HF", correct: false, feedback: "Beta-blockers must be started at low dose (1.25 mg bisoprolol) and titrated slowly; 10 mg from the start in a congested patient risks decompensation and bradycardia." },
+            { text: "Start furosemide 40 mg each morning, check U&E in about 1 week, start daily weights and safety-net", correct: true, feedback: "Correct. A loop diuretic relieves congestion while awaiting specialist review. Monitor U&E and weight, and give clear advice on when to seek help." },
+            { text: "Add spironolactone 50 mg daily for oedema", correct: false, feedback: "MRAs are prognostic therapy for confirmed HFrEF, started at 25 mg with careful potassium monitoring — not a first-line decongestant before the phenotype is known." },
+            { text: "Advise strict fluid restriction to 1 litre per day and no medication", correct: false, feedback: "Severe fluid restriction is not routinely recommended and will not adequately treat significant congestion. A loop diuretic is the treatment of choice." }
+          ]
+        },
+        {
+          prompt: "Reviewing her current medicines, which change is the highest priority for her heart failure?",
+          options: [
+            { text: "Stop the naproxen and offer alternative analgesia (e.g. topical NSAID or paracetamol, avoiding effervescent formulations)", correct: true, feedback: "Correct. NSAIDs cause sodium and water retention, worsen renal function and blunt diuretics. Stopping them is a key step; topical NSAIDs have minimal systemic absorption." },
+            { text: "Switch amlodipine to diltiazem for better rate control", correct: false, feedback: "Diltiazem and verapamil are negatively inotropic and should be avoided if HFrEF is possible. Rate control in HF is usually with a beta-blocker (and digoxin if needed)." },
+            { text: "Stop metformin because of heart failure", correct: false, feedback: "Metformin can be continued in stable HF with adequate renal function (eGFR 52 is acceptable); include it in sick day advice." },
+            { text: "No change is needed until the echo result", correct: false, feedback: "The naproxen is actively worsening her fluid retention and kidney function and should be stopped now." }
+          ]
+        },
+        {
+          prompt: "Echocardiography shows LVEF 35% with a dilated left ventricle. How is her heart failure classified and what does it mean for treatment?",
+          info: `<p><strong>Echo report:</strong> dilated LV, global hypokinesia, LVEF 35%, moderate functional mitral regurgitation, AF. Cardiology diagnosis: HFrEF, NYHA class III.</p>`,
+          options: [
+            { text: "HFpEF — treat with diuretics and comorbidity control only", correct: false, feedback: "HFpEF is LVEF 50% or more. At 35% this is HFrEF." },
+            { text: "HFmrEF — SGLT2 inhibitor is the only evidence-based therapy", correct: false, feedback: "HFmrEF is LVEF 41–49%. At 35% this is HFrEF, which has strong evidence for all four pillars." },
+            { text: "HFrEF — start the four pillars (ACEi/ARB or ARNI, HF beta-blocker, MRA, SGLT2 inhibitor) early, titrating with monitoring", correct: true, feedback: "Correct. LVEF 40% or less is HFrEF. Starting all four prognostic classes early and titrating to target or maximum tolerated doses reduces mortality and admissions. She also needs anticoagulation review for AF (CHA2DS2-VASc)." },
+            { text: "HFrEF — but treatment should wait until NYHA class IV", correct: false, feedback: "GDMT is indicated for symptomatic HFrEF regardless of NYHA class; delay increases the risk of death and hospitalisation." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 2: Optimising GDMT in HFrEF",
+      intro: `<p><strong>Mr David Hartley, 66</strong>, has ischaemic cardiomyopathy, LVEF 30%, NYHA II. He is referred to you (practice pharmacist IP) for GDMT optimisation from the HF clinic letter. Current medication: ramipril 5 mg OD, bisoprolol 2.5 mg OD, furosemide 40 mg OM, atorvastatin 80 mg ON, clopidogrel 75 mg OD. No MRA or SGLT2 inhibitor yet. Not diabetic.</p>
+<p>Today: BP 118/72 mmHg, HR 78 bpm (sinus rhythm), weight stable, no oedema, chest clear. Bloods 1 week ago: Na 139, K<sup>+</sup> 4.6 mmol/L, creatinine 108 µmol/L (baseline 98), eGFR 62.</p>`,
+      steps: [
+        {
+          prompt: "What is the best next step for Mr Hartley's GDMT?",
+          options: [
+            { text: "Increase ramipril step by step to 10 mg before considering any other drug", correct: false, feedback: "This older sequential approach delays the benefit of the other pillars. Current guidance favours starting all four classes early at low dose, then titrating." },
+            { text: "Start spironolactone 25 mg once daily with U&E in 1 week, and add an SGLT2 inhibitor as per the local pathway/specialist advice", correct: true, feedback: "Correct. He has two missing pillars, adequate BP, K+ 4.6 and eGFR 62. Adding the MRA (and SGLT2i) early offers large prognostic benefit; the SGLT2i may also reduce hyperkalaemia risk. Monitor U&E closely." },
+            { text: "Stop furosemide as he is euvolaemic, and make no other changes", correct: false, feedback: "Reducing the diuretic in a euvolaemic patient can be reasonable, but making no prognostic change misses the main opportunity." },
+            { text: "Switch ramipril to sacubitril/valsartan today, taking the first dose this evening", correct: false, feedback: "ARNI needs a 36-hour ACEi washout and, under TA388, is usually started by the HF specialist team. Missing pillars (MRA, SGLT2i) are the more immediate priority." }
+          ]
+        },
+        {
+          prompt: "One week after starting spironolactone 25 mg: K+ 5.3 mmol/L, creatinine 118 µmol/L. He feels well. What do you do?",
+          info: `<p><strong>Bloods:</strong> Na 138, K<sup>+</sup> 5.3 mmol/L, creatinine 118 µmol/L (baseline 98–108), eGFR 56. BP 114/70, HR 76.</p>`,
+          options: [
+            { text: "Stop spironolactone — potassium is above the normal range", correct: false, feedback: "K+ up to 5.5 mmol/L is acceptable on MRA/ACEi. Stopping would remove a prognostic drug unnecessarily." },
+            { text: "Halve the ramipril dose", correct: false, feedback: "Creatinine has risen about 10–20% from baseline and K+ is below 5.5 — both within accepted limits. No dose reduction is needed." },
+            { text: "Continue the current doses, check diet/OTC sources of potassium, and recheck U&E in about 2–4 weeks", correct: true, feedback: "Correct. These changes are within accepted limits (creatinine rise below 50%, K+ up to 5.5). Continue, give dietary advice (avoid potassium-containing salt substitutes) and keep monitoring." },
+            { text: "Start a potassium binder in primary care", correct: false, feedback: "Potassium binders are specialist-initiated for persistent hyperkalaemia limiting RAAS therapy; not indicated at K+ 5.3." }
+          ]
+        },
+        {
+          prompt: "At the next review, Mr Hartley's bloods are stable (K+ 5.0). HR is 74 bpm, BP 112/70, no dizziness. Which titration step is most appropriate?",
+          options: [
+            { text: "Increase bisoprolol from 2.5 mg to 3.75 mg once daily and review HR/BP in about 2 weeks", correct: true, feedback: "Correct. HR 74 bpm and adequate BP allow uptitration. Bisoprolol is increased stepwise (1.25, 2.5, 3.75, 5, 7.5, 10 mg) with review between steps." },
+            { text: "Increase bisoprolol from 2.5 mg to 10 mg once daily", correct: false, feedback: "Jumping to target dose risks bradycardia, hypotension and worsening HF. Titrate in steps." },
+            { text: "Stop bisoprolol as his BP is only 112/70", correct: false, feedback: "BP 112/70 without symptoms is not a reason to stop a prognostic beta-blocker." },
+            { text: "Add ivabradine in primary care to lower his heart rate", correct: false, feedback: "Ivabradine is specialist-initiated and only considered when HR remains 75 bpm or more despite maximum tolerated beta-blocker. He is not yet on target beta-blocker dose." }
+          ]
+        },
+        {
+          prompt: "Two months later, after a course of trimethoprim for a UTI, a routine U&E shows K+ 6.1 mmol/L, creatinine 124 µmol/L. He is well. What is the most appropriate action?",
+          info: `<p><strong>Bloods (non-haemolysed):</strong> K<sup>+</sup> 6.1 mmol/L, creatinine 124 µmol/L, eGFR 53. Current: ramipril 5 mg, bisoprolol 3.75 mg, spironolactone 25 mg, dapagliflozin 10 mg, furosemide 40 mg. Recently completed trimethoprim 200 mg BD for 3 days.</p>`,
+          options: [
+            { text: "Continue all medicines and recheck in 1 month", correct: false, feedback: "K+ above 6.0 mmol/L on an MRA requires action now; waiting a month is unsafe." },
+            { text: "Stop spironolactone, follow local hyperkalaemia guidance (urgent same-day/within 24 h repeat with ECG as indicated), identify contributors (trimethoprim) and plan a cautious rechallenge once K+ settles", correct: true, feedback: "Correct. With K+ above 6.0 mmol/L, stop the MRA, arrange urgent repeat U&E and ECG per local guidance, and remove precipitants. Trimethoprim raises potassium. Once resolved, the MRA can often be reintroduced (e.g. 12.5–25 mg) with closer monitoring." },
+            { text: "Stop all four pillars permanently", correct: false, feedback: "Disproportionate; withdrawing all prognostic therapy significantly increases risk. Target the likely cause and the MRA first." },
+            { text: "Increase furosemide to 80 mg to lower potassium and continue spironolactone", correct: false, feedback: "Using diuretics to manage hyperkalaemia in a euvolaemic patient risks dehydration and AKI and leaves the MRA in place at an unsafe potassium." }
+          ]
+        },
+        {
+          prompt: "The HF team recommends switching ramipril 5 mg OD to sacubitril/valsartan. How should the switch be done?",
+          options: [
+            { text: "Start sacubitril/valsartan this evening and stop ramipril tomorrow", correct: false, feedback: "Overlapping an ACEi with sacubitril/valsartan is contraindicated because of the risk of angioedema." },
+            { text: "Stop ramipril; start sacubitril/valsartan at least 36 hours after the last ramipril dose, usually at 49/51 mg twice daily (24/26 mg if low BP or other risk factors), checking U&E and BP in 1–2 weeks", correct: true, feedback: "Correct. A 36-hour washout from ACEi is mandatory. Start dose depends on BP, prior RAAS dose and renal function; titrate (doubling roughly every 2–4 weeks) towards 97/103 mg twice daily." },
+            { text: "Stop ramipril and start sacubitril/valsartan 97/103 mg twice daily the next morning", correct: false, feedback: "This both misses the 36-hour washout and starts at the target dose, risking angioedema and hypotension." },
+            { text: "Continue ramipril and add sacubitril alone", correct: false, feedback: "Sacubitril is only available combined with valsartan and must not be used with an ACEi." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 3: Weight gain and breathlessness — decompensation",
+      intro: `<p><strong>Mrs Irene Walsh, 79</strong>, has HFrEF (LVEF 32%), AF on apixaban, and CKD G3a. Medication: sacubitril/valsartan 49/51 mg BD, bisoprolol 5 mg OD, spironolactone 25 mg OD, dapagliflozin 10 mg OD, furosemide 40 mg OM. Her dry weight is 68 kg.</p>
+<p>She telephones: her weight is 70.6 kg (up 2.6 kg over 3 days), her ankles are more swollen and she is more breathless walking around the house. She needed an extra pillow last night.</p>`,
+      steps: [
+        {
+          prompt: "What is the most appropriate response to Mrs Walsh's telephone call?",
+          options: [
+            { text: "Reassure her that weight varies and ask her to call back in a week", correct: false, feedback: "A gain of more than 2 kg in 3 days with worsening symptoms indicates fluid retention and needs prompt assessment." },
+            { text: "Ask about red flags (breathlessness at rest, chest pain, syncope, confusion, palpitations) and arrange same-day face-to-face assessment", correct: true, feedback: "Correct. Screen for emergency features first; if none, assess the same day to examine, measure obs and check bloods before adjusting treatment." },
+            { text: "Advise her to stop her sacubitril/valsartan and spironolactone", correct: false, feedback: "Stopping prognostic therapy is not the treatment for congestion and may worsen outcomes. Sick day rules apply to dehydrating illness, not fluid overload." },
+            { text: "Call 999 immediately for all patients with weight gain", correct: false, feedback: "Many patients with mild-moderate congestion can be safely managed in the community after assessment. Emergency admission is for red flags." }
+          ]
+        },
+        {
+          prompt: "On assessment she has no red flags. Based on the findings, what is the best management?",
+          info: `<p><strong>Examination:</strong> alert, speaks in full sentences. RR 18, SpO<sub>2</sub> 95% (baseline 95–96%), HR 82 irregular, BP 128/74, temp 36.6 °C. Mild bibasal crackles, pitting oedema to mid-shin, JVP raised 3 cm. <strong>Point-of-care/same-day bloods:</strong> Na 137, K<sup>+</sup> 4.4 mmol/L, creatinine 112 µmol/L (baseline 105), eGFR 42.</p>`,
+          options: [
+            { text: "Increase furosemide to 80 mg daily (e.g. 40 mg BD, second dose early afternoon), daily weights, U&E in 3–5 days and review in 2–3 days, with clear safety-netting", correct: true, feedback: "Correct. Mild-moderate congestion without red flags can be managed by doubling the loop diuretic with close monitoring. Return towards the usual dose once back at dry weight. Involve the HF nurse team." },
+            { text: "Add metolazone 5 mg daily in primary care", correct: false, feedback: "Thiazide-type add-on for diuretic resistance is specialist-led because of the risk of severe hypokalaemia, hyponatraemia and AKI; first increase the loop diuretic." },
+            { text: "Reduce bisoprolol to 1.25 mg as it is causing fluid retention", correct: false, feedback: "Beta-blockers should usually be continued during mild worsening HF; reduction is reserved for hypotension, bradycardia or severe decompensation, ideally with specialist advice." },
+            { text: "Admit to hospital for intravenous diuretics", correct: false, feedback: "She is stable, with normal SpO2 and RR, and no red flags. A trial of increased oral diuretic with close follow-up is appropriate." }
+          ]
+        },
+        {
+          prompt: "Which assessment is most important to identify a precipitant for Mrs Walsh's decompensation?",
+          options: [
+            { text: "A chest CT scan", correct: false, feedback: "Not routinely needed. A focused history, examination, ECG and bloods identify most precipitants." },
+            { text: "Check her NT-proBNP again before doing anything else", correct: false, feedback: "Repeating NT-proBNP is not required to diagnose decompensation in known HF and should not delay management." },
+            { text: "Review adherence, salt/fluid intake and OTC medicines (e.g. NSAIDs, effervescent products), perform an ECG for AF rate, and look for infection, anaemia, thyroid dysfunction and uncontrolled BP", correct: true, feedback: "Correct. Common precipitants are non-adherence, new drugs (NSAIDs, salt-containing effervescents), fast AF, infection, ischaemia, anaemia and thyroid disease." },
+            { text: "Ask her to keep a food diary for 4 weeks", correct: false, feedback: "Dietary salt can contribute, but a 4-week diary does not address urgent, treatable precipitants such as fast AF or infection." }
+          ]
+        },
+        {
+          prompt: "Two days later, her daughter calls: Mrs Walsh is breathless at rest, cannot lie flat, and a home pulse oximeter reads 88%. What is the correct action?",
+          options: [
+            { text: "Increase furosemide to 120 mg and review tomorrow", correct: false, feedback: "Breathlessness at rest, orthopnoea and SpO2 88% indicate acute decompensation (possible pulmonary oedema) — this needs emergency treatment, not further oral titration." },
+            { text: "Book a routine GP appointment for later this week", correct: false, feedback: "Unsafe. These are red flags requiring emergency care now." },
+            { text: "Arrange an urgent HF nurse home visit within 48 hours", correct: false, feedback: "The HF nurse team is valuable for ongoing care, but hypoxia at rest needs immediate emergency assessment." },
+            { text: "Call 999 for emergency admission; advise her to sit upright while waiting", correct: true, feedback: "Correct. Hypoxia (SpO2 below 92%), breathlessness at rest and orthopnoea despite increased diuretic are red flags for acute HF requiring emergency admission (oxygen, IV diuretics, monitoring)." }
+          ]
+        },
+        {
+          prompt: "Mrs Walsh is discharged after 6 days. The discharge summary notes furosemide increased to 80 mg OM and spironolactone withheld for AKI. What should primary care do?",
+          options: [
+            { text: "Review within 2 weeks of discharge: reconcile medicines, check weight/fluid status and U&E, plan reintroduction of spironolactone with the HF team, update the care plan and refer to/notify the HF nurse service", correct: true, feedback: "Correct. NICE advises follow-up within 2 weeks of discharge. Medicines reconciliation, bloods, and a plan to restore GDMT withheld during admission are key, along with checking diuretic dose against her new dry weight." },
+            { text: "Continue the discharge medication unchanged indefinitely without review", correct: false, feedback: "The higher diuretic dose may become excessive once she is dry, and withheld spironolactone should be reconsidered. A structured review is essential." },
+            { text: "Restart spironolactone 50 mg immediately without checking bloods", correct: false, feedback: "Reintroduction after AKI needs U&E and potassium checks first, usually at 25 mg (or lower) with monitoring." },
+            { text: "Stop dapagliflozin because she was admitted", correct: false, feedback: "Admission does not by itself justify stopping an SGLT2 inhibitor; it reduces HF readmission. Review only if a specific reason (e.g. ketoacidosis, volume depletion) exists." }
+          ]
+        }
+      ]
+    }
+  ],
+
+  emis: [
+    {
+      title: "EMIS 1: Suspected heart failure — NT-proBNP result consultation",
+      case: `<p><strong>Mr Frank Bello, 71</strong>, returns to discuss blood results. Seen 10 days ago with 2 months of exertional breathlessness (now after 100 m on the flat), orthopnoea (2 pillows), and ankle swelling. Ex-smoker 30 pack-years. PMH: hypertension, previous MI 2018. Meds: ramipril 2.5 mg OD, atorvastatin 80 mg ON, aspirin 75 mg OD. Buys ibuprofen 400 mg TDS for back pain.</p>
+<p>"I'm about the same, doctor. Still puffed out on the stairs and my socks leave marks."</p>
+<p><strong>Today:</strong> BP 146/84, HR 84 regular, RR 18, SpO<sub>2</sub> 95%, temp 36.7 °C, weight 92 kg. JVP +3 cm, fine bibasal crackles, pitting oedema to mid-shin. No chest pain, syncope or palpitations.</p>
+<p><strong>Results:</strong> NT-proBNP 3,120 ng/L. Na 138, K<sup>+</sup> 4.7, creatinine 104 µmol/L, eGFR 64. Hb 131 g/L, ferritin 62 µg/L, TSAT 15%. TFT normal, HbA1c 41. ECG: sinus rhythm 84, Q waves II, III, aVF. CXR: cardiomegaly, small bilateral effusions.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Plan", "Medication", "Safety netting", "Follow up"],
+      model: {
+        "History": "F/U results. 2/12 SOBOE (now ~100 m flat, NYHA III), orthopnoea 2 pillows, ankle swelling. No CP, syncope, palps. Ex-smoker 30 pk-yr. PMH HTN, MI 2018. OTC ibuprofen 400 mg TDS for back pain.",
+        "Examination": "BP 146/84, HR 84 reg, RR 18, SpO2 95% RA, T 36.7, wt 92 kg. JVP +3 cm. Fine bibasal creps. Pitting oedema to mid-shin bilat. Alert, full sentences.",
+        "Comment": "NT-proBNP 3,120 ng/L (>2000). ECG SR, inferior Q waves. CXR cardiomegaly + small bilat effusions. U&E: K 4.7, Cr 104, eGFR 64. Hb 131, ferritin 62, TSAT 15% = iron deficiency. TFT/HbA1c NAD. Likely HF, ?ischaemic. Not acutely unwell, no red flags.",
+        "Problem": "Suspected heart failure (NT-proBNP >2000) — ?ischaemic aetiology. Iron deficiency without anaemia.",
+        "Plan": "Urgent referral HF specialist assessment + TTE within 2 wks (NICE NG106). Start loop diuretic for congestion. Stop NSAID. Daily weights. U&E 1 wk. Investigate iron deficiency (coeliac serology, consider GI referral/FIT per local pathway); flag for IV iron consideration by HF team. GDMT to follow echo result.",
+        "Medication": "Furosemide 40 mg OM started. Ibuprofen stopped — paracetamol (non-effervescent) +/- topical NSAID for back pain. Continue ramipril 2.5 mg, atorvastatin, aspirin.",
+        "Safety netting": "Pt advised: weigh daily AM; call if wt up >2 kg in 3 days, worsening SOB/swelling. 999 if SOB at rest, can't lie flat, chest pain, collapse/fainting. Avoid OTC NSAIDs/effervescent tabs. Pt understands, info leaflet given (BHF).",
+        "Follow up": "U&E + review 1 wk (diuretic response, wt). Await cardiology/echo (2-wk pathway). Review after echo to start/titrate GDMT."
+      },
+      checklist: [
+        "NT-proBNP value recorded and interpreted against NICE thresholds (>2000 ng/L)",
+        "Urgent referral for specialist assessment and echocardiography within 2 weeks",
+        "NYHA class or functional limitation documented",
+        "Red flags assessed and absent (SpO2, RR, chest pain, syncope)",
+        "NSAID identified and stopped with safer analgesia offered",
+        "Loop diuretic started with U&E monitoring planned",
+        "Daily weight advice with clear threshold (>2 kg in 3 days)",
+        "Iron deficiency identified (ferritin <100 / TSAT <20%) with investigation plan",
+        "Clear safety-netting including when to call 999"
+      ]
+    },
+    {
+      title: "EMIS 2: HFrEF GDMT titration review (pharmacist IP)",
+      case: `<p><strong>Ms Anjali Mistry, 58</strong>, non-ischaemic dilated cardiomyopathy, LVEF 28% (echo 3 months ago). HF clinic letter asks the practice to titrate GDMT. Current meds: sacubitril/valsartan 49/51 mg BD (started 4 weeks ago), bisoprolol 2.5 mg OD, spironolactone 25 mg OD, dapagliflozin 10 mg OD, furosemide 20 mg OM.</p>
+<p>"I feel a bit better — I can walk to the bus stop without stopping now. No dizziness. I get a bit tired."</p>
+<p>Denies orthopnoea, PND, ankle swelling or chest pain. Takes medicines every day using a dosette box. No OTC medicines. Weight stable at 74 kg (daily log reviewed).</p>
+<p><strong>Today:</strong> BP 116/74 (sitting), 112/70 (standing), HR 72 SR, SpO<sub>2</sub> 97%. Chest clear, no oedema. <strong>Bloods (5 days ago):</strong> Na 139, K<sup>+</sup> 4.8 mmol/L, creatinine 88 µmol/L (baseline 80), eGFR 68.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Plan", "Medication", "Safety netting", "Follow up"],
+      model: {
+        "History": "HFrEF titration review per HF clinic. Improved exercise tolerance (NYHA II). Mild fatigue. No dizziness, orthopnoea, PND, oedema, CP. Adherent (dosette). No OTC meds. Home wt stable 74 kg.",
+        "Examination": "BP 116/74 sit, 112/70 stand (no postural sx). HR 72 SR. SpO2 97%. Chest clear. No oedema. Euvolaemic.",
+        "Comment": "Bloods 5/7 ago: K 4.8, Cr 88 (baseline 80, <50% rise), eGFR 68 — acceptable. All 4 pillars on board. BP and HR allow titration. Titrate one drug at a time — prioritise ARNI dose increase per HF plan.",
+        "Problem": "Heart failure with reduced ejection fraction (LVEF 28%), NYHA II — GDMT optimisation.",
+        "Plan": "Increase sacubitril/valsartan to 97/103 mg BD (target). Continue bisoprolol 2.5 mg — plan next step to 3.75 mg at next review if HR >60, BP ok. Continue spironolactone 25 mg, dapagliflozin 10 mg. Consider reducing furosemide if remains euvolaemic. U&E + BP 1-2 wks. Titration plan added to med review comment. Copy to HF nurse.",
+        "Medication": "Sacubitril/valsartan 97 mg/103 mg tabs, 1 BD (replaces 49/51 mg). Other meds unchanged. Sick day guidance reiterated.",
+        "Safety netting": "Report dizziness/fainting, swelling of lips/face/tongue (angioedema — 999), wt gain >2 kg in 3 days, worsening SOB. Sick day rules: pause ARNI, spironolactone, dapagliflozin, furosemide if D&V/unable to eat-drink; restart 24-48 h after recovery. Avoid NSAIDs/K+ salt substitutes.",
+        "Follow up": "U&E, K+, BP in 1-2 wks; pharmacist review 2 wks for bisoprolol step to 3.75 mg. 6-monthly HF review once optimised."
+      },
+      checklist: [
+        "NYHA class and symptoms documented",
+        "Fluid status assessed (weight trend, oedema, chest)",
+        "BP (including postural) and HR documented to justify titration",
+        "U&E interpreted against acceptable limits (creatinine rise, K+)",
+        "Only one drug titrated at a time, with a clear next-step plan",
+        "Monitoring bloods booked 1–2 weeks after dose change",
+        "Angioedema warning and sick day guidance given",
+        "Communication with HF specialist nurse/team recorded"
+      ]
+    }
+  ],
+
+  prescriptions: [
+    {
+      title: "Rx 1: Beta-blocker uptitration",
+      case: `<p><strong>Mr Samuel Reid, 70</strong>, HFrEF (LVEF 33%), NYHA II. Currently bisoprolol 1.25 mg OD for 3 weeks, ramipril 5 mg OD, dapagliflozin 10 mg OD, spironolactone 25 mg OD. Today HR 76 bpm SR, BP 124/76, no dizziness, euvolaemic, weight stable. U&E stable. Write the next bisoprolol titration step for 28 days.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["bisoprolol"]] },
+        { key: "strength", label: "Strength", accept: [["2.5"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: {
+        drug: "Bisoprolol fumarate",
+        strength: "2.5 mg",
+        form: "Tablet",
+        directions: "Take ONE tablet ONCE a day (replaces bisoprolol 1.25 mg)",
+        quantity: "28 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> HR 76 bpm and BP 124/76 without symptoms or congestion allow the next titration step from 1.25 mg to 2.5 mg once daily. Stop the 1.25 mg prescription on EMIS to avoid duplication.</p>
+<p><strong>Titration plan:</strong> 1.25 → 2.5 → 3.75 → 5 → 7.5 → 10 mg once daily, increasing usually no faster than every 2 weeks (BNF schedule gives longer intervals at higher doses), aiming for 10 mg or maximum tolerated dose. Hold titration if HR below about 60 bpm, symptomatic hypotension or worsening congestion.</p>
+<p><strong>Counselling:</strong> may feel more tired or dizzy for a week or two after each increase; do not stop suddenly; weigh daily and report weight gain over 2 kg in 3 days or worsening breathlessness.</p>
+<p><strong>Monitoring:</strong> HR, BP and fluid status at 2 weeks. Beta-blocker titration does not itself require U&E, but bloods are due for the RAAS inhibitor/MRA anyway.</p>`
+    },
+    {
+      title: "Rx 2: Starting an MRA",
+      case: `<p><strong>Mrs Gwen Price, 68</strong>, HFrEF (LVEF 35%), NYHA II, on ramipril 10 mg OD, bisoprolol 5 mg OD and furosemide 40 mg OM. The HF clinic recommends adding an MRA. Bloods: K<sup>+</sup> 4.3 mmol/L, creatinine 92 µmol/L, eGFR 58. BP 122/74. Prescribe spironolactone at the usual starting dose for 28 days.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["spironolactone"]] },
+        { key: "strength", label: "Strength", accept: [["25"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: {
+        drug: "Spironolactone",
+        strength: "25 mg",
+        form: "Tablet",
+        directions: "Take ONE tablet ONCE a day in the morning",
+        quantity: "28 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> MRAs reduce mortality and HF hospitalisation in HFrEF. K<sup>+</sup> 4.3 and eGFR 58 allow starting at 25 mg once daily (consider 12.5 mg or alternate days if eGFR lower or K<sup>+</sup> borderline). Avoid if K<sup>+</sup> above 5.0 mmol/L at baseline or severe renal impairment, per BNF.</p>
+<p><strong>Titration:</strong> target 50 mg once daily if K<sup>+</sup> and renal function allow, usually after at least 4–8 weeks.</p>
+<p><strong>Monitoring:</strong> U&amp;E and K<sup>+</sup> at 1 week, then at 1 month and periodically thereafter (e.g. 3-monthly in the first year, then at least 6-monthly), per BNF/local guidance. If K<sup>+</sup> above 5.5 mmol/L, halve dose; above 6.0 mmol/L, stop.</p>
+<p><strong>Counselling:</strong> avoid potassium supplements and potassium-containing salt substitutes; avoid OTC NSAIDs; sick day guidance (pause if vomiting/diarrhoea); report breast tenderness/enlargement (switch to eplerenone possible).</p>`
+    },
+    {
+      title: "Rx 3: Adding an SGLT2 inhibitor",
+      case: `<p><strong>Mr Kwame Asante, 62</strong>, HFrEF (LVEF 30%), NYHA II, on sacubitril/valsartan 49/51 mg BD, bisoprolol 5 mg OD, eplerenone 25 mg OD. No diabetes. eGFR 55, K<sup>+</sup> 4.9 mmol/L, BP 118/72. The HF specialist advises adding dapagliflozin. Prescribe for 28 days.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["dapagliflozin"]] },
+        { key: "strength", label: "Strength", accept: [["10"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: {
+        drug: "Dapagliflozin",
+        strength: "10 mg",
+        form: "Tablet",
+        directions: "Take ONE tablet ONCE a day",
+        quantity: "28 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> dapagliflozin (NICE TA679) is the fourth pillar for symptomatic HFrEF, reducing CV death and HF hospitalisation, with or without diabetes. Fixed dose of 10 mg once daily — no titration. Check the BNF/SPC for the current eGFR threshold below which initiation is not recommended.</p>
+<p><strong>Expected effects:</strong> a small initial fall in eGFR is expected and is not a reason to stop. Mild diuretic effect — review loop diuretic dose if the patient becomes dry or dizzy. May modestly lower potassium, helpful alongside an MRA.</p>
+<p><strong>Counselling:</strong> genital hygiene (risk of genital fungal infection); stay hydrated; sick day guidance — pause during dehydrating illness, fasting or before major surgery; seek urgent help for symptoms of ketoacidosis (nausea, vomiting, abdominal pain, unusual drowsiness, rapid breathing) even if blood glucose is normal; rare Fournier's gangrene — report genital/perineal pain, swelling or fever.</p>
+<p><strong>Monitoring:</strong> U&amp;E and volume status in 1–2 weeks (especially with loop diuretics), then routinely.</p>`
+    }
+  ],
+
+  mcq: [
+    {
+      q: "A 68-year-old with suspected heart failure has an NT-proBNP of 1,250 ng/L. According to NICE NG106, what is the recommended action?",
+      options: [
+        "Refer for specialist assessment and echocardiography within 6 weeks",
+        "Refer urgently for specialist assessment and echocardiography within 2 weeks",
+        "Heart failure is excluded; no further action",
+        "Repeat NT-proBNP in 3 months before deciding"
+      ],
+      answer: 0,
+      explanation: "NT-proBNP 400–2,000 ng/L: specialist assessment and echo within 6 weeks. Above 2,000 ng/L: within 2 weeks. Below 400 ng/L, HF is less likely but not excluded if suspicion remains."
+    },
+    {
+      q: "Which factor is most likely to give a falsely LOW NT-proBNP level in a patient with heart failure?",
+      options: [
+        "Atrial fibrillation",
+        "Age over 70",
+        "Obesity (BMI over 35)",
+        "Chronic kidney disease"
+      ],
+      answer: 2,
+      explanation: "Obesity lowers natriuretic peptide levels (as do diuretics and RAAS inhibitors, beta-blockers and MRAs). AF, older age and CKD raise NT-proBNP."
+    },
+    {
+      q: "A patient's echocardiogram shows an LVEF of 45% with symptoms and signs of heart failure. How is this classified?",
+      options: [
+        "HFrEF",
+        "HFmrEF",
+        "HFpEF",
+        "HF with improved ejection fraction"
+      ],
+      answer: 1,
+      explanation: "HFrEF is LVEF 40% or less, HFmrEF 41–49%, HFpEF 50% or more. HF with improved EF describes someone whose LVEF was previously 40% or less and has since improved."
+    },
+    {
+      q: "A patient with HFrEF is comfortable at rest but becomes breathless walking slowly on the flat and when getting dressed. What is the NYHA class?",
+      options: [
+        "NYHA I",
+        "NYHA II",
+        "NYHA IV",
+        "NYHA III"
+      ],
+      answer: 3,
+      explanation: "NYHA III: comfortable at rest, but less than ordinary activity causes symptoms. NYHA II is limitation only with ordinary activity; NYHA IV is symptoms at rest."
+    },
+    {
+      q: "A patient taking ramipril 5 mg twice daily is to switch to sacubitril/valsartan. What is the minimum interval between the last ramipril dose and the first sacubitril/valsartan dose?",
+      options: [
+        "No interval is needed",
+        "12 hours",
+        "36 hours",
+        "7 days"
+      ],
+      answer: 2,
+      explanation: "A 36-hour ACE inhibitor washout is required because combined ACE and neprilysin inhibition greatly increases angioedema risk. No washout is needed from an ARB."
+    },
+    {
+      q: "What is the usual target dose of bisoprolol in HFrEF?",
+      options: [
+        "10 mg once daily",
+        "5 mg once daily",
+        "20 mg once daily",
+        "2.5 mg twice daily"
+      ],
+      answer: 0,
+      explanation: "Bisoprolol is started at 1.25 mg once daily and titrated stepwise (2.5, 3.75, 5, 7.5) to a target of 10 mg once daily, or the maximum tolerated dose."
+    },
+    {
+      q: "A patient on spironolactone 25 mg daily for HFrEF has a potassium of 6.2 mmol/L on a non-haemolysed sample. What is the most appropriate action regarding spironolactone?",
+      options: [
+        "Continue and recheck in 3 months",
+        "Halve the dose to 12.5 mg daily",
+        "Increase furosemide and continue spironolactone",
+        "Stop spironolactone and manage hyperkalaemia per local guidance"
+      ],
+      answer: 3,
+      explanation: "For MRAs, potassium above 5.5 mmol/L: halve the dose; above 6.0 mmol/L: stop, and follow local hyperkalaemia guidance (urgent repeat, ECG, consider admission at higher levels). Rechallenge may be possible later."
+    },
+    {
+      q: "Two weeks after increasing ramipril, a patient's creatinine has risen from 100 to 135 µmol/L and potassium is 5.2 mmol/L. They feel well. What is the best action?",
+      options: [
+        "Stop ramipril immediately",
+        "Continue ramipril and recheck U&E in 1–2 weeks",
+        "Switch to candesartan",
+        "Admit for acute kidney injury"
+      ],
+      answer: 1,
+      explanation: "A creatinine rise of up to about 50% from baseline and K+ up to 5.5 mmol/L are generally acceptable after starting or increasing a RAAS inhibitor. Continue, look for contributors (NSAIDs, dehydration) and recheck."
+    },
+    {
+      q: "A patient with HFrEF and hypertension needs additional blood pressure control. Which drug should be AVOIDED?",
+      options: [
+        "Amlodipine",
+        "Spironolactone",
+        "Diltiazem",
+        "Candesartan"
+      ],
+      answer: 2,
+      explanation: "Non-dihydropyridine calcium-channel blockers (diltiazem, verapamil) are negatively inotropic and can worsen HFrEF. Amlodipine is neutral and can be used if needed after GDMT."
+    },
+    {
+      q: "Which medicine has NICE technology appraisal recommendations for symptomatic heart failure with preserved ejection fraction?",
+      options: [
+        "Empagliflozin",
+        "Sacubitril/valsartan",
+        "Ivabradine",
+        "Bisoprolol"
+      ],
+      answer: 0,
+      explanation: "Empagliflozin (TA929) and dapagliflozin (TA902) are recommended for HFmrEF/HFpEF. The other options have their evidence and recommendations in HFrEF."
+    },
+    {
+      q: "A patient with HFrEF and fatigue has Hb 132 g/L, ferritin 180 µg/L and TSAT 16%. What is the most appropriate interpretation and plan?",
+      options: [
+        "Iron replete — no action",
+        "Iron deficiency only if anaemic — recheck in a year",
+        "Start oral ferrous sulfate as the preferred treatment for HF",
+        "Iron deficiency (ferritin 100–299 with TSAT below 20%) — investigate the cause and refer for IV iron consideration"
+      ],
+      answer: 3,
+      explanation: "In HF, iron deficiency is ferritin below 100 µg/L, or 100–299 µg/L with TSAT below 20%, regardless of Hb. IV iron (usually in secondary care) improves symptoms; oral iron is poorly effective in HF."
+    },
+    {
+      q: "What weight change should prompt a patient with heart failure to contact their clinical team, as typically advised?",
+      options: [
+        "Any weight gain of 0.5 kg in a day",
+        "A gain of more than 2 kg over 3 days",
+        "A gain of 5 kg over a month only",
+        "Weight changes are not useful in heart failure"
+      ],
+      answer: 1,
+      explanation: "Daily morning weights detect fluid retention early. A rise of more than 2 kg in 3 days (or the threshold in their personal plan) should prompt contact so diuretics can be adjusted."
+    },
+    {
+      q: "A patient with HFrEF on sacubitril/valsartan, spironolactone, dapagliflozin and furosemide develops profuse diarrhoea and vomiting. What sick day advice is appropriate?",
+      options: [
+        "Temporarily pause sacubitril/valsartan, spironolactone, dapagliflozin and furosemide, and restart when eating and drinking normally for 24–48 hours",
+        "Stop all medicines permanently",
+        "Double the furosemide dose",
+        "Continue all medicines unchanged"
+      ],
+      answer: 0,
+      explanation: "During dehydrating illness, RAAS inhibitors/ARNI, MRAs, SGLT2 inhibitors and diuretics increase the risk of AKI, hyperkalaemia and ketoacidosis. Pause temporarily and restart after recovery; seek advice if unwell beyond 48 hours."
+    },
+    {
+      q: "Which presentation in a patient with known heart failure most clearly requires an emergency (999) admission?",
+      options: [
+        "Weight up 1.5 kg in 5 days with mild ankle swelling",
+        "Increased fatigue after a bisoprolol dose increase",
+        "Breathless at rest, unable to lie flat, SpO2 87% on air",
+        "Asymptomatic BP 98/62 mmHg on optimised GDMT"
+      ],
+      answer: 2,
+      explanation: "Breathlessness at rest, orthopnoea and hypoxia suggest acute decompensated HF/pulmonary oedema needing emergency treatment. The others can usually be managed in primary care with review."
+    },
+    {
+      q: "According to NICE NG106, when should a person be followed up after discharge from hospital following an admission for heart failure?",
+      options: [
+        "Within 3 months",
+        "At the next annual review",
+        "Only if they request an appointment",
+        "Within 2 weeks of discharge"
+      ],
+      answer: 3,
+      explanation: "NICE advises a follow-up within 2 weeks of discharge to review symptoms, fluid status, renal function and medicines, and to reinstate or titrate GDMT withheld during admission."
+    }
+  ]
+};
+</script>
+<script src="assets/flexylen-module.js"></script>
+</body>
+</html>

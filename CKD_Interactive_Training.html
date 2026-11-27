@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CKD Management | Flexylen Clinical Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/flexylen-module.css">
+</head>
+<body>
+<div id="app"></div>
+<script>
+window.FLEXYLEN_MODULE = {
+  id: "ckd",
+  title: "CKD Management",
+  icon: "🫘",
+  tone: "green",
+  duration: "60–90 minutes",
+  summary: "Master eGFR interpretation, CKD staging, medication management, and recognising when to escalate to nephrology services.",
+  reviewStatus: "Draft — awaiting clinical review",
+  updated: "November 2026",
+  passMark: 80,
+
+  objectives: [
+    "Interpret eGFR and urine ACR results, recognise when eGFR is unreliable, and confirm a diagnosis of chronic kidney disease (CKD) correctly.",
+    "Classify CKD using the KDIGO G and A categories and set an appropriate monitoring frequency.",
+    "Distinguish acute kidney injury (AKI) from CKD and arrange appropriate investigations, including renal ultrasound and haematuria work-up.",
+    "Apply NICE NG203 treatment thresholds for blood pressure, ACE inhibitors/ARBs, SGLT2 inhibitors, statins and (where appropriate) finerenone.",
+    "Safely optimise medicines in CKD: dose adjustment using eGFR or Cockcroft-Gault creatinine clearance, nephrotoxic drugs and sick day guidance.",
+    "Use the Kidney Failure Risk Equation and NG203 criteria to decide when to refer to nephrology, and document the decision clearly in EMIS Web."
+  ],
+
+  sources: [
+    { label: "NICE NG203 — Chronic kidney disease: assessment and management", url: "https://www.nice.org.uk/guidance/ng203" },
+    { label: "NICE TA775 — Dapagliflozin for treating chronic kidney disease", url: "https://www.nice.org.uk/guidance/ta775" },
+    { label: "NICE TA942 — Empagliflozin for treating chronic kidney disease", url: "https://www.nice.org.uk/guidance/ta942" },
+    { label: "NICE TA877 — Finerenone for treating chronic kidney disease in type 2 diabetes", url: "https://www.nice.org.uk/guidance/ta877" },
+    { label: "KDIGO 2024 Clinical Practice Guideline for the Evaluation and Management of CKD", url: "https://kdigo.org/guidelines/ckd-evaluation-and-management/" },
+    { label: "Kidney Failure Risk Equation calculator", url: "https://kidneyfailurerisk.com/" },
+    { label: "Think Kidneys (UK Kidney Association) — AKI and medicines resources", url: "https://www.thinkkidneys.nhs.uk/" }
+  ],
+
+  learn: [
+    {
+      title: "1. eGFR and urine ACR: getting the numbers right",
+      html: `<p>CKD is defined as abnormalities of kidney structure or function <strong>present for more than 3 months</strong> with implications for health. In practice it is diagnosed on an eGFR &lt;60 mL/min/1.73m², an ACR ≥3 mg/mmol, or other markers of kidney damage (e.g. persistent haematuria after urological causes are excluded, structural abnormality on imaging).</p>
+<ul>
+<li><strong>eGFR</strong>: UK laboratories report the CKD-EPI creatinine equation. NICE NG203 advises <strong>not</strong> using an ethnicity adjustment.</li>
+<li>A single low eGFR is not a diagnosis. If eGFR is newly &lt;60, <strong>repeat within 2 weeks</strong> to exclude AKI, then confirm chronicity with a repeat result over a period of at least 3 months.</li>
+<li><strong>Urine ACR</strong> is the preferred test for proteinuria (more sensitive than PCR at low levels). Use an early morning sample where possible. If the initial ACR is 3–70 mg/mmol, confirm with an early morning sample; an ACR ≥70 mg/mmol does not need repeating to confirm.</li>
+</ul>
+<div class="callout key"><strong>When eGFR is unreliable</strong>: extremes of muscle mass (amputees, bodybuilders, frailty/sarcopenia), large recent meat intake (advise avoiding meat for 12 hours before the test), pregnancy, AKI (eGFR assumes steady state), and some drugs that block creatinine secretion (e.g. trimethoprim). NG203 suggests considering <strong>cystatin C-based eGFR</strong> at initial diagnosis where eGFR is 45–59 for at least 90 days with an ACR &lt;3, to confirm or rule out CKD.</div>
+<div class="callout green"><strong>Dosing vs staging</strong>: eGFR (per 1.73m²) is for diagnosis and staging. For drugs with narrow therapeutic index or where the SPC specifies it (e.g. DOACs, some antivirals, aminoglycosides) — and at extremes of body weight or in older people — calculate <strong>creatinine clearance (Cockcroft-Gault)</strong> using actual body weight, as the BNF advises.</div>`
+    },
+    {
+      title: "2. KDIGO staging and monitoring frequency",
+      html: `<p>Classify CKD by cause, GFR category (G) and albuminuria category (A). Record both — "CKD G3a A2" carries far more prognostic information than "CKD stage 3".</p>
+<table>
+<tr><th>GFR category</th><th>eGFR (mL/min/1.73m²)</th><th>Description</th></tr>
+<tr><td>G1</td><td>≥90</td><td>Normal or high (CKD only if other markers of damage)</td></tr>
+<tr><td>G2</td><td>60–89</td><td>Mildly decreased (CKD only if other markers)</td></tr>
+<tr><td>G3a</td><td>45–59</td><td>Mildly to moderately decreased</td></tr>
+<tr><td>G3b</td><td>30–44</td><td>Moderately to severely decreased</td></tr>
+<tr><td>G4</td><td>15–29</td><td>Severely decreased</td></tr>
+<tr><td>G5</td><td>&lt;15</td><td>Kidney failure</td></tr>
+</table>
+<table>
+<tr><th>ACR category</th><th>ACR (mg/mmol)</th><th>Description</th></tr>
+<tr><td>A1</td><td>&lt;3</td><td>Normal to mildly increased</td></tr>
+<tr><td>A2</td><td>3–30</td><td>Moderately increased</td></tr>
+<tr><td>A3</td><td>&gt;30</td><td>Severely increased</td></tr>
+</table>
+<p><strong>Heat map: suggested number of eGFR monitoring tests per year</strong> (NG203, adapted from KDIGO; colours denote rising risk — individualise to the clinical picture):</p>
+<table>
+<tr><th>G \\ A</th><th>A1 (&lt;3)</th><th>A2 (3–30)</th><th>A3 (&gt;30)</th></tr>
+<tr><td>G1–G2</td><td>≤1 (low risk)</td><td>1 (moderate)</td><td>≥1 (high)</td></tr>
+<tr><td>G3a</td><td>1 (moderate)</td><td>1 (high)</td><td>2 (very high)</td></tr>
+<tr><td>G3b</td><td>≤2 (high)</td><td>2 (very high)</td><td>≥2 (very high)</td></tr>
+<tr><td>G4</td><td>2 (very high)</td><td>2 (very high)</td><td>3 (very high)</td></tr>
+<tr><td>G5</td><td>4 (very high)</td><td>≥4 (very high)</td><td>≥4 (very high)</td></tr>
+</table>
+<div class="callout key"><strong>Progression</strong>: obtain at least 3 eGFR results over at least 90 days to assess rate of change. NG203 defines <strong>accelerated progression</strong> as a sustained decrease in eGFR of 25% or more <em>and</em> a change in GFR category within 12 months, or a sustained decrease of 15 mL/min/1.73m² or more within 12 months.</div>`
+    },
+    {
+      title: "3. Who to test, AKI vs CKD, and investigations",
+      html: `<p><strong>Test (eGFR + ACR)</strong> people with: diabetes; hypertension; previous AKI; cardiovascular disease; structural renal tract disease, recurrent calculi or prostatic hypertrophy; multisystem disease with possible kidney involvement (e.g. SLE); gout; family history of kidney failure or hereditary kidney disease; incidental haematuria or proteinuria; and long-term nephrotoxic drugs (e.g. lithium, calcineurin inhibitors, long-term NSAIDs). Do not use age, sex, ethnicity or obesity alone as a reason to test.</p>
+<table>
+<tr><th>Feature</th><th>Favours AKI</th><th>Favours CKD</th></tr>
+<tr><td>Previous results</td><td>Recent normal baseline; rise over hours–days</td><td>Stable impairment over &gt;3 months</td></tr>
+<tr><td>Context</td><td>Acute illness, sepsis, dehydration, new nephrotoxic drug, obstruction</td><td>Long-standing diabetes/hypertension</td></tr>
+<tr><td>Other clues</td><td>Oliguria, rapidly rising K+</td><td>Small kidneys on ultrasound, anaemia of CKD, CKD-MBD</td></tr>
+</table>
+<p><strong>Renal ultrasound</strong> (NG203): accelerated progression; visible or persistent invisible haematuria; symptoms of urinary tract obstruction; family history of polycystic kidney disease and aged over 20; eGFR &lt;30 (G4–G5); or if a renal biopsy is planned by a specialist.</p>
+<div class="callout"><strong>Haematuria</strong>: use reagent strips (not urine microscopy). Treat 1+ or more as positive; exclude UTI. Persistent invisible haematuria (2 of 3 positive) with or without proteinuria needs assessment: urology referral under NICE NG12 criteria where suspected cancer pathway criteria are met, and nephrology input if ACR ≥30 with haematuria.</div>
+<div class="callout red"><strong>Same-day assessment</strong>: suspected AKI with K+ ≥6.5 mmol/L (or ECG change), anuria, suspected obstruction, or AKI with features of a systemic illness (vasculitis rash, haemoptysis). Follow your local hyperkalaemia and AKI pathway.</div>`
+    },
+    {
+      title: "4. Blood pressure and RAS blockade (ACEi/ARB)",
+      html: `<table>
+<tr><th>ACR</th><th>Clinic BP target (NG203)</th></tr>
+<tr><td>&lt;70 mg/mmol</td><td>&lt;140/90 (systolic target range 120–139)</td></tr>
+<tr><td>≥70 mg/mmol</td><td>&lt;130/80 (systolic target range 120–129)</td></tr>
+</table>
+<p><strong>Offer an ACE inhibitor or ARB</strong> (titrated to the highest licensed dose tolerated) to adults with CKD and:</p>
+<ul>
+<li><strong>diabetes and ACR &gt;3 mg/mmol</strong> (A2–A3);</li>
+<li><strong>hypertension and ACR &gt;30 mg/mmol</strong> (A3);</li>
+<li><strong>ACR ≥70 mg/mmol</strong>, irrespective of hypertension or cardiovascular disease.</li>
+</ul>
+<p>For hypertension with ACR ≤30 and no diabetes, follow NICE NG136 for choice of antihypertensive. <strong>Do not combine</strong> an ACE inhibitor with an ARB.</p>
+<div class="callout key"><strong>Monitoring after starting or increasing</strong>: check U&amp;E (creatinine, eGFR, K+) before starting and 1–2 weeks after starting and after each dose increase.
+<ul>
+<li>eGFR fall &lt;25% or creatinine rise &lt;30%: <strong>do not modify the dose</strong> (expected haemodynamic effect); repeat as clinically indicated.</li>
+<li>eGFR fall ≥25% or creatinine rise ≥30%: look for other causes (volume depletion, NSAIDs, other drugs). If none, stop the drug or reduce to the previously tolerated dose and consider an alternative antihypertensive; consider renal artery stenosis.</li>
+<li><strong>Potassium</strong>: do not routinely start if K+ &gt;5.0 mmol/L; <strong>stop if K+ rises to &gt;6.0 mmol/L</strong> after other contributing drugs have been stopped.</li>
+</ul></div>`
+    },
+    {
+      title: "5. SGLT2 inhibitors, finerenone and cardiovascular protection",
+      html: `<p>SGLT2 inhibitors reduce CKD progression, kidney failure and cardiovascular events in people with and without diabetes. They are now a core part of CKD treatment alongside an optimised ACEi/ARB.</p>
+<table>
+<tr><th>Situation</th><th>Recommendation (summary — check current NICE text)</th></tr>
+<tr><td>Type 2 diabetes, CKD, ACR &gt;30, on max tolerated ACEi/ARB</td><td><strong>Offer</strong> an SGLT2 inhibitor (NG203/NG28)</td></tr>
+<tr><td>Type 2 diabetes, CKD, ACR 3–30, on ACEi/ARB</td><td><strong>Consider</strong> an SGLT2 inhibitor</td></tr>
+<tr><td>CKD without diabetes</td><td><strong>Dapagliflozin</strong> (TA775): eGFR 25–75 with T2DM or ACR ≥22.6 mg/mmol, as add-on to optimised standard care. <strong>Empagliflozin</strong> (TA942): eGFR 20–45, or eGFR 45–90 with ACR ≥22.6 mg/mmol or T2DM.</td></tr>
+<tr><td>Type 2 diabetes, CKD G3–G4 with albuminuria</td><td><strong>Finerenone</strong> (TA877): add-on to optimised ACEi/ARB and SGLT2i (unless unsuitable) when eGFR ≥25 and serum K+ within the range in the SPC; specialist or locally agreed pathway</td></tr>
+</table>
+<ul>
+<li>Expect an initial small, reversible dip in eGFR after starting an SGLT2i; this is not a reason to stop.</li>
+<li>Glycaemic effect is minimal at low eGFR, but kidney and cardiac benefit persists. Review sulfonylurea/insulin doses if HbA1c is near target (hypoglycaemia risk).</li>
+<li>Counsel on genital mycotic infection, foot care, volume depletion and <strong>euglycaemic DKA</strong> (diabetes) — and sick day guidance.</li>
+</ul>
+<div class="callout green"><strong>Statins</strong>: offer <strong>atorvastatin 20 mg</strong> for primary or secondary prevention of CVD in CKD. Increase the dose if non-HDL cholesterol has not fallen by more than 40% and eGFR is ≥30; agree higher doses with a renal specialist if eGFR &lt;30. Offer antiplatelets for secondary prevention (be aware of bleeding risk).</div>`
+    },
+    {
+      title: "6. Medicines optimisation in CKD",
+      html: `<p>Review every medicine at diagnosis, at each change in G category, and after any AKI. Use the BNF renal impairment section and the SPC.</p>
+<table>
+<tr><th>Drug / class</th><th>Practical point</th></tr>
+<tr><td>Metformin</td><td>Review dose if eGFR &lt;45; <strong>stop if eGFR &lt;30</strong> (MHRA/BNF). Withhold during dehydrating illness.</td></tr>
+<tr><td>NSAIDs</td><td>Avoid where possible, especially with ACEi/ARB + diuretic ("triple whammy"). If essential, short course, lowest dose, monitor U&amp;E.</td></tr>
+<tr><td>Nitrofurantoin</td><td>Avoid if eGFR &lt;45 (BNF allows cautious short-course use at 30–44 for resistant lower UTI only); reduced efficacy and toxicity risk.</td></tr>
+<tr><td>DOACs</td><td>Dose by <strong>Cockcroft-Gault CrCl</strong> (actual body weight). E.g. apixaban 2.5 mg twice daily for AF if 2 of: age ≥80, weight ≤60 kg, creatinine ≥133 micromol/L (or CrCl 15–29); dabigatran avoided if CrCl &lt;30.</td></tr>
+<tr><td>Gabapentin, pregabalin</td><td>Reduce dose by CrCl; accumulation causes sedation, falls, respiratory depression.</td></tr>
+<tr><td>Opioids</td><td>Morphine and codeine metabolites accumulate — use lower doses, longer intervals; seek specialist advice in G4–G5.</td></tr>
+<tr><td>Lithium</td><td>Nephrotoxic; requires close level and U&amp;E monitoring; discuss with psychiatry if eGFR falls.</td></tr>
+<tr><td>Others</td><td>Trimethoprim (raises K+ and creatinine), spironolactone/potassium supplements (K+), sulfonylureas (hypoglycaemia), DPP-4 inhibitors (most need dose reduction, linagliptin does not), allopurinol, colchicine, digoxin, LMWH, bisphosphonates.</td></tr>
+</table>
+<div class="callout red"><strong>Contrast and surgery</strong>: people with eGFR &lt;30 (and some G3b with other risk factors) are at increased risk of contrast-associated AKI — make sure the radiology request states the eGFR and medicines.</div>`
+    },
+    {
+      title: "7. Sick day guidance (SADMANS) and AKI",
+      html: `<p>During a <strong>dehydrating illness</strong> (vomiting, diarrhoea, fever, sweats/shaking), some medicines increase the risk of AKI or of harm if AKI occurs. The mnemonic <strong>SADMANS</strong> lists those commonly temporarily withheld:</p>
+<ul>
+<li><strong>S</strong>ulfonylureas (hypoglycaemia)</li>
+<li><strong>A</strong>CE inhibitors</li>
+<li><strong>D</strong>iuretics</li>
+<li><strong>M</strong>etformin</li>
+<li><strong>A</strong>RBs</li>
+<li><strong>N</strong>SAIDs</li>
+<li><strong>S</strong>GLT2 inhibitors (also DKA risk)</li>
+</ul>
+<p>Restart once eating and drinking normally for <strong>24–48 hours</strong>. If not improving within 48 hours, or unable to keep fluids down, seek medical advice.</p>
+<div class="callout key"><strong>Caveats</strong>: Think Kidneys has highlighted that evidence for blanket sick day rules is limited and that inappropriate withholding can cause harm (e.g. stopping diuretics in heart failure, missing doses for minor illness). Give <strong>individualised</strong> written advice to people at higher risk, explain it applies to dehydrating illness only, and check understanding. Insulin should not be stopped — people with diabetes need specific sick day advice.</div>
+<div class="callout red">After an AKI episode: recheck U&amp;E until recovery, document the episode as a coded AKI stage, review every medicine before restarting, and consider CKD monitoring for at least 3 years even if creatinine returns to baseline.</div>`
+    },
+    {
+      title: "8. Referral to nephrology and the Kidney Failure Risk Equation",
+      html: `<p>The <strong>4-variable Kidney Failure Risk Equation (KFRE)</strong> uses age, sex, eGFR and ACR to estimate the 5-year risk of needing kidney replacement therapy. It is validated for people with CKD G3–G5. Many UK labs now report it automatically.</p>
+<p><strong>NG203 — refer for specialist assessment</strong> (taking into account the person's wishes and comorbidities) if:</p>
+<ul>
+<li>5-year KFRE risk of needing renal replacement therapy <strong>&gt;5%</strong>;</li>
+<li>ACR <strong>≥70 mg/mmol</strong>, unless known to be caused by diabetes and already appropriately treated;</li>
+<li>ACR <strong>≥30 mg/mmol with haematuria</strong>;</li>
+<li><strong>sustained decrease in eGFR of ≥25% and a change in G category</strong>, or ≥15 mL/min/1.73m² within 12 months;</li>
+<li>hypertension that remains poorly controlled despite <strong>at least 4 antihypertensives</strong> at therapeutic doses;</li>
+<li>known or suspected <strong>rare or genetic causes</strong> of CKD;</li>
+<li>suspected <strong>renal artery stenosis</strong>.</li>
+</ul>
+<div class="callout key"><strong>eGFR &lt;30 (G4–G5)</strong>: NG203 moved from an eGFR-only referral threshold to KFRE-based risk, but most people with eGFR &lt;30 will meet a criterion, and many local pathways still expect discussion or referral at this level. Specialist input is also needed for kidney failure planning, anaemia management and CKD-MBD in G4–G5. Use advice and guidance where available, and follow your local pathway.</div>
+<div class="callout green">A good referral includes: trend of eGFR (at least 3 results) and ACR, KFRE, BP readings, urinalysis, ultrasound result if done, medicines (including over-the-counter NSAIDs), comorbidities and the person's priorities (including whether they would consider dialysis or conservative care).</div>`
+    },
+    {
+      title: "9. Complications, vaccination and lifestyle",
+      html: `<ul>
+<li><strong>Anaemia</strong>: check Hb in G3b–G5 (and if symptomatic). Investigate if Hb ≤110 g/L or symptoms — exclude other causes (iron, B12, folate, GI loss). Correct iron deficiency; ESAs are specialist-initiated (NICE NG8).</li>
+<li><strong>CKD-MBD</strong>: do not routinely measure calcium, phosphate, PTH or vitamin D if eGFR ≥30; measure in G4–G5. Do not routinely offer vitamin D supplements purely to manage CKD-MBD; treat deficiency as usual.</li>
+<li><strong>Metabolic acidosis</strong>: NG203 suggests considering oral sodium bicarbonate if eGFR &lt;30 and serum bicarbonate &lt;20 mmol/L (specialist advice often sought).</li>
+<li><strong>Vaccination</strong>: annual influenza; pneumococcal vaccine (CKD G4–G5, nephrotic syndrome and other eligible groups — check the Green Book); COVID-19 per current JCVI programme; hepatitis B for people likely to need dialysis or transplant (specialist-led).</li>
+<li><strong>Lifestyle</strong>: smoking cessation, regular exercise, healthy weight, limit salt (aim &lt;6 g/day). Do not offer low-protein diets (&lt;0.6–0.8 g/kg/day). Dietetic input for hyperkalaemia or advanced CKD.</li>
+</ul>
+<div class="callout green"><strong>Practice tip</strong>: CKD G3a–G5 is on the QOF register. Run a register search for patients on ACEi/ARB without a U&amp;E in 12 months, metformin with eGFR &lt;30, and diabetes + ACR &gt;3 not on an SGLT2 inhibitor — quick wins for medicines optimisation.</div>`
+    }
+  ],
+
+  scenarios: [
+    {
+      title: "Case 1: New CKD in type 2 diabetes",
+      intro: `<p><strong>Mr Daniel Okafor, 61</strong>, has type 2 diabetes (diagnosed 9 years ago) and hypertension. He attends his annual diabetes review with the practice clinical pharmacist. Medicines: metformin 1 g twice daily, amlodipine 10 mg once daily. Non-smoker, BMI 31.</p>
+<p>Results: HbA1c 58 mmol/mol, eGFR 52 mL/min/1.73m², urine ACR 14 mg/mmol (random sample). Clinic BP 148/86. Previous eGFR 14 months ago was 57.</p>`,
+      steps: [
+        {
+          prompt: "How should you confirm and record his kidney status today?",
+          options: [
+            { text: "Code CKD G3a A2 now, as both results are abnormal.", correct: false, feedback: "A single abnormal ACR and an eGFR from today are not enough. CKD requires abnormalities persisting for more than 3 months, and an ACR between 3 and 70 should be confirmed on an early morning sample." },
+            { text: "Repeat the ACR on an early morning sample and recheck eGFR (with an earlier result showing reduced eGFR, aim for evidence over at least 3 months), then code the G and A categories.", correct: true, feedback: "Correct. ACR 3–70 needs confirming with an early morning sample, and eGFR must be shown to be persistently low over 3 months. His previous eGFR of 57 already suggests chronicity — repeat to confirm and exclude AKI." },
+            { text: "Request a 24-hour urine protein collection to quantify proteinuria.", correct: false, feedback: "24-hour collections are not needed in primary care. Urine ACR is the recommended test, using an early morning sample to confirm." },
+            { text: "No action — eGFR 52 is normal for his age.", correct: false, feedback: "eGFR declines with age but an eGFR <60 with albuminuria in diabetes is clinically significant and associated with higher cardiovascular and kidney risk." }
+          ]
+        },
+        {
+          prompt: "Repeat early morning ACR is 18 mg/mmol and eGFR 50. How do you classify him and how often should eGFR be monitored?",
+          options: [
+            { text: "CKD G3a A2 — monitor eGFR and ACR at least once a year (more often if the clinical picture changes).", correct: true, feedback: "Correct. eGFR 45–59 = G3a; ACR 3–30 = A2. The NG203 heat map suggests one eGFR test a year in G3a A2, individualised to risk (e.g. after medicine changes)." },
+            { text: "CKD G3b A3 — monitor every 3 months.", correct: false, feedback: "G3b is eGFR 30–44 and A3 is ACR >30. He is G3a A2." },
+            { text: "CKD G2 A2 — no routine monitoring needed.", correct: false, feedback: "G2 is eGFR 60–89. With eGFR 50 he is G3a, and CKD needs regular monitoring." },
+            { text: "CKD stage 3 — ACR does not change management.", correct: false, feedback: "ACR is central to staging, prognosis and treatment decisions (e.g. ACEi/ARB in diabetes with ACR >3 and SGLT2 inhibitor thresholds)." }
+          ]
+        },
+        {
+          prompt: "BP is 148/86 on amlodipine. What is the best next step for BP and renoprotection?",
+          options: [
+            { text: "Increase amlodipine — it is already at 10 mg so add indapamide.", correct: false, feedback: "Amlodipine is at maximum dose, but a thiazide-like diuretic is not the priority. In diabetes with ACR >3, an ACE inhibitor or ARB is indicated for renoprotection." },
+            { text: "Start ramipril 2.5 mg once daily, titrate to maximum tolerated dose, and check U&E before and 1–2 weeks after each change; target BP <140/90.", correct: true, feedback: "Correct. NG203 recommends an ACEi/ARB in CKD with diabetes and ACR >3 mg/mmol. With ACR <70 the target is <140/90 (systolic 120–139). Monitor U&E and potassium 1–2 weeks after starting and each titration." },
+            { text: "Start ramipril and losartan together for maximal proteinuria reduction.", correct: false, feedback: "Dual RAS blockade (ACEi + ARB) is not recommended — it increases hyperkalaemia and AKI without improving outcomes." },
+            { text: "Target BP <130/80 as he has diabetes.", correct: false, feedback: "NG203 uses ACR, not diabetes, to set the CKD target: <130/80 applies when ACR ≥70 mg/mmol. With ACR 18, the target is <140/90." }
+          ]
+        },
+        {
+          prompt: "He is now established on ramipril 10 mg. Which further medicine is most appropriate to reduce his kidney and cardiovascular risk?",
+          info: `<p>Three months later: eGFR 47, ACR 12 mg/mmol, K+ 4.8 mmol/L, BP 134/80, HbA1c 57 mmol/mol. Total cholesterol 5.6, non-HDL 4.1 mmol/L. He is not on a statin.</p>`,
+          options: [
+            { text: "Add an SGLT2 inhibitor (e.g. dapagliflozin 10 mg once daily) and offer atorvastatin 20 mg.", correct: true, feedback: "Correct. In type 2 diabetes with CKD and ACR 3–30 on an ACEi/ARB, NICE recommends considering an SGLT2 inhibitor (offer if ACR >30). Everyone with CKD should be offered atorvastatin 20 mg for CVD prevention." },
+            { text: "Stop metformin because eGFR is under 50.", correct: false, feedback: "Metformin can continue; review the dose if eGFR <45 and stop if eGFR <30." },
+            { text: "Add a sulfonylurea to improve HbA1c.", correct: false, feedback: "This ignores the kidney indication. A sulfonylurea adds hypoglycaemia risk and offers no renoprotection." },
+            { text: "Add finerenone now.", correct: false, feedback: "Finerenone (TA877) is an add-on to optimised ACEi/ARB and SGLT2 inhibitor therapy, unless an SGLT2i is unsuitable. Start the SGLT2 inhibitor first." }
+          ]
+        },
+        {
+          prompt: "What safety advice is most important to give when starting the SGLT2 inhibitor?",
+          options: [
+            { text: "Stop it permanently if eGFR falls at all at the next blood test.", correct: false, feedback: "A small early dip in eGFR is expected and usually reversible; it is not a reason to stop." },
+            { text: "Sick day guidance: temporarily stop dapagliflozin, ramipril and metformin during dehydrating illness, restart after 24–48 hours of normal eating and drinking; also genital hygiene, foot care and symptoms of DKA.", correct: true, feedback: "Correct. Give individualised, written sick day advice. SGLT2 inhibitors carry a risk of euglycaemic DKA in diabetes, especially with acute illness, fasting or surgery." },
+            { text: "Take it only when blood glucose is high.", correct: false, feedback: "SGLT2 inhibitors are taken daily for kidney and cardiovascular protection, not as needed for glucose." },
+            { text: "No specific advice — the side-effect profile is like placebo.", correct: false, feedback: "Genital mycotic infection, volume depletion and DKA are important and must be counselled." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 2: Rising creatinine, potassium and an AKI-on-CKD medicines review",
+      intro: `<p><strong>Mrs Margaret Hale, 76</strong>, has hypertension, osteoarthritis and CKD G3b A3 (eGFR 38, ACR 42 mg/mmol). Ramipril was started at 2.5 mg and increased to 5 mg two weeks ago. Other medicines: indapamide 2.5 mg, atorvastatin 20 mg, paracetamol as required.</p>`,
+      steps: [
+        {
+          prompt: "Her U&E 2 weeks after the ramipril increase show creatinine 128 → 150 micromol/L (eGFR 38 → 31) and K+ 5.4 mmol/L. She is well. What do you do?",
+          options: [
+            { text: "Stop ramipril — creatinine has risen.", correct: false, feedback: "A creatinine rise of about 17% (eGFR fall about 18%) is below the 30%/25% thresholds. NG203 advises not modifying the dose. Stopping would lose renoprotection in A3 CKD." },
+            { text: "Continue ramipril 5 mg, review diet and other potassium-raising drugs, and repeat U&E in 1–2 weeks.", correct: true, feedback: "Correct. Creatinine rise <30% and K+ ≤6.0: continue at the current dose, check for other causes of hyperkalaemia (e.g. NSAIDs, potassium supplements, trimethoprim) and recheck. Hold off further titration until stable." },
+            { text: "Increase ramipril to 10 mg as planned.", correct: false, feedback: "With a rising K+ of 5.4 and an eGFR change, pause titration and recheck before increasing." },
+            { text: "Admit to hospital for hyperkalaemia.", correct: false, feedback: "K+ 5.4 in a well patient does not need admission; it needs review of contributing factors and a repeat test." }
+          ]
+        },
+        {
+          prompt: "Six weeks later she phones: two days of diarrhoea and vomiting, dizzy on standing. She has been taking ibuprofen bought from a pharmacy for knee pain. What is the most appropriate action?",
+          options: [
+            { text: "Advise her to double her fluid intake and continue all medicines.", correct: false, feedback: "She has a dehydrating illness while taking an ACEi, diuretic and NSAID (the \"triple whammy\"), with symptoms suggesting volume depletion. She needs assessment and blood tests." },
+            { text: "Arrange same-day clinical assessment with urgent U&E, and advise her to stop ibuprofen and temporarily withhold ramipril and indapamide.", correct: true, feedback: "Correct. This is a high-risk AKI situation. Assess hydration and BP, check U&E urgently, and withhold the nephrotoxic or haemodynamically active drugs." },
+            { text: "Prescribe loperamide and review in a week.", correct: false, feedback: "This misses likely AKI and the medicine risks. She needs same-day assessment." },
+            { text: "Switch ramipril to losartan.", correct: false, feedback: "An ARB carries the same AKI risk during dehydration and should also be withheld." }
+          ]
+        },
+        {
+          prompt: "Her same-day results are back. How should these be managed?",
+          info: `<p>Creatinine 236 micromol/L (baseline 150), eGFR 18, K+ 6.3 mmol/L, Na+ 132. BP 102/60, HR 98. Still vomiting intermittently and unable to keep fluids down. Lab AKI warning: <strong>AKI stage 2</strong>.</p>`,
+          options: [
+            { text: "Recheck U&E in 1 week once she is eating again.", correct: false, feedback: "AKI stage 2 with K+ 6.3, hypotension and ongoing vomiting needs urgent hospital assessment today." },
+            { text: "Prescribe a potassium binder and review tomorrow.", correct: false, feedback: "Starting a binder in primary care does not address her volume depletion, AKI and inability to take fluids. She needs secondary care assessment." },
+            { text: "Refer to the acute medical team / ED today for IV fluids, ECG and potassium management; communicate the medicines withheld.", correct: true, feedback: "Correct. Significant hyperkalaemia, hypotension, AKI stage 2 and inability to maintain oral intake all point to same-day admission. Follow your local AKI and hyperkalaemia pathway and send a clear summary." },
+            { text: "Refer routinely to nephrology.", correct: false, feedback: "This is an acute problem needing same-day care, not a routine outpatient referral." }
+          ]
+        },
+        {
+          prompt: "She is discharged 5 days later with creatinine 158 micromol/L. Ramipril and indapamide remain on hold. What is the best plan for restarting medicines?",
+          options: [
+            { text: "Restart ramipril 5 mg and indapamide together on discharge day.", correct: false, feedback: "Reintroduce one medicine at a time once she is stable, eating and drinking, with U&E checks between steps." },
+            { text: "Never restart ramipril — she had AKI on it.", correct: false, feedback: "AKI was triggered by dehydration plus an NSAID. With A3 CKD she has a strong indication for an ACEi/ARB; restarting carefully is usually appropriate." },
+            { text: "Recheck U&E in about 1 week; if stable and BP allows, restart ramipril at 2.5 mg with U&E 1–2 weeks later, then consider indapamide based on BP; code the AKI; stop and document NSAID avoidance.", correct: true, feedback: "Correct. Staged reintroduction with monitoring, coded AKI, NSAID avoidance flagged (including over-the-counter) and individualised sick day advice." },
+            { text: "Start an SGLT2 inhibitor instead of ramipril.", correct: false, feedback: "An SGLT2 inhibitor may well be appropriate later as an add-on, but not as a replacement for RAS blockade, and not until she is stable after AKI." }
+          ]
+        },
+        {
+          prompt: "Which written advice best reflects current guidance on sick day rules for Mrs Hale?",
+          options: [
+            { text: "Stop all your medicines whenever you feel unwell.", correct: false, feedback: "Blanket advice is unsafe — stopping statins, antiplatelets or other essential medicines has no benefit, and stopping for trivial illness causes harm." },
+            { text: "If you have vomiting, diarrhoea, or fever with sweats and shaking, temporarily stop ramipril and indapamide; restart when you have been eating and drinking normally for 24–48 hours; seek advice if not better in 48 hours. Never take ibuprofen or other anti-inflammatories.", correct: true, feedback: "Correct. Individualised, specific to dehydrating illness, with a restart rule and safety netting — consistent with Think Kidneys caveats." },
+            { text: "Drink 3 litres of water a day to protect your kidneys.", correct: false, feedback: "Excessive fluid does not protect the kidneys and can cause hyponatraemia in older people on diuretics." },
+            { text: "Sick day rules are not relevant as she is not diabetic.", correct: false, feedback: "Sick day guidance applies to ACE inhibitors, ARBs, diuretics and NSAIDs, not only diabetes medicines." }
+          ]
+        }
+      ]
+    },
+    {
+      title: "Case 3: Deciding when to refer to nephrology",
+      intro: `<p><strong>Mr Rajesh Mehta, 58</strong>, has hypertension and CKD first noted 4 years ago. No diabetes. Medicines: losartan 100 mg, amlodipine 10 mg, atorvastatin 20 mg. A clinical pharmacist is reviewing his CKD results.</p>
+<table><tr><th>Date</th><th>eGFR</th><th>ACR (mg/mmol)</th></tr>
+<tr><td>Oct 2025</td><td>44</td><td>38</td></tr>
+<tr><td>Apr 2026</td><td>39</td><td>52</td></tr>
+<tr><td>Oct 2026</td><td>33</td><td>61</td></tr></table>`,
+      steps: [
+        {
+          prompt: "How would you describe the change in his kidney function over the last 12 months?",
+          options: [
+            { text: "Stable — still within G3b.", correct: false, feedback: "eGFR has fallen from 44 to 33 (25%), with rising ACR. That is not stable even though the category is still G3b." },
+            { text: "An eGFR fall of 11 mL/min/1.73m² (25%) with rising albuminuria, but no change in G category — progression that needs action, not yet meeting the NG203 accelerated progression definition.", correct: true, feedback: "Correct. Accelerated progression needs ≥25% fall AND a category change within 12 months, or ≥15 mL/min/1.73m² fall. He is borderline — so look for reversible causes, optimise treatment and check other referral criteria such as KFRE." },
+            { text: "Accelerated progression — urgent same-day nephrology referral.", correct: false, feedback: "He does not yet meet the accelerated progression definition (no category change; fall <15). Even if he did, this would be a routine or soon referral, not same day." },
+            { text: "Expected age-related decline.", correct: false, feedback: "Age-related decline is about 1 mL/min/1.73m² a year. A fall of 11 in a year is far greater." }
+          ]
+        },
+        {
+          prompt: "The lab reports a 4-variable KFRE 5-year risk of 7.2%. What does this mean for referral?",
+          options: [
+            { text: "Refer — a 5-year KFRE risk >5% meets the NG203 criterion for specialist assessment.", correct: true, feedback: "Correct. NG203 recommends referral when the 5-year risk of needing renal replacement therapy is greater than 5%, taking into account the person's wishes and comorbidities." },
+            { text: "Do not refer until eGFR is below 30.", correct: false, feedback: "NG203 uses KFRE risk rather than an eGFR threshold alone; a risk >5% justifies referral now." },
+            { text: "KFRE only applies to people with diabetes.", correct: false, feedback: "KFRE is validated across CKD G3–G5 regardless of cause." },
+            { text: "Refer only if the 2-year risk exceeds 40%.", correct: false, feedback: "A 2-year risk threshold is sometimes used by specialist services for kidney replacement therapy planning, but the NG203 primary care referral criterion is a 5-year risk >5%." }
+          ]
+        },
+        {
+          prompt: "His urine dipstick shows 2+ blood on two occasions with no infection. What additional significance does this have?",
+          options: [
+            { text: "None — haematuria is common in CKD.", correct: false, feedback: "Haematuria with ACR ≥30 suggests possible glomerular disease and is itself a referral criterion." },
+            { text: "Refer to urology only.", correct: false, feedback: "Urology assessment may be needed according to NG12 criteria, but ACR ≥30 with haematuria is an NG203 nephrology referral criterion too." },
+            { text: "Repeat in 12 months.", correct: false, feedback: "Persistent invisible haematuria with significant albuminuria and declining eGFR should not be left for 12 months." },
+            { text: "ACR ≥30 with haematuria is an independent NG203 referral criterion and raises concern about glomerulonephritis; arrange a renal ultrasound and include this in the referral.", correct: true, feedback: "Correct. Persistent invisible haematuria is also an indication for renal ultrasound. Consider whether urology input is also needed (NG12 criteria based on age and symptoms)." }
+          ]
+        },
+        {
+          prompt: "While awaiting nephrology, what is the most important change to his treatment?",
+          info: `<p>BP 142/84 (home average 138/82). K+ 4.9 mmol/L. Sodium bicarbonate 24 mmol/L. Hb 128 g/L.</p>`,
+          options: [
+            { text: "Add ramipril to losartan for more proteinuria reduction.", correct: false, feedback: "Combining an ACEi and ARB is not recommended." },
+            { text: "Start an SGLT2 inhibitor (e.g. dapagliflozin 10 mg) as he has CKD with ACR ≥22.6 mg/mmol and eGFR 25–75, and work toward a BP target of <140/90.", correct: true, feedback: "Correct. TA775 supports dapagliflozin for CKD without diabetes when ACR ≥22.6 mg/mmol and eGFR 25–75, on optimised ACEi/ARB. With ACR <70 the BP target is <140/90; he is just above it." },
+            { text: "Start oral sodium bicarbonate.", correct: false, feedback: "Bicarbonate is 24 mmol/L (normal) and eGFR is >30; there is no indication." },
+            { text: "Prescribe a low-protein diet of 0.5 g/kg/day.", correct: false, feedback: "NICE advises against low-protein diets in CKD because of malnutrition risk." }
+          ]
+        },
+        {
+          prompt: "He asks what nephrology will do and whether he can still be managed by the practice. What is the best response?",
+          options: [
+            { text: "Nephrology will take over all his care and he will no longer need practice reviews.", correct: false, feedback: "Most CKD care remains shared with primary care. Practice monitoring, BP management, medicines review and CVD prevention continue." },
+            { text: "He will need dialysis within the year.", correct: false, feedback: "A 5-year risk of 7.2% means most people in his position do not reach kidney failure within 5 years. Avoid inaccurate and alarming statements." },
+            { text: "Specialists will look for a treatable cause (e.g. glomerulonephritis), advise on slowing progression, and plan ahead if needed; the practice will continue monitoring, medicines and BP checks, and he should avoid NSAIDs and follow sick day advice.", correct: true, feedback: "Correct. This sets accurate expectations about shared care and reinforces self-management." },
+            { text: "Referral is optional, so he should wait until symptoms appear.", correct: false, feedback: "CKD is usually asymptomatic until advanced. Waiting for symptoms delays diagnosis of treatable causes." }
+          ]
+        }
+      ]
+    }
+  ],
+
+  emis: [
+    {
+      title: "EMIS 1: CKD annual review with diabetes (pharmacist clinic)",
+      case: `<p><strong>Mrs Aisha Begum, 67</strong>, attends a CKD and diabetes medicines review with the practice clinical pharmacist (IP). Type 2 diabetes, hypertension. Medicines: metformin 500 mg twice daily, ramipril 10 mg once daily, atorvastatin 20 mg once night, amlodipine 5 mg once daily.</p>
+<p><strong>Pharmacist:</strong> "How have you been with your tablets?"<br><strong>Mrs Begum:</strong> "Fine, no problems. I take them all every day. I sometimes have ibuprofen for my back."<br><strong>Pharmacist:</strong> "Any swelling of your ankles, passing urine more at night, or feeling more tired?"<br><strong>Mrs Begum:</strong> "No, nothing like that."</p>
+<p><strong>Results:</strong> eGFR 41 (previous 44 and 46 over 18 months), ACR 36 mg/mmol (previous 28), K+ 4.6, HbA1c 61 mmol/mol, non-HDL 2.4 mmol/L. KFRE 5-year 2.1%. Urine dipstick: no blood. <strong>Obs:</strong> BP 136/78, weight 72 kg.</p>
+<p>The pharmacist agrees to start dapagliflozin 10 mg, advises stopping ibuprofen, and gives sick day guidance.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Medication", "Plan", "Safety netting", "Follow up"],
+      model: {
+        "History": "CKD/T2DM medicines review. Reports good adherence. Uses OTC ibuprofen intermittently for back pain. No ankle swelling, nocturia or fatigue.",
+        "Examination": "BP 136/78. Wt 72 kg.",
+        "Comment": "eGFR 41 (46 > 44 > 41 over 18/12), ACR 36 (prev 28). K+ 4.6. HbA1c 61. Non-HDL 2.4. KFRE 5-yr 2.1%. Dipstick: no blood.\nCKD G3b A3. Slow decline, not accelerated progression. No NG203 referral criteria met (KFRE <5%, ACR <70, no haematuria).",
+        "Problem": "Chronic kidney disease stage G3b A3\nType 2 diabetes mellitus",
+        "Medication": "Started dapagliflozin 10 mg OD (T2DM + CKD, ACR >30, on max ACEi).\nMetformin 500 mg BD continued (eGFR >30; dose appropriate for eGFR <45).\nRamipril 10 mg, atorvastatin 20 mg, amlodipine 5 mg continued.\nAdvised to stop OTC ibuprofen; paracetamol for back pain.",
+        "Plan": "Counselled: expected small eGFR dip, genital hygiene, hydration, DKA symptoms.\nSick day guidance given verbally + leaflet (dapagliflozin, ramipril, metformin).\nBP at target (<140/90 as ACR <70).\nNSAID avoidance alert added.\nU&E in 2-4/52.",
+        "Safety netting": "Stop dapagliflozin, ramipril, metformin if D&V/fever, restart after 24-48h eating/drinking normally. Seek urgent help if N&V, abdo pain, breathlessness or unusually drowsy (possible DKA), or genital pain/swelling.",
+        "Follow up": "U&E 2-4/52 then CKD monitoring at least 2x/yr (eGFR + ACR). Diabetes review 3/12 for HbA1c."
+      },
+      checklist: [
+        "Staged as CKD G3b A3 using both eGFR and ACR",
+        "Commented on eGFR trend and that accelerated progression / NG203 referral criteria are not met (KFRE <5%)",
+        "Identified and addressed OTC NSAID use",
+        "Rationale for SGLT2 inhibitor documented (T2DM, ACR >30, on maximum tolerated ACEi)",
+        "Metformin dose reviewed against eGFR",
+        "BP target documented as <140/90 (ACR <70)",
+        "Sick day guidance and DKA warning symptoms documented",
+        "Follow-up U&E and monitoring frequency recorded"
+      ]
+    },
+    {
+      title: "EMIS 2: Post-AKI medication review (telephone)",
+      case: `<p><strong>Mr Thomas Wright, 79</strong>, was discharged 4 days ago after admission with AKI stage 2 secondary to gastroenteritis. Background: CKD G3a A2, heart failure with reduced ejection fraction, AF, osteoarthritis. Discharge summary: ramipril 5 mg and furosemide 40 mg <em>withheld</em>, apixaban 5 mg twice daily continued, bisoprolol 5 mg continued, metformin stopped. Discharge creatinine 142 (baseline 118), K+ 4.9.</p>
+<p><strong>Pharmacist (telephone):</strong> "How are you feeling since coming home?"<br><strong>Mr Wright:</strong> "Much better, eating and drinking normally for 3 days. No sickness or diarrhoea. My ankles are a bit puffier, and I'm a bit breathless going upstairs."<br><strong>Pharmacist:</strong> "Have you weighed yourself?"<br><strong>Mr Wright:</strong> "Up 1.5 kg since I got home. I'm 58 kg now."</p>
+<p>Today's bloods: creatinine 130 micromol/L, eGFR 47, K+ 4.7. Calculated CrCl (Cockcroft-Gault, actual body weight) ≈ 34 mL/min. Age 79, weight 58 kg.</p>`,
+      headings: ["History", "Examination", "Comment", "Problem", "Medication", "Plan", "Safety netting", "Follow up"],
+      model: {
+        "History": "Tel review post discharge (AKI stage 2, gastroenteritis). Eating and drinking normally 3/7, no D&V. Increased ankle swelling, mild SOBOE on stairs. Home wt up 1.5 kg (now 58 kg). Discharge: ramipril + furosemide withheld, metformin stopped.",
+        "Examination": "Telephone consultation - no examination. Self-reported wt 58 kg.",
+        "Comment": "Creat 130 (discharge 142, baseline 118), eGFR 47, K+ 4.7 - recovering AKI. CrCl (C-G) approx 34 mL/min.\nSigns of fluid re-accumulation with diuretic withheld (HFrEF).\nApixaban: 1 of 3 dose-reduction criteria (wt ≤60 kg); age 79, creat <133 - 5 mg BD remains appropriate; recheck if criteria change.",
+        "Problem": "Acute kidney injury stage 2 (resolving)\nCKD G3a A2\nHeart failure with reduced ejection fraction",
+        "Medication": "Restart furosemide 40 mg OM today (fluid overload, renal function recovering).\nRamipril remains on hold - plan to restart 1.25-2.5 mg once U&E stable after diuretic restart.\nMetformin remains stopped pending review.\nApixaban 5 mg BD continued (dose checked). Bisoprolol 5 mg continued.",
+        "Plan": "AKI coded. Medicines reconciled with discharge summary.\nDaily weights; same-day clinician review arranged if worsening.\nIndividualised sick day advice: furosemide and ramipril only in D&V/fever, discuss with practice before stopping diuretic given HF.\nNSAID avoidance reinforced.",
+        "Safety netting": "Call 999/ED if breathless at rest, chest pain, or unable to lie flat. Call practice same day if wt up >2 kg in 3 days, reduced urine output, dizziness or D&V recurs.",
+        "Follow up": "U&E 1/52 after furosemide restart, then restart ramipril with U&E 1-2/52 later. Face-to-face review within 1/52 (BP, fluid status). HF nurse informed."
+      },
+      checklist: [
+        "AKI episode coded and medicines reconciled against the discharge summary",
+        "Renal function trend compared with baseline (recovering AKI)",
+        "Recognised fluid re-accumulation in heart failure and prioritised restarting the diuretic",
+        "Staged reintroduction of ramipril with U&E monitoring",
+        "DOAC dose checked against the apixaban dose-reduction criteria (age, weight, creatinine)",
+        "Individualised sick day advice (recognises harm of withholding diuretic in heart failure)",
+        "Clear red-flag safety netting for heart failure and AKI",
+        "Follow-up blood tests and face-to-face review with timescales"
+      ]
+    }
+  ],
+
+  prescriptions: [
+    {
+      title: "Rx 1: Starting an ACE inhibitor in diabetic CKD",
+      case: `<p><strong>Mr Daniel Okafor, 61</strong> (Case 1): type 2 diabetes, CKD G3a A2 (eGFR 50, early morning ACR 18 mg/mmol), BP 148/86 on amlodipine 10 mg. K+ 4.5 mmol/L. No history of angioedema. You plan to start an ACE inhibitor at a low dose and titrate. Write a 28-day prescription.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["ramipril"]] },
+        { key: "strength", label: "Strength", accept: [["2.5"], ["1.25"]] },
+        { key: "form", label: "Form", accept: [["tablet"], ["capsule"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: {
+        drug: "Ramipril",
+        strength: "2.5 mg",
+        form: "Tablets",
+        directions: "Take ONE tablet ONCE a day. Stop temporarily if you have vomiting, diarrhoea or a fever with sweats and shaking; restart when eating and drinking normally for 24-48 hours.",
+        quantity: "28 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> NG203 recommends an ACE inhibitor or ARB in CKD with diabetes and ACR &gt;3 mg/mmol. Start low (ramipril 2.5 mg once daily; 1.25 mg in frail older people) and titrate every 2–4 weeks to the maximum tolerated dose (ramipril 10 mg). Ramipril is available as capsules and tablets — either is acceptable.</p>
+<p><strong>Monitoring:</strong> U&amp;E (creatinine, eGFR, K+) before starting and <strong>1–2 weeks after starting and each dose increase</strong>. Accept a creatinine rise &lt;30% / eGFR fall &lt;25%. Do not start if K+ &gt;5.0; stop if K+ &gt;6.0.</p>
+<p><strong>Counselling:</strong> dry cough (switch to an ARB if troublesome), dizziness with the first doses, angioedema (seek urgent help for lip/tongue/face swelling), avoid NSAIDs and potassium supplements/salt substitutes, and <strong>sick day guidance</strong>.</p>`
+    },
+    {
+      title: "Rx 2: SGLT2 inhibitor for CKD without diabetes",
+      case: `<p><strong>Mr Rajesh Mehta, 58</strong> (Case 3): CKD from hypertension, eGFR 33, ACR 61 mg/mmol, on losartan 100 mg (maximum dose). No diabetes. No history of DKA or recurrent genital infection. You start an SGLT2 inhibitor in line with TA775. Write a 28-day prescription.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["dapagliflozin"], ["empagliflozin"]] },
+        { key: "strength", label: "Strength", accept: [["10"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["28"], ["30"]] }
+      ],
+      model: {
+        drug: "Dapagliflozin",
+        strength: "10 mg",
+        form: "Tablets",
+        directions: "Take ONE tablet ONCE a day in the morning. Stop temporarily if you have vomiting, diarrhoea or are unable to eat and drink; restart when eating and drinking normally for 24-48 hours.",
+        quantity: "28 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> TA775 recommends dapagliflozin as add-on to optimised standard care (maximum tolerated ACEi/ARB) for CKD with eGFR 25–75 and either type 2 diabetes or ACR ≥22.6 mg/mmol. The CKD dose is <strong>10 mg once daily</strong> with no titration. Empagliflozin 10 mg once daily (TA942) is an alternative within its eligibility criteria.</p>
+<p><strong>Monitoring:</strong> U&amp;E at about 2–4 weeks (an initial eGFR dip of a few mL/min is expected and usually stabilises), then routine CKD monitoring. Review volume status and diuretic doses in older people.</p>
+<p><strong>Counselling:</strong> genital hygiene and mycotic infection, increased urination, maintain hydration, foot care, and <strong>sick day guidance</strong> — withhold during dehydrating illness and 2–3 days before major surgery (per local protocol). The DKA risk is low without diabetes but still mention feeling very unwell with vomiting or abdominal pain.</p>`
+    },
+    {
+      title: "Rx 3: DOAC dosing in an older person with CKD",
+      case: `<p><strong>Mrs Edith Clarke, 84</strong>, has newly diagnosed non-valvular AF (CHA₂DS₂-VASc 5, ORBIT low-moderate bleeding risk) and CKD G3b. Weight 54 kg, serum creatinine 102 micromol/L, eGFR 43. Cockcroft-Gault CrCl (actual body weight) ≈ 31 mL/min. The team has agreed apixaban. Write a 28-day prescription at the correct dose.</p>`,
+      fields: [
+        { key: "drug", label: "Drug (generic name)", accept: [["apixaban"]] },
+        { key: "strength", label: "Strength", accept: [["2.5"]] },
+        { key: "form", label: "Form", accept: [["tablet"]] },
+        { key: "directions", label: "Directions", full: true },
+        { key: "quantity", label: "Quantity", accept: [["56"], ["60"]] }
+      ],
+      model: {
+        drug: "Apixaban",
+        strength: "2.5 mg",
+        form: "Tablets",
+        directions: "Take ONE tablet TWICE a day, approximately 12 hours apart, to prevent stroke. Do not stop unless advised.",
+        quantity: "56 tablets"
+      },
+      explanation: `<p><strong>Rationale:</strong> for AF, apixaban is reduced to <strong>2.5 mg twice daily</strong> if at least 2 of: age ≥80 years, weight ≤60 kg, serum creatinine ≥133 micromol/L — or if CrCl is 15–29 mL/min. Mrs Clarke meets 2 criteria (age 84, weight 54 kg), so 2.5 mg twice daily is correct even though her creatinine is under 133. Use <strong>Cockcroft-Gault CrCl</strong>, not eGFR, for DOAC dosing decisions, as recommended in the BNF and SPC.</p>
+<p><strong>Monitoring:</strong> U&amp;E, FBC and LFT at baseline and at least annually; more often in CKD (a common rule is CrCl ÷ 10 = months between checks). Recalculate CrCl after any AKI or weight change.</p>
+<p><strong>Counselling:</strong> bleeding signs (black stools, blood in urine, prolonged bleeding), carry an anticoagulant alert card, avoid NSAIDs and aspirin unless prescribed, tell dentists/pharmacists, missed dose: take it as soon as remembered and then continue twice daily as before — never double up.</p>`
+    }
+  ],
+
+  mcq: [
+    {
+      q: "A 54-year-old man has an eGFR of 55 mL/min/1.73m² on a routine test. His eGFR a year ago was 82. What is the most appropriate next step?",
+      options: [
+        "Repeat the eGFR within 2 weeks to exclude AKI",
+        "Code CKD G3a and start an ACE inhibitor",
+        "Refer to nephrology for accelerated progression",
+        "Request a renal ultrasound only"
+      ],
+      answer: 0,
+      explanation: "A newly reduced eGFR should be repeated within 2 weeks to exclude AKI, then confirmed as persistent over 3 months before diagnosing CKD. Staging needs a confirmed result and an ACR."
+    },
+    {
+      q: "Which result is classified as albuminuria category A3?",
+      options: [
+        "ACR 2.5 mg/mmol",
+        "ACR 18 mg/mmol",
+        "ACR 35 mg/mmol",
+        "PCR 12 mg/mmol"
+      ],
+      answer: 2,
+      explanation: "A1 is ACR <3, A2 is 3–30 and A3 is >30 mg/mmol. ACR is preferred over PCR for detection and staging of proteinuria."
+    },
+    {
+      q: "A 70-year-old with CKD G3b A2 and hypertension (no diabetes) has a clinic BP of 146/84. What is his NG203 clinic BP target?",
+      options: [
+        "<130/80",
+        "<140/90",
+        "<150/90",
+        "<120/70"
+      ],
+      answer: 1,
+      explanation: "In CKD with ACR <70 mg/mmol, the target is <140/90 (systolic range 120–139). <130/80 applies when ACR ≥70 mg/mmol. The age-based <150/90 target in NG136 is for people aged 80 and over with hypertension, but NG203 targets apply in CKD."
+    },
+    {
+      q: "Two weeks after starting lisinopril, a patient's creatinine has risen from 100 to 125 micromol/L and K+ is 5.2 mmol/L. What should you do?",
+      options: [
+        "Stop lisinopril and switch to losartan",
+        "Halve the dose of lisinopril",
+        "Admit for hyperkalaemia",
+        "Continue the current dose and recheck U&E"
+      ],
+      answer: 3,
+      explanation: "A 25% creatinine rise is below the 30% threshold, and K+ is under 6.0. NG203 advises not modifying the dose. Recheck and look for other contributing factors."
+    },
+    {
+      q: "Which patient meets an NG203 criterion for referral to nephrology?",
+      options: [
+        "eGFR 48, ACR 8, KFRE 5-year risk 1.2%",
+        "eGFR 35, ACR 40 with persistent invisible haematuria",
+        "eGFR 52 falling to 47 over 12 months, ACR 2",
+        "Type 2 diabetes, eGFR 60, ACR 45, on maximum ACE inhibitor and SGLT2i"
+      ],
+      answer: 1,
+      explanation: "ACR ≥30 with haematuria is a referral criterion. Option D has ACR <70 with a known diabetic cause, already treated. Options A and C do not meet KFRE, ACR or progression thresholds."
+    },
+    {
+      q: "Which statement about the Kidney Failure Risk Equation (4-variable) is correct?",
+      options: [
+        "It uses age, sex, eGFR and ACR to estimate the 5-year risk of kidney failure needing replacement therapy",
+        "It estimates 10-year cardiovascular risk",
+        "It requires serum phosphate and bicarbonate",
+        "It is only valid for people with diabetic kidney disease"
+      ],
+      answer: 0,
+      explanation: "The 4-variable KFRE uses age, sex, eGFR and ACR. NICE recommends referral when the 5-year risk is >5%. The 8-variable version adds calcium, phosphate, bicarbonate and albumin, but is not needed in routine use."
+    },
+    {
+      q: "A woman with CKD G3b (eGFR 32) and type 2 diabetes takes metformin 1 g twice daily. What is the most appropriate action?",
+      options: [
+        "Stop metformin immediately",
+        "No change is needed until eGFR is <15",
+        "Review and reduce the metformin dose, and stop if eGFR falls below 30",
+        "Switch to glibenclamide"
+      ],
+      answer: 2,
+      explanation: "BNF/MHRA advice: review the metformin dose when eGFR is <45 (a reduced maximum daily dose is usual) and stop if eGFR <30. Glibenclamide is long-acting and carries a high hypoglycaemia risk in CKD."
+    },
+    {
+      q: "Which statin regimen does NICE recommend for primary prevention of CVD in adults with CKD?",
+      options: [
+        "Simvastatin 40 mg",
+        "Rosuvastatin 40 mg",
+        "Pravastatin 10 mg",
+        "Atorvastatin 20 mg"
+      ],
+      answer: 3,
+      explanation: "NICE recommends atorvastatin 20 mg for primary or secondary prevention in CKD. Increase if non-HDL falls by less than 40% and eGFR is ≥30; agree higher doses with a renal specialist if eGFR <30."
+    },
+    {
+      q: "For which DOAC dosing decision should Cockcroft-Gault creatinine clearance be used rather than eGFR?",
+      options: [
+        "Choosing a rivaroxaban dose for AF in a patient weighing 52 kg",
+        "Staging CKD for the QOF register",
+        "Deciding whether to start an ACE inhibitor",
+        "Setting the BP target"
+      ],
+      answer: 0,
+      explanation: "DOAC licences and the BNF use CrCl (Cockcroft-Gault, actual body weight). This matters most at low body weight and in older people, where eGFR may overestimate clearance. eGFR is used for staging and most CKD decisions."
+    },
+    {
+      q: "A 45-year-old with CKD (no diabetes) has eGFR 40 and ACR 28 mg/mmol on maximum candesartan. Which treatment is supported by NICE TA775?",
+      options: [
+        "Add ramipril",
+        "Add finerenone",
+        "Add dapagliflozin 10 mg once daily",
+        "Add spironolactone 25 mg"
+      ],
+      answer: 2,
+      explanation: "Dapagliflozin is recommended for CKD with eGFR 25–75 and ACR ≥22.6 mg/mmol (or type 2 diabetes) as add-on to optimised ACEi/ARB. Finerenone (TA877) applies only to CKD with type 2 diabetes. Dual RAS blockade is not recommended."
+    },
+    {
+      q: "Which medicine is NOT part of the SADMANS sick day mnemonic?",
+      options: [
+        "Sulfonylureas",
+        "Diuretics",
+        "SGLT2 inhibitors",
+        "Atorvastatin"
+      ],
+      answer: 3,
+      explanation: "SADMANS: Sulfonylureas, ACE inhibitors, Diuretics, Metformin, ARBs, NSAIDs, SGLT2 inhibitors. Statins do not need to be withheld during a short dehydrating illness."
+    },
+    {
+      q: "A 30-year-old with eGFR 85 and a father who had polycystic kidney disease asks about screening. Which investigation is most appropriate?",
+      options: [
+        "Cystatin C",
+        "Renal ultrasound",
+        "24-hour urine collection",
+        "No investigation until eGFR is <60"
+      ],
+      answer: 1,
+      explanation: "NG203 recommends renal ultrasound for people with a family history of polycystic kidney disease who are aged over 20. Discuss implications (e.g. insurance, genetic counselling) before testing."
+    },
+    {
+      q: "A woman with CKD G3a has an uncomplicated lower UTI. Her eGFR is 52. Which statement about nitrofurantoin is correct?",
+      options: [
+        "It is contraindicated at any eGFR below 60",
+        "It can be used at this eGFR; avoid if eGFR is below 45 except for short courses in specific resistant infections",
+        "It must be dose-doubled to achieve urinary concentrations",
+        "It is preferred over all other options when eGFR is below 30"
+      ],
+      answer: 1,
+      explanation: "BNF advice: avoid nitrofurantoin if eGFR <45, although a short course may be used with caution at 30–44 to treat uncomplicated lower UTI caused by suspected or proven multidrug-resistant bacteria. At eGFR 52 it can be used."
+    },
+    {
+      q: "A patient with CKD G4 asks whether he should follow a low-protein diet. What does NICE advise?",
+      options: [
+        "Restrict protein to below 0.6 g/kg/day",
+        "Follow a high-protein diet to prevent sarcopenia",
+        "Take a protein supplement daily",
+        "Do not offer low-protein diets; give healthy eating advice and refer to a dietitian where appropriate"
+      ],
+      answer: 3,
+      explanation: "NICE advises against low-protein diets (less than 0.6–0.8 g/kg/day) in CKD because of malnutrition risk. Dietary advice should be tailored, for example on potassium, phosphate and salt, with dietetic input where needed."
+    },
+    {
+      q: "A man with CKD G3b has an Hb of 104 g/L. What is the most appropriate first step?",
+      options: [
+        "Start an erythropoiesis-stimulating agent in primary care",
+        "Assume anaemia of CKD and do nothing",
+        "Check ferritin, transferrin saturation, B12 and folate, and look for other causes such as GI blood loss",
+        "Transfuse"
+      ],
+      answer: 2,
+      explanation: "Investigate anaemia when Hb ≤110 g/L. Exclude other causes and correct iron deficiency before attributing it to CKD. ESAs are specialist-initiated (NICE NG8)."
+    }
+  ]
+};
+</script>
+<script src="assets/flexylen-module.js"></script>
+</body>
+</html>
